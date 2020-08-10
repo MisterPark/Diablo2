@@ -9,8 +9,8 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
-
-	bool IsCollided(const GameObject* _target);
+	RECT GetCollisionArea();
+	bool IsCollided(GameObject* _target);
 	void SetColliderSize(LONG left, LONG top, LONG right, LONG bottom);
 
 	// 충돌 옵션임

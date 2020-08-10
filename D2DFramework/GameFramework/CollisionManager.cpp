@@ -122,9 +122,9 @@ bool CollisionManager::IsCollided(GameObject* _target, GameObject* _other)
 	if (target == nullptr)return false;
 	Character* other = dynamic_cast<Character*>(_other);
 	if (other == nullptr)return false;
-	RECT targetRect = target->simpleCollider + target->position;
+	RECT targetRect = target->GetCollisionArea();
 
-	RECT otherRect = other->simpleCollider + other->position;
+	RECT otherRect = other->GetCollisionArea();
 
 	if (targetRect.right < otherRect.left) return false;
 	if (targetRect.left > otherRect.right) return false;

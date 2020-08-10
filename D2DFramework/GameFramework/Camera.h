@@ -17,14 +17,14 @@ public:
 	static void SetTarget(GameObject* _target);
 	static void SetRangeX(int minX, int maxX);
 	static void SetRangeY(int minY, int maxY);
-	static int GetX();
-	static int GetY();
+	static float GetX();
+	static float GetY();
 
 	static void FollowTarget();
 
-	Transform position{ 0.f,0.f };
-	Transform minPos{ 0.f,0.f };
-	Transform maxPos{ 0.f,0.f };
+	D3DXVECTOR3 position;
+	D3DXVECTOR3 minPos;
+	D3DXVECTOR3 maxPos;
 	GameObject* target = nullptr;
 };
 

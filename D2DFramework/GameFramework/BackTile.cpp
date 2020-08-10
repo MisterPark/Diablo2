@@ -3,7 +3,6 @@
 
 BackTile::BackTile()
 {
-	position = { 0,0 };
 }
 
 BackTile::~BackTile()
@@ -16,6 +15,6 @@ void BackTile::Update()
 
 void BackTile::Render()
 {
-	Transform pos = GetPositionFromCamera();
+	D3DXVECTOR3 pos = GetPositionFromCamera();
 	RenderManager::DrawTile(SpriteType::NORMAL, tileset, offsetIndex, pos.x, pos.y);
 }

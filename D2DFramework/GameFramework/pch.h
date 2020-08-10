@@ -53,9 +53,9 @@ extern HWND g_hwnd;
 #include "fmod.h"
 #include "SoundMgr.h"
 
-//#include <d3d9.h>
-//#pragma comment(lib,"d3d9.lib")
-//#include <d3dx9.h>
-//#pragma comment(lib,"d3dx9.lib")
+#include <d3d9.h>
+#pragma comment(lib,"d3d9.lib")
+#include <d3dx9.h>
+#pragma comment(lib,"d3dx9.lib")
 
 #endif //PCH_H

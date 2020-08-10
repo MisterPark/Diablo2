@@ -5,8 +5,8 @@
 // 아이소매트릭 미사용시 주석처리
 #define ISOMETRIC
 
-#define dfEDIT_WIDTH 1280
-#define dfEDIT_HEIGHT 720
+#define dfEDIT_WIDTH 800
+#define dfEDIT_HEIGHT 600
 
 #define dfTILE_W 160
 #define dfTILE_H 80

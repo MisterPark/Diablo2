@@ -27,12 +27,12 @@ void Effect::Update()
 
 void Effect::Render()
 {
-	Transform pos = GetPositionFromCamera();
+	D3DXVECTOR3 pos = GetPositionFromCamera();
 	RenderManager::DrawSprite(SpriteType::NORMAL, anim->GetCurrentSpriteIndex(), pos.x, pos.y);
 
 	if (ObjectManager::IsVisibleCollider())
 	{
-		RenderManager::DrawSimpleCollider(pos + simpleCollider, RGB(0, 255, 0));
+		RenderManager::DrawSimpleCollider(GetCollisionArea(), RGB(0, 255, 0));
 	}
 }
 

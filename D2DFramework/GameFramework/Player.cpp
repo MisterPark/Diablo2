@@ -9,7 +9,7 @@ Player::Player()
 {
 	// Á¤º¸
 	hp = 10;
-	position = { 30,250 };
+	position = { 30.f,250.f,0.f };
 	speed = 200.f;
 	isVisible = false;
 	isEnable = false;
@@ -58,12 +58,12 @@ void Player::Render()
 {
 	if (isVisible == false) return;
 
-	Transform pos = GetPositionFromCamera();
+	D3DXVECTOR3 pos = GetPositionFromCamera();
 	RenderManager::DrawSprite(SpriteType::NORMAL, anim->GetCurrentSpriteIndex(), pos.x, pos.y);
 	
 	if (ObjectManager::IsVisibleCollider())
 	{
-		RenderManager::DrawSimpleCollider(pos + simpleCollider, RGB(0, 255, 0));
+		RenderManager::DrawSimpleCollider(GetCollisionArea(), RGB(0, 255, 0));
 	}
 	
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include "Define.h"
-#include "Transform.h"
+#include <d3dx9.h>
 #include "RenderManager.h"
 #include "Animation.h"
 #include "IState.h"
@@ -40,7 +40,7 @@ public:
 	void SetTarget(GameObject* _target);
 	void SetAnimation(SpriteIndex _index);
 	void SetAnimation(SpriteIndex _startIndex, SpriteIndex _endIndex);
-	Transform GetPositionFromCamera();
+	D3DXVECTOR3 GetPositionFromCamera();
 
 	void FollowTarget();
 	void FaceTarget();
@@ -49,8 +49,8 @@ public:
 
 public:
 	// 위치 방향
-	Transform position{ 0.f, 0.f };
-	Transform localPosition{ 0.f,0.f };
+	D3DXVECTOR3 position{ 0.f,0.f,0.f };
+	D3DXVECTOR3 localPosition{ 0.f,0.f,0.f };
 	Direction direction = Direction::RIGHT;
 	int width = 0;
 	int height = 0;

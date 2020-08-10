@@ -57,7 +57,7 @@ void TileManager::RenderTile()
 	for (auto iter : pTileManager->tileMap)
 	{
 		Tile* tile = iter.second;
-		Transform pos = tile->GetPositionFromCamera();
+		D3DXVECTOR3 pos = tile->GetPositionFromCamera();
 		RenderManager::DrawTile(SpriteType::NORMAL, tile->tileset, tile->offsetIndex, pos.x, pos.y);
 
 		RECT rt = { pos.x + 1,pos.y + 1,pos.x + dfTILE_W - 1,pos.y + dfTILE_H - 1 };
@@ -88,12 +88,12 @@ void TileManager::RenderTile()
 
 void TileManager::RenderCrossLine()
 {
-	int screenW = RenderManager::GetWidth();
-	int screenH = RenderManager::GetHeight();
-	int w = screenW / dfTILE_W + 1;
-	int h = screenH / dfTILE_H + 2;
-	int offsetX = Camera::GetX() % dfTILE_W;
-	int offsetY = Camera::GetY() % dfTILE_H;
+	float screenW = (float)RenderManager::GetWidth();
+	float screenH = (float)RenderManager::GetHeight();
+	float w = screenW / dfTILE_W + 1;
+	float h = screenH / dfTILE_H + 2;
+	float offsetX = fmodf(Camera::GetX(),dfTILE_W);
+	float offsetY = fmodf(Camera::GetY(),dfTILE_H);
 	int diagonalCount = w + h;
 
 	#ifdef ISOMETRIC
@@ -102,18 +102,36 @@ void TileManager::RenderCrossLine()
 	// 가로선
 	for (int row = 0; row < h; row++)
 	{
-		int sy = row * dfTILE_H_HALF - offsetY;
+		float sy = row * dfTILE_H_HALF - offsetY;
 
 		RenderManager::DrawLine(0, sy, screenW, sy, RGB(255, 0, 255));
 
 
 }
 	// 세로선
-	for (int col = 0; col < w; col++)
+	for (int col = -1; col < w; col++)
 	{
 		int sx = col * dfTILE_W_HALF - offsetX;
 
 		RenderManager::DrawLine(sx, 0, sx, screenH, RGB(255, 0, 255));
+	}
+
+	// 대각선 /
+	for (int cnt = -1; cnt < diagonalCount; cnt++)
+	{
+		int sx = (cnt * dfTILE_W) - offsetX - (offsetY * 2);
+		int ey = (cnt * dfTILE_H) - offsetY - (offsetX / 2);
+
+		RenderManager::DrawLine(sx, 0, 0, ey, RGB(255, 0, 255));
+	}
+
+	// 대각선 
+	for (int cnt = -1; cnt < diagonalCount; cnt++)
+	{
+		int sx = RenderManager::GetWidth() - (cnt * dfTILE_W) - offsetX + (offsetY * 2);
+		int ey = (cnt * dfTILE_H) - offsetY + (offsetX / 2);
+
+		RenderManager::DrawLine(sx, 0, RenderManager::GetWidth(), ey, RGB(255, 0, 0));
 	}
 
 	#else
@@ -140,23 +158,7 @@ void TileManager::RenderCrossLine()
 
 	
 
-	// 대각선 /
-	for (int cnt = -1; cnt < diagonalCount; cnt++)
-	{
-		int sx = (cnt * dfTILE_W) - offsetX - (offsetY * 2);
-		int ey = (cnt * dfTILE_H) - offsetY - (offsetX / 2);
 
-		RenderManager::DrawLine(sx, 0, 0, ey, RGB(255, 0, 255));
-	}
-
-	// 대각선 
-	for (int cnt = -1; cnt < diagonalCount; cnt++)
-	{
-		int sx = RenderManager::GetWidth() - (cnt * dfTILE_W) - offsetX + (offsetY * 2);
-		int ey = (cnt * dfTILE_H) - offsetY + (offsetX / 2);
-
-		RenderManager::DrawLine(sx, 0, RenderManager::GetWidth(), ey, RGB(255, 0, 0));
-	}
 }
 
 void TileManager::RenderMousePosition()
@@ -169,7 +171,7 @@ void TileManager::RenderMousePosition()
 	POINT idx = GetTileIndexFromMouse();
 
 	WCHAR wstr[128];
-	wsprintf(wstr, L"Mouse[%d,%d]   Camera[%d,%d]  Tile(%d,%d) Count:%d", pt.x, pt.y,Camera::GetX(),Camera::GetY(), idx.y, idx.x, pTileManager->tileMap.size());
+	wsprintf(wstr, L"Mouse[%d,%d]   Camera[%d,%d]  Tile(%d,%d) Count:%d", pt.x, pt.y,(int)Camera::GetX(),(int)Camera::GetY(), idx.y, idx.x, pTileManager->tileMap.size());
 	RenderManager::DrawString(wstr, 100, 0, RGB(254, 254, 254));
 }
 
@@ -221,14 +223,10 @@ void TileManager::RenderTileSelector()
 	{
 	#ifdef ISOMETRIC
 
-		int worldX = pt.x;
-		int worldY = pt.y;
-		POINT idx;
-		idx.x = (worldX / dfTILE_W_HALF + worldY / dfTILE_H_HALF) / 2;
-		idx.y = (worldY / dfTILE_H_HALF - (worldX / dfTILE_W_HALF)) / 2;
-
-		int sx = (idx.x - idx.y) * dfTILE_W_HALF -(Camera::GetX() % dfTILE_W);
-		int sy = (idx.x + idx.y) * dfTILE_H_HALF -(Camera::GetY() % dfTILE_H);
+		POINT idx = GetTileIndexFromMouse();
+		
+		int sx = (idx.x - idx.y) * dfTILE_W_HALF - Camera::GetX();
+		int sy = (idx.x + idx.y) * dfTILE_H_HALF - Camera::GetY();
 
 		RenderManager::DrawLine(sx, sy, sx + dfTILE_W_HALF, sy +dfTILE_H_HALF,RGB(0,255,0));
 		RenderManager::DrawLine(sx + dfTILE_W_HALF, sy + dfTILE_H_HALF, sx, sy +dfTILE_H, RGB(0, 255, 0));
@@ -329,8 +327,8 @@ POINT TileManager::GetTileIndexFromMouse()
 	GetCursorPos(&pt);
 	ScreenToClient(g_hwnd, &pt);
 
-	int worldX = (pt.x + Camera::GetX());
-	int worldY = (pt.y + Camera::GetY());
+	float worldX = (pt.x + Camera::GetX());
+	float worldY = (pt.y + Camera::GetY());
 
 	POINT idx;
 	#ifdef ISOMETRIC

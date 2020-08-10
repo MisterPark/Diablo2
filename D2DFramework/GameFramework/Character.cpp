@@ -12,14 +12,24 @@ void Character::Render()
 }
 
 
-bool Character::IsCollided(const GameObject* _target)
+RECT Character::GetCollisionArea()
 {
-	const Character* target = dynamic_cast<const Character*>(_target);
+	RECT myBox = this->simpleCollider;
+	myBox.left += this->position.x;
+	myBox.right += this->position.x;
+	myBox.top += this->position.y;
+	myBox.bottom += this->position.y;
+	return myBox;
+}
+
+bool Character::IsCollided(GameObject* _target)
+{
+	Character* target = dynamic_cast<Character*>(_target);
 	if (target == nullptr) return false;
 	if (target->type == type) return false;
 
-	RECT myBox = this->simpleCollider + this->position;
-	RECT targetBox = target->simpleCollider + target->position;
+	RECT myBox = GetCollisionArea();
+	RECT targetBox = target->GetCollisionArea();
 	RECT outBox;
 
 	if (!IntersectRect(&outBox, &myBox, &targetBox)) return false;
@@ -38,8 +48,8 @@ void Character::SetColliderSize(LONG left, LONG top, LONG right, LONG bottom)
 
 void Character::PushOut(Character* target,DWORD option)
 {
-	RECT targetRect = target->simpleCollider + target->position;
-	RECT myRect = simpleCollider + position;
+	RECT targetRect = target->GetCollisionArea();
+	RECT myRect = GetCollisionArea();
 
 	RECT area;
 	if (IntersectRect(&area, &targetRect, &myRect) == false )return;

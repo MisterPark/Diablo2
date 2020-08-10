@@ -6,7 +6,6 @@ Camera* pCamera = nullptr;
 
 Camera::Camera()
 {
-	position = { 0,0 };
 }
 
 Camera::~Camera()
@@ -31,19 +30,19 @@ void Camera::Update()
 {
 	if (InputManager::GetKey(VK_NUMPAD4))
 	{
-		pCamera->position.x -= 2;
+		pCamera->position.x -= 2.f;
 	}
 	if (InputManager::GetKey(VK_NUMPAD6))
 	{
-		pCamera->position.x += 2;
+		pCamera->position.x += 2.f;
 	}
 	if (InputManager::GetKey(VK_NUMPAD8))
 	{
-		pCamera->position.y -= 2;
+		pCamera->position.y -= 2.f;
 	}
 	if (InputManager::GetKey(VK_NUMPAD5))
 	{
-		pCamera->position.y += 2;
+		pCamera->position.y += 2.f;
 	}
 	if (InputManager::GetKey(VK_NUMPAD7))
 	{
@@ -76,12 +75,12 @@ void Camera::SetRangeY(int minY, int maxY)
 	pCamera->maxPos.y = maxY;
 }
 
-int Camera::GetX()
+float Camera::GetX()
 {
 	return pCamera->position.x;
 }
 
-int Camera::GetY()
+float Camera::GetY()
 {
 	return pCamera->position.y;
 }

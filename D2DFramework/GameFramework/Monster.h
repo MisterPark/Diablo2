@@ -25,8 +25,8 @@ public:
 
 
 public:
-    Transform spawnPos{ 0.f,0.f };
-    Transform backAndForthPos{ 0.f,0.f };
+	D3DXVECTOR3 spawnPos{ 0.f,0.f,0.f};
+	D3DXVECTOR3 backAndForthPos{ 0.f,0.f,0.f};
     float attackRange = 100.f;
     bool backAndForthFlag = false;
 

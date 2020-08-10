@@ -3,7 +3,7 @@
 
 Label::Label()
 {
-	position = { 0,0 };
+	position = { 0.f,0.f ,0.f};
 	wmemset(text, 0, 64);
 	wmemset(font, 0, 16);
 }
