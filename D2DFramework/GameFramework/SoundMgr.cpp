@@ -93,6 +93,8 @@ void SoundManager::LoadSoundFile()
 
 	if (handle == 0)
 		return; 
+	if (handle == -1)
+		return;
 
 	int iResult = 0; 
 
