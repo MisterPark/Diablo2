@@ -9,6 +9,15 @@ void Character::Update()
 
 void Character::Render()
 {
+	if (isVisible == false) return;
+
+	Transform pos = GetPositionFromCamera();
+	RenderManager::DrawSprite(SpriteType::NORMAL, anim->GetCurrentSpriteIndex(), pos.x, pos.y);
+
+	if (ObjectManager::IsVisibleCollider())
+	{
+		RenderManager::DrawSimpleCollider(pos + simpleCollider, RGB(0, 255, 0));
+	}
 }
 
 
@@ -65,7 +74,7 @@ void Character::PushOut(Character* target,DWORD option)
 				Player* p = dynamic_cast<Player*>(target);
 				if (p != nullptr)
 				{
-					p->stickFlag = false;
+					//p->stickFlag = false;
 				}
 			}
 		}

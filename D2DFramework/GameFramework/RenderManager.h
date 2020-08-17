@@ -5,7 +5,15 @@ enum class SpriteIndex
 {
 	NONE,
 	BACKGROUND,
-
+	BACKGROUND_W,
+	BACKGROUND_200,
+	HD,
+	TR,
+	S1,
+	S2,
+	LA,
+	RA,
+	LG,
 	END,
 };
 
@@ -91,7 +99,7 @@ private:
 	RECT area = { 0,0,dfCLIENT_WIDTH,dfCLIENT_HEIGHT };
 
 	Sprite* pSprite = nullptr;
-	DWORD colorKey = 0x00FFFFFF; // 투명색
+	DWORD colorKey = 0x00000000; // 투명색
 	int width = 0;
 	int height = 0;
 	int pitch = 0;

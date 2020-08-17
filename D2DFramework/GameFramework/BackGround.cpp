@@ -8,7 +8,7 @@ BackGround::BackGround()
 {
 	position.x = 0;
 	position.y = 0;
-	anim->SetAnimation(SpriteIndex::BACKGROUND);
+	anim->SetAnimation(SpriteIndex::BACKGROUND_W);
 }
 
 BackGround::~BackGround()
@@ -46,6 +46,17 @@ void BackGround::SetStretch(bool _isFillClient)
 
 void BackGround::Update()
 {
+	if (InputManager::GetKeyDown('Z'))
+	{
+		if (anim->GetCurrentSpriteIndex() == SpriteIndex::BACKGROUND_200)
+		{
+			anim->SetAnimation(SpriteIndex::BACKGROUND_W);
+		}
+		else
+		{
+			anim->SetAnimation(SpriteIndex::BACKGROUND_200);
+		}
+	}
 	pBackGround->anim->Update();
 }
 
