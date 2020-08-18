@@ -33,14 +33,21 @@ public:
 
 	Command command = Command::NONE;
 
-	RECT idleCollider = { -10,-40,10,0 };
-	RECT jumpCollider = { -10,-40,10,-20 };
-	RECT sitCollider = { -10,-20,10,0 };
-	RECT stickColliderL = { 10,-40,30,0 };
-	RECT stickColliderR = { -30,-40,-10,0 };
-	bool stickFlag = false;
-	Direction stickDirection = Direction::LEFT;
-	int stickMaxY = 0;
-	int score = 0;
+	bool isDrawLine = false;
+	int state = 1;
+	int lgX = 0;
+	int lgY = 0;
+	int trX = 0;
+	int trY = 0;
+	int laX = 0;
+	int laY = 0;
+	int raX = 0;
+	int raY = 0;
+	int hdX = 0;
+	int hdY = 0;
+	int s1X = 0;
+	int s1Y = 0;
+	int s2X = 0;
+	int s2Y = 0;
 };
 

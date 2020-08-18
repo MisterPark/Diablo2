@@ -210,7 +210,7 @@ void ObjectManager::Render()
 	}
 
 	// 디버그용
-	TimeManager::RenderFPS();
+	//TimeManager::RenderFPS();
 	Player::RenderPlayerInfo();
 }
 
