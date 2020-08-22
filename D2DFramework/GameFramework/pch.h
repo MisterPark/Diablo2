@@ -27,23 +27,7 @@
 
 using namespace std;
 
-// 사용자 추가
-#include "Point.h"
 
-#include "MemoryPool.h"
-#include "Define.h"
-#include "MainGame.h"
-#include "TimeManager.h"
-#include "InputManager.h"
-#include "ObjectManager.h"
-#include "RenderManager.h"
-#include "SceneManager.h"
-#include "CollisionManager.h"
-#include "Camera.h"
-#include "TileManager.h"
-#include "FileManager.h"
-
-extern HWND g_hwnd;
 
 #include "framework.h"
 
@@ -53,9 +37,32 @@ extern HWND g_hwnd;
 #include "fmod.h"
 #include "SoundMgr.h"
 
-//#include <d3d9.h>
-//#pragma comment(lib,"d3d9.lib")
-//#include <d3dx9.h>
-//#pragma comment(lib,"d3dx9.lib")
+#include <d3d9.h>
+#include <d3dx9.h>
+#pragma comment(lib,"d3d9.lib")
+#pragma comment(lib,"d3dx9.lib")
+
+// 사용자 추가
+#include "Point.h"
+
+#include "MemoryPool.h"
+#include "Define.h"
+#include "MainGame.h"
+#include "TimeManager.h"
+#include "InputManager.h"
+#include "ObjectManager.h"
+#include "D2DRenderManager.h"
+#include "SceneManager.h"
+#include "CollisionManager.h"
+#include "Camera.h"
+#include "TileManager.h"
+#include "FileManager.h"
+
+#include "Transform.h"
+#include "Vector3.h"
+
+
+
+extern HWND g_hwnd;
 
 #endif //PCH_H

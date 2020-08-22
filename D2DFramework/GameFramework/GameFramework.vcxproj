@@ -23,14 +23,14 @@
     <ProjectGuid>{8A46B463-E27F-4F53-9B51-D4BDA591D125}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GameFramework</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectName>D2DFramework</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -74,7 +74,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;C:\Users\gg949\Desktop\GameFramework\GameFramework\fMode;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64;C:\Users\gg949\Desktop\GameFramework\GameFramework\fMode;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;C:\Users\gg949\Desktop\GameFramework\GameFramework\fMode;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -155,13 +155,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
-    <ClInclude Include="BackGround.h" />
-    <ClInclude Include="BackTile.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Character.h" />
     <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="D2DRenderManager.h" />
     <ClInclude Include="Define.h" />
-    <ClInclude Include="Effect.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="fmod.h" />
@@ -177,16 +174,11 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="IState.h" />
-    <ClInclude Include="Label.h" />
-    <ClInclude Include="Logo.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MemoryPool.h" />
-    <ClInclude Include="Monster.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="Point.h" />
-    <ClInclude Include="RenderManager.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SoundMgr.h" />
@@ -196,16 +188,13 @@
     <ClInclude Include="TileManager.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Transform.h" />
-    <ClInclude Include="UI.h" />
+    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
-    <ClCompile Include="BackGround.cpp" />
-    <ClCompile Include="BackTile.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Character.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
-    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="D2DRenderManager.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="GameFramework.cpp" />
@@ -213,10 +202,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="IScene.cpp" />
     <ClCompile Include="IState.cpp" />
-    <ClCompile Include="Label.cpp" />
-    <ClCompile Include="Logo.cpp" />
     <ClCompile Include="MainGame.cpp" />
-    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -224,15 +210,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SoundMgr.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileManager.cpp" />
     <ClCompile Include="TimeManager.cpp" />
-    <ClCompile Include="UI.cpp" />
+    <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameFramework.rc" />

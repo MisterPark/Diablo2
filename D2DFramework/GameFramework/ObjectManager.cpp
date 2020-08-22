@@ -1,32 +1,15 @@
 #include "pch.h"
 #include "ObjectManager.h"
-#include "Character.h"
-#include "Player.h"
-#include "UI.h"
-#include "BackGround.h"
-#include "Logo.h"
-#include "Label.h"
-#include "BackTile.h"
-#include "Tile.h"
-#include "Monster.h"
-#include "Effect.h"
 
 ObjectManager* pObjectManager = nullptr;
 int lastUid = 0;
 
 ObjectManager::ObjectManager()
 {
-	player = Player::GetInstance();
-	CollisionManager::RegisterObject(player);
-	BackGround::GetInstance();
 }
 
 ObjectManager::~ObjectManager()
 {
-	Player::Release();
-	player = nullptr;
-	CollisionManager::DisregisterObject(player);
-	BackGround::Release();
 }
 
 ObjectManager * ObjectManager::GetInstance()
@@ -43,29 +26,6 @@ GameObject * ObjectManager::CreateObject(ObjectType _type)
 	GameObject* pObj = nullptr;
 	switch (_type)
 	{
-	case ObjectType::BACK_TILE:
-		pObj = new BackTile;
-		break;
-	case ObjectType::TILE:
-		pObj = new Tile;
-		break;
-	case ObjectType::MONSTER:
-		pObj = new Monster;
-		break;
-	case ObjectType::PLAYER:
-		return Player::GetInstance();
-	case ObjectType::EFFECT:
-		pObj = new Effect;
-		break;
-	case ObjectType::UI:
-		pObj = new UI();
-		break;
-	case ObjectType::LOGO:
-		pObj = new Logo();
-		break;
-	case ObjectType::LABEL:
-		pObj = new Label;
-		break;
 	default:
 		return nullptr;
 	}
@@ -74,10 +34,10 @@ GameObject * ObjectManager::CreateObject(ObjectType _type)
 	pObj->uid = ++lastUid;
 	pObjectManager->objectTable[(int)_type].push_back(pObj);
 
-	if (dynamic_cast<Character*>(pObj) != nullptr)
-	{
-		CollisionManager::RegisterObject(pObj);
-	}
+	//if (dynamic_cast<Character*>(pObj) != nullptr)
+	//{
+	//	CollisionManager::RegisterObject(pObj);
+	//}
 
 	return pObj;
 }
@@ -116,26 +76,6 @@ void ObjectManager::DestroyAll(ObjectType _type)
 	}
 }
 
-
-int ObjectManager::FindTopStickTileY(GameObject* _stickTile)
-{
-	if (_stickTile == nullptr) return 0;
-
-	int minY = 999999;
-	auto& tileList = pObjectManager->objectTable[(int)ObjectType::TILE];
-	auto iter = tileList.begin();
-	auto end = tileList.end();
-	for (; iter != end; ++iter)
-	{
-		Tile* tile = (Tile*)(*iter);
-		if ((tile->option & dfTILE_OPTION_STICK) == false) continue;
-		if (_stickTile->position.x != tile->position.x) continue;
-		minY = min(minY, tile->position.y);
-	}
-
-	return minY;
-}
-
 void ObjectManager::Release()
 {
 	delete pObjectManager;
@@ -144,8 +84,6 @@ void ObjectManager::Release()
 
 void ObjectManager::Update()
 {
-	BackGround::GetInstance()->Update();
-	Player::GetInstance()->Update();
 
 	auto& objTable = pObjectManager->objectTable;
 	for (auto& objList : objTable)
@@ -175,10 +113,10 @@ void ObjectManager::LateUpdate()
 				{
 					iter = objList.erase(iter);
 
-					if (dynamic_cast<Character*>(target) != nullptr)
+			/*		if (dynamic_cast<Character*>(target) != nullptr)
 					{
 						CollisionManager::DisregisterObject(target);
-					}
+					}*/
 
 					delete target;
 				}
@@ -196,9 +134,6 @@ void ObjectManager::LateUpdate()
 
 void ObjectManager::Render()
 {
-	BackGround::GetInstance()->Render();
-	Player::GetInstance()->Render();
-
 	auto& objTable = pObjectManager->objectTable;
 	for (auto& objList : objTable)
 	{
@@ -211,7 +146,6 @@ void ObjectManager::Render()
 
 	// 디버그용
 	//TimeManager::RenderFPS();
-	Player::RenderPlayerInfo();
 }
 
 bool ObjectManager::IsVisibleCollider()

@@ -106,5 +106,5 @@ void TimeManager::RenderFPS()
 {
 	WCHAR wstr[8];
 	wsprintf(wstr, L"%ld", pTimeManager->fps);
-	RenderManager::DrawString(wstr, 0, 0, RGB(255, 60, 255));
+	//RenderManager::DrawString(wstr, 0, 0, RGB(255, 60, 255));
 }

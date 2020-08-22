@@ -12,7 +12,6 @@ public:
 	static void Release();
 
 	static void Update();
-	static void UpdateGravity();
 	static void RegisterObject(GameObject* _pObj);
 	static void DisregisterObject(GameObject* _pObj);
 	static bool FindObject(GameObject* _pObj);

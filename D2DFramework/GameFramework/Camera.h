@@ -22,9 +22,9 @@ public:
 
 	static void FollowTarget();
 
-	Transform position{ 0.f,0.f };
-	Transform minPos{ 0.f,0.f };
-	Transform maxPos{ 0.f,0.f };
+	Transform transform;
+	Vector3 minPos;
+	Vector3 maxPos;
 	GameObject* target = nullptr;
 };
 

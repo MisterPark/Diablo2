@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "CollisionManager.h"
-#include "Character.h"
 
 CollisionManager* pCollisionManager = nullptr;
 
@@ -29,8 +28,6 @@ void CollisionManager::Release()
 
 void CollisionManager::Update()
 {
-	// 중력
-	UpdateGravity();
 
 	// 충돌
 	for (auto src : pCollisionManager->objectList)
@@ -49,27 +46,6 @@ void CollisionManager::Update()
 
 	
 
-}
-
-void CollisionManager::UpdateGravity()
-{
-	Character* target = nullptr;
-	for (auto iter : pCollisionManager->objectList)
-	{
-		target = dynamic_cast<Character*>(iter);
-		if (target == nullptr) continue;
-		if (target->useGravity == false) continue;
-
-		target->gravityCount += 0.5f;
-		float gravityPower = target->gravityCount * dfGRAVITY * TimeManager::DeltaTime();
-		gravityPower = min(gravityPower, 25.f);
-		target->position.y += gravityPower;
-		if (target->gravityCount >2.f && target->jumpCount == 0)
-		{
-			target->jumpFlag = false;
-			target->isFalldown = true;
-		}
-	}
 }
 
 void CollisionManager::RegisterObject(GameObject* _pObj)
@@ -116,20 +92,5 @@ bool CollisionManager::FindObject(GameObject* _pObj)
 
 bool CollisionManager::IsCollided(GameObject* _target, GameObject* _other)
 {
-	if (_target == nullptr)return false;
-	if (_other == nullptr)return false;
-	Character* target = dynamic_cast<Character*>(_target);
-	if (target == nullptr)return false;
-	Character* other = dynamic_cast<Character*>(_other);
-	if (other == nullptr)return false;
-	RECT targetRect = target->simpleCollider + target->position;
-
-	RECT otherRect = other->simpleCollider + other->position;
-
-	if (targetRect.right < otherRect.left) return false;
-	if (targetRect.left > otherRect.right) return false;
-	if (targetRect.top > otherRect.bottom) return false;
-	if (targetRect.bottom < otherRect.top) return false;
-
-	return true;
+	return false;
 }

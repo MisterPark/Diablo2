@@ -6,7 +6,6 @@ Camera* pCamera = nullptr;
 
 Camera::Camera()
 {
-	position = { 0,0 };
 }
 
 Camera::~Camera()
@@ -31,19 +30,19 @@ void Camera::Update()
 {
 	if (InputManager::GetKey(VK_NUMPAD4))
 	{
-		pCamera->position.x -= 2;
+		pCamera->transform.position.x -= 2;
 	}
 	if (InputManager::GetKey(VK_NUMPAD6))
 	{
-		pCamera->position.x += 2;
+		pCamera->transform.position.x += 2;
 	}
 	if (InputManager::GetKey(VK_NUMPAD8))
 	{
-		pCamera->position.y -= 2;
+		pCamera->transform.position.y -= 2;
 	}
 	if (InputManager::GetKey(VK_NUMPAD5))
 	{
-		pCamera->position.y += 2;
+		pCamera->transform.position.y += 2;
 	}
 	if (InputManager::GetKey(VK_NUMPAD7))
 	{
@@ -55,8 +54,8 @@ void Camera::Update()
 
 void Camera::SetPosition(int _x, int _y)
 {
-	pCamera->position.x = _x;
-	pCamera->position.y = _y;
+	pCamera->transform.position.x = _x;
+	pCamera->transform.position.y = _y;
 }
 
 void Camera::SetTarget(GameObject* _target)
@@ -78,12 +77,12 @@ void Camera::SetRangeY(int minY, int maxY)
 
 int Camera::GetX()
 {
-	return pCamera->position.x;
+	return pCamera->transform.position.x;
 }
 
 int Camera::GetY()
 {
-	return pCamera->position.y;
+	return pCamera->transform.position.y;
 }
 
 void Camera::FollowTarget()
@@ -91,24 +90,24 @@ void Camera::FollowTarget()
 	if (pCamera->target == nullptr)return;
 
 
-	pCamera->position.x = pCamera->target->position.x - (RenderManager::GetWidth() / 2);
-	pCamera->position.y = pCamera->target->position.y - (RenderManager::GetHeight() / 2);
+	pCamera->transform.position.x = pCamera->target->transform.position.x - (dfCLIENT_WIDTH / 2);
+	pCamera->transform.position.y = pCamera->target->transform.position.y - (dfCLIENT_HEIGHT / 2);
 
-	if (pCamera->position.x < pCamera->minPos.x)
+	if (pCamera->transform.position.x < pCamera->minPos.x)
 	{
-		pCamera->position.x = pCamera->minPos.x;
+		pCamera->transform.position.x = pCamera->minPos.x;
 	}
-	else if (pCamera->position.x > pCamera->maxPos.x)
+	else if (pCamera->transform.position.x > pCamera->maxPos.x)
 	{
-		pCamera->position.x = pCamera->maxPos.x;
+		pCamera->transform.position.x = pCamera->maxPos.x;
 	}
 
-	if (pCamera->position.y < pCamera->minPos.y)
+	if (pCamera->transform.position.y < pCamera->minPos.y)
 	{
-		pCamera->position.y = pCamera->minPos.y;
+		pCamera->transform.position.y = pCamera->minPos.y;
 	}
-	else if (pCamera->position.y > pCamera->maxPos.y)
+	else if (pCamera->transform.position.y > pCamera->maxPos.y)
 	{
-		pCamera->position.y = pCamera->maxPos.y;
+		pCamera->transform.position.y = pCamera->maxPos.y;
 	}
 }

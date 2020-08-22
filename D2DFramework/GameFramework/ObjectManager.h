@@ -18,7 +18,6 @@ public:
 	static void DestroyAll();
 	static void DestroyAll(ObjectType _type);
 
-	static int FindTopStickTileY(GameObject* _stickTile);
 
 	static void Release();
 	static void Update();

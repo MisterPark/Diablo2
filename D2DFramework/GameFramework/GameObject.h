@@ -1,7 +1,5 @@
 #pragma once
-#include "Define.h"
 #include "Transform.h"
-#include "RenderManager.h"
 #include "Animation.h"
 #include "IState.h"
 
@@ -38,40 +36,26 @@ public:
 
 	void SetPosition(float _x, float _y);
 	void SetTarget(GameObject* _target);
-	void SetAnimation(SpriteIndex _index);
-	void SetAnimation(SpriteIndex _startIndex, SpriteIndex _endIndex);
-	Transform GetPositionFromCamera();
+	Vector3 GetPositionFromCamera();
 
-	void FollowTarget();
-	void FaceTarget();
-	void TakeDamage(int _damage);
-	bool KnockBack();
 
 public:
 	// 위치 방향
-	Transform position{ 0.f, 0.f };
-	Transform localPosition{ 0.f,0.f };
+	Transform transform;
 	Direction direction = Direction::RIGHT;
-	int width = 0;
-	int height = 0;
 	
 	ObjectType type = ObjectType::NONE;
-	int hp = 5;
+	
 	int uid = 0;
+
+	int hp = 5;
+
 	bool isEnable = true;
 	bool isVisible = true;
-	bool jumpFlag = false;
 	bool isDead = false;
 	bool isAlliance = true;
-	bool isSitdown = false;
-	//  공격받았을 시 넉백 관련
-	Direction knockbackDirection = Direction::RIGHT;
-	float knockbackDelay = 0.5f;
-	float knockbackTick = 0.f;
-	bool isAttacked = false;
-	bool isImmortal = false;
-	float immotalDelay = 0.5f;
-	float immotalTick = 0.f;
+
+	
 
 	//스프라이트 관련
 	Animation* anim = nullptr;
