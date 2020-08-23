@@ -60,6 +60,7 @@ void MainGame::Initialize()
 
 	SoundManager::GetInstance()->Initialize();
 
+	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOBW.png", L"SOBW", 5, 6);
 	//RenderManager::LoadSprite(SpriteIndex::BACKGROUND, "Sprites\\background.bmp", 0, 0);
 	//RenderManager::LoadSprite(SpriteIndex::BACKGROUND_W, "Sprites\\background2.bmp", 0, 0);
 	//RenderManager::LoadSprite(SpriteIndex::BACKGROUND_200, "Sprites\\200.bmp", 0, 0);
@@ -106,9 +107,11 @@ void MainGame::Run()
 	if (!TimeManager::SkipFrame())
 	{
 		//RenderManager::Clear();
+		D2DRenderManager::Clear();
 		ObjectManager::Render();
 		TileManager::Render();
 		//RenderManager::Present();
+		D2DRenderManager::Present();
 		//RenderManager::Flip();
 	}
 	

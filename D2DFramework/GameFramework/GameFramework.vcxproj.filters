@@ -138,13 +138,19 @@
     <ClInclude Include="D2DRenderManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h">
+    <ClInclude Include="Tile.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Vector3.h">
+      <Filter>MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h">
+    <ClInclude Include="Character.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -206,13 +212,19 @@
     <ClCompile Include="D2DRenderManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Transform.cpp">
+    <ClCompile Include="Tile.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Vector3.cpp">
+      <Filter>MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Tile.cpp">
+    <ClCompile Include="Character.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

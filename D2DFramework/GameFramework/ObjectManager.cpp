@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ObjectManager.h"
+#include "Character.h"
 
 ObjectManager* pObjectManager = nullptr;
 int lastUid = 0;
@@ -26,6 +27,9 @@ GameObject * ObjectManager::CreateObject(ObjectType _type)
 	GameObject* pObj = nullptr;
 	switch (_type)
 	{
+	case ObjectType::CHARACTER:
+		pObj = new Character;
+		break;
 	default:
 		return nullptr;
 	}

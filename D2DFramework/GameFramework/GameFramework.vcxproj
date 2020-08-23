@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="D2DRenderManager.h" />
     <ClInclude Include="Define.h" />
@@ -184,6 +185,7 @@
     <ClInclude Include="SoundMgr.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestScene.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileManager.h" />
     <ClInclude Include="TimeManager.h" />
@@ -193,6 +195,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="D2DRenderManager.cpp" />
     <ClCompile Include="EventManager.cpp" />
@@ -213,6 +216,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SoundMgr.cpp" />
     <ClCompile Include="TestScene.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileManager.cpp" />
     <ClCompile Include="TimeManager.cpp" />

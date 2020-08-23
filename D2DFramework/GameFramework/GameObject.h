@@ -7,17 +7,7 @@ enum class ObjectType
 {
 	// 렌더링 순서 중요
 	NONE,
-	BACK_TILE,
-	TILE,
-	MONSTER,
-	PLAYER,
-	EFFECT,
-
-	UI,
-	LOGO,
-	SELECT_BOX,
-	
-	LABEL,
+	CHARACTER,
 	END
 };
 

@@ -3,6 +3,7 @@
 
 void TestScene::OnLoaded()
 {
+	ObjectManager::CreateObject(ObjectType::CHARACTER);
 }
 
 void TestScene::OnUnloaded()

@@ -11,8 +11,23 @@ public:
 
 };
 
-class Matrix : public D3DXMATRIX
-{
-public:
+typedef D3DXMATRIX Matrix;
 
-};
+//
+//class Matrix : public D3DXMATRIX
+//{
+//public:
+//	using D3DXMATRIX::operator const FLOAT*;
+//	using D3DXMATRIX::operator FLOAT*;
+//	using D3DXMATRIX::operator*;
+//	using D3DXMATRIX::operator();
+//	using D3DXMATRIX::operator*=;
+//	using D3DXMATRIX::operator+;
+//	using D3DXMATRIX::operator+=;
+//	using D3DXMATRIX::operator-;
+//	using D3DXMATRIX::operator-=;
+//	using D3DXMATRIX::operator/;
+//	using D3DXMATRIX::operator/=;
+//	using D3DXMATRIX::operator==;
+//	using D3DXMATRIX::operator!=;
+//};

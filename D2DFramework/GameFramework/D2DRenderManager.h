@@ -1,4 +1,7 @@
 #pragma once
+
+class Texture;
+
 class D2DRenderManager
 {
 private:
@@ -15,14 +18,19 @@ public:
 	static void Clear();
 	static void Present(HWND renderTarget = nullptr);
 
+	static LPDIRECT3DDEVICE9 GetDevice();
+	static LPD3DXSPRITE GetSprite();
+
+	static HRESULT LoadSprite(const wstring& filePath, const wstring& spriteKey, DWORD row, DWORD col);
+	static void DrawSprite(const wstring& spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
+
 private:
 	// 실질적으로 장치를 다룰 객체. 
 	LPDIRECT3DDEVICE9 pDevice = nullptr;
-	// 장치의 지원 수준 조사 및 장치를 제어할 객체를 생성할 com 객체 .
 	LPDIRECT3D9 pSDK = nullptr;
-	// com 객체!- 그냥 하나 하나 부품처럼 생각한다라 생각하면 되겠다. 
-
 	LPD3DXSPRITE pSprite = nullptr;
 	LPD3DXFONT	pFont = nullptr;
+
+	map<wstring, Texture*> textureMap;
 };
 

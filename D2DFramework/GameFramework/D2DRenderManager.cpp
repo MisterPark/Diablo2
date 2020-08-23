@@ -91,7 +91,7 @@ HRESULT D2DRenderManager::Initialize()
 	fontInfo.Width = 20;
 	fontInfo.Weight = FW_HEAVY;
 	fontInfo.CharSet = HANGUL_CHARSET;
-	lstrcpy(fontInfo.FaceName, L"메이플스토리");
+	lstrcpy(fontInfo.FaceName, L"바탕");
 	if (FAILED(D3DXCreateFontIndirect(pD2DRenderManager->pDevice, &fontInfo, &pD2DRenderManager->pFont)))
 	{
 		MessageBoxW(g_hwnd, L"폰트 생성 실패", nullptr, MB_OK);
@@ -102,6 +102,12 @@ HRESULT D2DRenderManager::Initialize()
 
 void D2DRenderManager::Release()
 {
+	for (auto pair : pD2DRenderManager->textureMap)
+	{
+		delete pair.second;
+	}
+	pD2DRenderManager->textureMap.clear();
+
 	if (pD2DRenderManager->pFont)
 	{
 		pD2DRenderManager->pFont->Release();
@@ -132,4 +138,93 @@ void D2DRenderManager::Present(HWND renderTarget)
 	pD2DRenderManager->pSprite->End();
 	pD2DRenderManager->pDevice->EndScene();
 	pD2DRenderManager->pDevice->Present(nullptr, nullptr, renderTarget, nullptr);
+}
+
+LPDIRECT3DDEVICE9 D2DRenderManager::GetDevice()
+{
+	return pD2DRenderManager->pDevice;
+}
+
+LPD3DXSPRITE D2DRenderManager::GetSprite()
+{
+	return pD2DRenderManager->pSprite;
+}
+
+HRESULT D2DRenderManager::LoadSprite(const wstring& filePath, const wstring& spriteKey, DWORD row, DWORD col)
+{
+	auto find = pD2DRenderManager->textureMap.find(spriteKey);
+
+	if (find != pD2DRenderManager->textureMap.end()) return S_OK;
+
+	Texture* tex = new Texture;
+
+	if (FAILED(D3DXGetImageInfoFromFile(filePath.c_str(), &tex->imageInfo)))
+	{
+		MessageBox(g_hwnd, L"이미지 정보 불러오기 실패", nullptr, MB_OK);
+		delete tex;
+		return E_FAIL;
+	}
+
+	if (FAILED(D3DXCreateTextureFromFileEx(
+		pD2DRenderManager->pDevice,
+		filePath.c_str(),
+		tex->imageInfo.Width,
+		tex->imageInfo.Height,
+		tex->imageInfo.MipLevels,
+		0,
+		tex->imageInfo.Format,
+		D3DPOOL_MANAGED,
+		D3DX_DEFAULT,
+		D3DX_DEFAULT,
+		0,
+		nullptr,
+		nullptr,
+		&tex->pTexture)))
+	{
+		wstring errMsg = filePath + L"Create Texture Failed";
+		MessageBox(g_hwnd, errMsg.c_str(), nullptr, MB_OK);
+		delete tex;
+		return E_FAIL;
+	}
+
+	tex->rowCount = row;
+	tex->colCount = col;
+
+	pD2DRenderManager->textureMap[spriteKey] = tex;
+
+	return S_OK;
+}
+
+void D2DRenderManager::DrawSprite(const wstring& spriteKey, Transform transform, DWORD row, DWORD col)
+{
+	auto find = pD2DRenderManager->textureMap.find(spriteKey);
+	if (find == pD2DRenderManager->textureMap.end())
+	{
+		// 로드되지 않은 스프라이트.
+		return;
+	}
+
+	const Texture* tex = find->second;
+
+	// 스프라이트 한장의 넓이와 높이, 위치
+	int w = int(tex->imageInfo.Width / tex->colCount);
+	int h = int(tex->imageInfo.Height / tex->rowCount);
+	int x = col * w;
+	int y = row * h;
+	RECT area;
+	area.left = x;
+	area.top = y;
+	area.right = x + w;
+	area.bottom = y + h;
+
+	float centerX = float(w >> 1);
+	float centerY = float(h >> 1);
+
+	Matrix world, trans, rot, scale;
+	D3DXMatrixScaling(&scale, transform.scale.x, transform.scale.y, 0.f);
+	D3DXMatrixTranslation(&trans, transform.position.x, transform.position.y, 0.f);
+	world = scale * trans;
+
+	pD2DRenderManager->pSprite->SetTransform(&world);
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &Vector3(centerX, centerY, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 }
