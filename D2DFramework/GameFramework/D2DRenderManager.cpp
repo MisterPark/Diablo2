@@ -228,3 +228,19 @@ void D2DRenderManager::DrawSprite(const wstring& spriteKey, Transform transform,
 	pD2DRenderManager->pSprite->SetTransform(&world);
 	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &Vector3(centerX, centerY, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 }
+
+void D2DRenderManager::DrawString(const string & text)
+{
+	Matrix world;
+	D3DXMatrixIdentity(&world);
+	pD2DRenderManager->pSprite->SetTransform(&world);
+	pD2DRenderManager->pFont->DrawTextA(pD2DRenderManager->pSprite, text.c_str(), lstrlenA(text.c_str()), nullptr, 0, D3DCOLOR_ARGB(255, 0, 0, 0));
+}
+
+void D2DRenderManager::DrawString(const wstring & text)
+{
+	Matrix world;
+	D3DXMatrixIdentity(&world);
+	pD2DRenderManager->pSprite->SetTransform(&world);
+	pD2DRenderManager->pFont->DrawTextW(pD2DRenderManager->pSprite, text.c_str(), lstrlen(text.c_str()), nullptr, 0, D3DCOLOR_ARGB(255, 0, 0, 0));
+}

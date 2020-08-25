@@ -32,7 +32,8 @@ public:
 public:
 	// 위치 방향
 	Transform transform;
-	Direction direction = Direction::RIGHT;
+	//radian
+	float direction = 0.f;
 	
 	ObjectType type = ObjectType::NONE;
 	

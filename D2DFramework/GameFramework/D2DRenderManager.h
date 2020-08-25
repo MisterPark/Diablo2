@@ -24,6 +24,10 @@ public:
 	static HRESULT LoadSprite(const wstring& filePath, const wstring& spriteKey, DWORD row, DWORD col);
 	static void DrawSprite(const wstring& spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
 
+	static void DrawString(const string& text);
+	static void DrawString(const wstring& text);
+
+
 private:
 	// 실질적으로 장치를 다룰 객체. 
 	LPDIRECT3DDEVICE9 pDevice = nullptr;

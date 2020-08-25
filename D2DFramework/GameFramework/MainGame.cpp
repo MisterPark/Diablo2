@@ -61,17 +61,7 @@ void MainGame::Initialize()
 	SoundManager::GetInstance()->Initialize();
 
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOBW.png", L"SOBW", 5, 6);
-	//RenderManager::LoadSprite(SpriteIndex::BACKGROUND, "Sprites\\background.bmp", 0, 0);
-	//RenderManager::LoadSprite(SpriteIndex::BACKGROUND_W, "Sprites\\background2.bmp", 0, 0);
-	//RenderManager::LoadSprite(SpriteIndex::BACKGROUND_200, "Sprites\\200.bmp", 0, 0);
-	//RenderManager::LoadSprite(SpriteIndex::HD, "Sprites\\character\\so\\HD\\000.bmp", 0, 0);
-	//RenderManager::LoadSprite(SpriteIndex::S1, "Sprites\\character\\so\\S1\\000.bmp", 0, 0);
-	//RenderManager::LoadSprite(SpriteIndex::S2, "Sprites\\character\\so\\S2\\000.bmp", 0, 0);
-	//RenderManager::LoadSprite(SpriteIndex::TR, "Sprites\\character\\so\\TR\\000.bmp", 0, 0);
-	//RenderManager::LoadSprite(SpriteIndex::LA, "Sprites\\character\\so\\LA\\000.bmp", 0, 0);
-	//RenderManager::LoadSprite(SpriteIndex::RA, "Sprites\\character\\so\\RA\\000.bmp", 0, 0);
-	//RenderManager::LoadSprite(SpriteIndex::LG, "Sprites\\character\\so\\LG\\000.bmp", 0, 0);
-
+	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SONUHTH.png", L"SONUHTH", 16, 8);
 	SceneManager::LoadScene<TestScene>();
 }
 
