@@ -33,7 +33,7 @@ void Character::Update()
 	POINT pt;
 	GetCursorPos(&pt);
 	ScreenToClient(g_hwnd, &pt);
-	Vector3 dir = { float(pt.x),float(pt.y),0.f };
+	Vector3 dir = { float(pt.x) + Camera::GetX(),float(pt.y) + Camera::GetY(),0.f };
 	dir -= transform.position;
 	direction = atan2f(dir.y, dir.x);
 

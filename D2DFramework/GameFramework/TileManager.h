@@ -26,10 +26,10 @@ public:
 	static void Render();
 private:
 	static void RenderTile();
-//	static void RenderCrossLine();
+	static void RenderCrossLine();
 //	static void RenderMousePosition();
 //	static void RenderTileSet();
-//	static void RenderTileSelector();
+	static void RenderTileSelector();
 //	static void RenderSelectedTile();
 //public:
 //	static void ShowTileSet();

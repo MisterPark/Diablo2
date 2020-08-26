@@ -41,13 +41,13 @@ void TileManager::Render()
 	// 타일
 	RenderTile();
 	// 격자
-	//RenderCrossLine();
+	RenderCrossLine();
 	// 좌표(타일 인덱스)
 	//RenderMousePosition();
 	// 타일 선택창
 	//RenderTileSet();
 	// 타일 선택영역
-	//RenderTileSelector();
+	RenderTileSelector();
 	// 선택된 타일 표시
 	//RenderSelectedTile();
 }
@@ -65,80 +65,80 @@ void TileManager::RenderTile()
 
 	}
 }
-//
-//void TileManager::RenderCrossLine()
-//{
-//	int screenW = RenderManager::GetWidth();
-//	int screenH = RenderManager::GetHeight();
-//	int w = screenW / dfTILE_W + 1;
-//	int h = screenH / dfTILE_H + 2;
-//	int offsetX = Camera::GetX() % dfTILE_W;
-//	int offsetY = Camera::GetY() % dfTILE_H;
-//	int diagonalCount = w + h;
-//
-//	#ifdef ISOMETRIC
-//	w = screenW / dfTILE_W_HALF + 1;
-//	h = screenH / dfTILE_H_HALF + 2;
-//	// 가로선
-//	for (int row = 0; row < h; row++)
-//	{
-//		int sy = row * dfTILE_H_HALF - offsetY;
-//
-//		RenderManager::DrawLine(0, sy, screenW, sy, RGB(255, 0, 255));
-//
-//
-//}
-//	// 세로선
-//	for (int col = 0; col < w; col++)
-//	{
-//		int sx = col * dfTILE_W_HALF - offsetX;
-//
-//		RenderManager::DrawLine(sx, 0, sx, screenH, RGB(255, 0, 255));
-//	}
-//
-//	#else
-//	w = screenW / dfTILE_W + 1;
-//	h = screenH / dfTILE_H + 2;
-//
-//	// 가로선
-//	for (int row = 0; row < h; row++)
-//	{
-//		int sy = row * dfTILE_H - offsetY;
-//
-//		RenderManager::DrawLine(0, sy, screenW, sy, RGB(255, 0, 255));
-//
-//
-//	}
-//	// 세로선
-//	for (int col = 0; col < w; col++)
-//	{
-//		int sx = col * dfTILE_W - offsetX;
-//
-//		RenderManager::DrawLine(sx, 0, sx, screenH, RGB(255, 0, 255));
-//	}
-//	#endif // ISOMETRIC
-//
-//	
-//
-//	// 대각선 /
-//	for (int cnt = -1; cnt < diagonalCount; cnt++)
-//	{
-//		int sx = (cnt * dfTILE_W) - offsetX - (offsetY * 2);
-//		int ey = (cnt * dfTILE_H) - offsetY - (offsetX / 2);
-//
-//		RenderManager::DrawLine(sx, 0, 0, ey, RGB(255, 0, 255));
-//	}
-//
-//	// 대각선 
-//	for (int cnt = -1; cnt < diagonalCount; cnt++)
-//	{
-//		int sx = RenderManager::GetWidth() - (cnt * dfTILE_W) - offsetX + (offsetY * 2);
-//		int ey = (cnt * dfTILE_H) - offsetY + (offsetX / 2);
-//
-//		RenderManager::DrawLine(sx, 0, RenderManager::GetWidth(), ey, RGB(255, 0, 0));
-//	}
-//}
-//
+
+void TileManager::RenderCrossLine()
+{
+	int screenW = dfCLIENT_WIDTH;
+	int screenH = dfCLIENT_HEIGHT;
+	int w = screenW / dfTILE_W + 1;
+	int h = screenH / dfTILE_H + 2;
+	int offsetX = Camera::GetX() % dfTILE_W;
+	int offsetY = Camera::GetY() % dfTILE_H;
+	int diagonalCount = w + h;
+
+	#ifdef ISOMETRIC
+	w = screenW / dfTILE_W_HALF + 1;
+	h = screenH / dfTILE_H_HALF + 2;
+	// 가로선
+	for (int row = 0; row < h; row++)
+	{
+		int sy = row * dfTILE_H_HALF - offsetY;
+
+		D2DRenderManager::DrawLine(0, sy, screenW, sy);
+
+
+}
+	// 세로선
+	for (int col = 0; col < w; col++)
+	{
+		int sx = col * dfTILE_W_HALF - offsetX;
+
+		D2DRenderManager::DrawLine(sx, 0, sx, screenH);
+	}
+
+	#else
+	w = screenW / dfTILE_W + 1;
+	h = screenH / dfTILE_H + 2;
+
+	// 가로선
+	for (int row = 0; row < h; row++)
+	{
+		int sy = row * dfTILE_H - offsetY;
+
+		RenderManager::DrawLine(0, sy, screenW, sy, RGB(255, 0, 255));
+
+
+	}
+	// 세로선
+	for (int col = 0; col < w; col++)
+	{
+		int sx = col * dfTILE_W - offsetX;
+
+		RenderManager::DrawLine(sx, 0, sx, screenH, RGB(255, 0, 255));
+	}
+	#endif // ISOMETRIC
+
+	
+
+	// 대각선 /
+	for (int cnt = -1; cnt < diagonalCount; cnt++)
+	{
+		int sx = (cnt * dfTILE_W) - offsetX - (offsetY * 2);
+		int ey = (cnt * dfTILE_H) - offsetY - (offsetX / 2);
+
+		D2DRenderManager::DrawLine(sx, 0, 0, ey);
+	}
+
+	// 대각선 
+	for (int cnt = -1; cnt < diagonalCount; cnt++)
+	{
+		int sx = dfCLIENT_WIDTH - (cnt * dfTILE_W) - offsetX + (offsetY * 2);
+		int ey = (cnt * dfTILE_H) - offsetY + (offsetX / 2);
+
+		D2DRenderManager::DrawLine(sx, 0, dfCLIENT_WIDTH, ey);
+	}
+}
+
 //void TileManager::RenderMousePosition()
 //{
 //	// 좌표(타일 인덱스)
@@ -172,71 +172,47 @@ void TileManager::RenderTile()
 //
 //}
 //
-//void TileManager::RenderTileSelector()
-//{
-//	POINT pt;
-//	GetCursorPos(&pt);
-//	ScreenToClient(g_hwnd, &pt);
-//
-//	if (pTileManager->isShowTileSet)
-//	{
-//		if (pTileManager->tileSetArea.left > pt.x) return;
-//		if (pTileManager->tileSetArea.right < pt.x) return;
-//		if (pTileManager->tileSetArea.top > pt.y) return;
-//		if (pTileManager->tileSetArea.bottom < pt.y) return;
-//
-//		POINT idx;
-//		idx.x = (pt.x) / dfTILE_W;
-//		idx.y = (pt.y) / dfTILE_H;
-//
-//		RECT rect;
-//		rect.left = idx.x * dfTILE_W;
-//		rect.top = idx.y * dfTILE_H;
-//		rect.right = rect.left + dfTILE_W;
-//		rect.bottom = rect.top + dfTILE_H;
-//
-//		RenderManager::DrawSimpleCollider(rect, RGB(0, 255, 0));
-//	}
-//	else
-//	{
-//	#ifdef ISOMETRIC
-//
-//		int worldX = pt.x;
-//		int worldY = pt.y;
-//		POINT idx;
-//		idx.x = (worldX / dfTILE_W_HALF + worldY / dfTILE_H_HALF) / 2;
-//		idx.y = (worldY / dfTILE_H_HALF - (worldX / dfTILE_W_HALF)) / 2;
-//
-//		int sx = (idx.x - idx.y) * dfTILE_W_HALF -(Camera::GetX() % dfTILE_W);
-//		int sy = (idx.x + idx.y) * dfTILE_H_HALF -(Camera::GetY() % dfTILE_H);
-//
-//		RenderManager::DrawLine(sx, sy, sx + dfTILE_W_HALF, sy +dfTILE_H_HALF,RGB(0,255,0));
-//		RenderManager::DrawLine(sx + dfTILE_W_HALF, sy + dfTILE_H_HALF, sx, sy +dfTILE_H, RGB(0, 255, 0));
-//		RenderManager::DrawLine(sx, sy+dfTILE_H, sx - dfTILE_W_HALF, sy + dfTILE_H_HALF, RGB(0, 255, 0));
-//		RenderManager::DrawLine(sx - dfTILE_W_HALF, sy + dfTILE_H_HALF, sx , sy, RGB(0, 255, 0));
-//
-//	
-//	#else
-//		int offsetX = Camera::GetX() % dfTILE_W;
-//		int offsetY = Camera::GetY() % dfTILE_H;
-//
-//		POINT idx;
-//		idx.x = (pt.x + offsetX) / dfTILE_W;
-//		idx.y = (pt.y + offsetY) / dfTILE_H;
-//
-//		RECT rect;
-//		rect.left = idx.x * dfTILE_W - offsetX;
-//		rect.top = idx.y * dfTILE_H - offsetY;
-//		rect.right = rect.left + dfTILE_W;
-//		rect.bottom = rect.top + dfTILE_H;
-//
-//		RenderManager::DrawSimpleCollider(rect, RGB(0, 255, 0));
-//	#endif // ISOMETRIC
-//
-//		
-//	}
-//}
-//
+void TileManager::RenderTileSelector()
+{
+	POINT pt;
+	GetCursorPos(&pt);
+	ScreenToClient(g_hwnd, &pt);
+
+#ifdef ISOMETRIC
+
+	int worldX = pt.x;
+	int worldY = pt.y;
+	POINT idx;
+	idx.x = (worldX / dfTILE_W_HALF + worldY / dfTILE_H_HALF) / 2;
+	idx.y = (worldY / dfTILE_H_HALF - (worldX / dfTILE_W_HALF)) / 2;
+
+	int sx = (idx.x - idx.y) * dfTILE_W_HALF - (Camera::GetX() % dfTILE_W);
+	int sy = (idx.x + idx.y) * dfTILE_H_HALF - (Camera::GetY() % dfTILE_H);
+
+	D2DRenderManager::DrawLine(sx, sy, sx + dfTILE_W_HALF, sy + dfTILE_H_HALF, D3DCOLOR_ARGB(255, 0, 255, 0));
+	D2DRenderManager::DrawLine(sx + dfTILE_W_HALF, sy + dfTILE_H_HALF, sx, sy + dfTILE_H, D3DCOLOR_ARGB(255, 0, 255, 0));
+	D2DRenderManager::DrawLine(sx, sy + dfTILE_H, sx - dfTILE_W_HALF, sy + dfTILE_H_HALF, D3DCOLOR_ARGB(255, 0, 255, 0));
+	D2DRenderManager::DrawLine(sx - dfTILE_W_HALF, sy + dfTILE_H_HALF, sx, sy, D3DCOLOR_ARGB(255, 0, 255, 0));
+
+
+#else
+	int offsetX = Camera::GetX() % dfTILE_W;
+	int offsetY = Camera::GetY() % dfTILE_H;
+
+	POINT idx;
+	idx.x = (pt.x + offsetX) / dfTILE_W;
+	idx.y = (pt.y + offsetY) / dfTILE_H;
+
+	RECT rect;
+	rect.left = idx.x * dfTILE_W - offsetX;
+	rect.top = idx.y * dfTILE_H - offsetY;
+	rect.right = rect.left + dfTILE_W;
+	rect.bottom = rect.top + dfTILE_H;
+
+	RenderManager::DrawSimpleCollider(rect, RGB(0, 255, 0));
+#endif // ISOMETRIC
+}
+
 //void TileManager::RenderSelectedTile()
 //{
 //	RenderManager::DrawTile(SpriteType::NORMAL, pTileManager->curTileSet, pTileManager->selectedTileIndex, 600, 0);

@@ -28,6 +28,9 @@ public:
 	static void DrawString(const string& text);
 	static void DrawString(const wstring& text);
 
+	static void DrawLine(float sx, float sy, float ex, float ey);
+	static void DrawLine(float sx, float sy, float ex, float ey, D3DXCOLOR color);
+
 
 private:
 	// 실질적으로 장치를 다룰 객체. 
@@ -35,6 +38,7 @@ private:
 	LPDIRECT3D9 pSDK = nullptr;
 	LPD3DXSPRITE pSprite = nullptr;
 	LPD3DXFONT	pFont = nullptr;
+	LPD3DXLINE pLine = nullptr;
 
 	map<wstring, Texture*> textureMap;
 };

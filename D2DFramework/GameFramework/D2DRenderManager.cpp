@@ -97,6 +97,11 @@ HRESULT D2DRenderManager::Initialize()
 		MessageBoxW(g_hwnd, L"폰트 생성 실패", nullptr, MB_OK);
 		return E_FAIL;
 	}
+	if (FAILED(D3DXCreateLine(pD2DRenderManager->pDevice, &pD2DRenderManager->pLine)))
+	{
+		MessageBoxW(g_hwnd, L"라인 생성 실패", nullptr, MB_OK);
+		return E_FAIL;
+	}
 	return S_OK;
 }
 
@@ -108,6 +113,10 @@ void D2DRenderManager::Release()
 	}
 	pD2DRenderManager->textureMap.clear();
 
+	if (pD2DRenderManager->pLine)
+	{
+		pD2DRenderManager->pLine->Release();
+	}
 	if (pD2DRenderManager->pFont)
 	{
 		pD2DRenderManager->pFont->Release();
@@ -131,10 +140,12 @@ void D2DRenderManager::Clear()
 	pD2DRenderManager->pDevice->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_ARGB(255, 0, 0, 255), 0.f, 0);
 	pD2DRenderManager->pDevice->BeginScene();
 	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
+	pD2DRenderManager->pLine->Begin();
 }
 
 void D2DRenderManager::Present(HWND renderTarget)
 {
+	pD2DRenderManager->pLine->End();
 	pD2DRenderManager->pSprite->End();
 	pD2DRenderManager->pDevice->EndScene();
 	pD2DRenderManager->pDevice->Present(nullptr, nullptr, renderTarget, nullptr);
@@ -232,9 +243,9 @@ void D2DRenderManager::DrawSprite(const wstring& spriteKey, Transform transform,
 	float centerX = float(w >> 1);
 	float centerY = float(h >> 1);
 
-	Matrix world, trans, rot, scale;
+	Matrix world, trans, rot, scale, parent;
 	D3DXMatrixScaling(&scale, transform.scale.x, transform.scale.y, 0.f);
-	D3DXMatrixTranslation(&trans, transform.position.x, transform.position.y, 0.f);
+	D3DXMatrixTranslation(&trans, transform.position.x - Camera::GetX(), transform.position.y - Camera::GetY(), 0.f);
 	world = scale * trans;
 
 	pD2DRenderManager->pSprite->SetTransform(&world);
@@ -255,4 +266,26 @@ void D2DRenderManager::DrawString(const wstring & text)
 	D3DXMatrixIdentity(&world);
 	pD2DRenderManager->pSprite->SetTransform(&world);
 	pD2DRenderManager->pFont->DrawTextW(pD2DRenderManager->pSprite, text.c_str(), lstrlen(text.c_str()), nullptr, 0, D3DCOLOR_ARGB(255, 0, 0, 0));
+}
+
+void D2DRenderManager::DrawLine(float sx, float sy, float ex, float ey)
+{
+	D3DXVECTOR2 point[2] = {};
+	point[0].x = sx;
+	point[0].y = sy;
+	point[1].x = ex;
+	point[1].y = ey;
+
+	pD2DRenderManager->pLine->Draw(point, 2, D3DCOLOR_ARGB(255, 0, 0, 0));
+}
+
+void D2DRenderManager::DrawLine(float sx, float sy, float ex, float ey, D3DXCOLOR color)
+{
+	D3DXVECTOR2 point[2] = {};
+	point[0].x = sx;
+	point[0].y = sy;
+	point[1].x = ex;
+	point[1].y = ey;
+
+	pD2DRenderManager->pLine->Draw(point, 2, color);
 }
