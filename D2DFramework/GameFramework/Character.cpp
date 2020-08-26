@@ -1,6 +1,16 @@
 #include "pch.h"
 #include "Character.h"
 
+Character::Character()
+{
+	anim->SetSpriteKey(L"SONUHTH");
+	anim->SetLoop(true);
+}
+
+Character::~Character()
+{
+}
+
 void Character::Update()
 {
 	if (InputManager::GetKey(VK_UP))
@@ -26,15 +36,11 @@ void Character::Update()
 	Vector3 dir = { float(pt.x),float(pt.y),0.f };
 	dir -= transform.position;
 	direction = atan2f(dir.y, dir.x);
+
+	anim->Update();
 }
 
 void Character::Render()
 {
-	float angle = D3DXToDegree(direction) + 630;
-	angle = fmodf(angle, 360.f);
-	CHAR str[16] = { 0, };
-	sprintf_s(str, "%f", angle);
-	int directionIndex = angle / (360 / 16) - 1;
-	D2DRenderManager::DrawString(str);
-	D2DRenderManager::DrawSprite(L"SONUHTH", transform, directionIndex, 0);
+	anim->Render();
 }

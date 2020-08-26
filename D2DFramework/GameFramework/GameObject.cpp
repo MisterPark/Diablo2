@@ -5,6 +5,7 @@
 GameObject::GameObject()
 {
 	anim = new Animation;
+	anim->SetReferenceObject(this);
 }
 
 GameObject::~GameObject()

@@ -150,6 +150,18 @@ LPD3DXSPRITE D2DRenderManager::GetSprite()
 	return pD2DRenderManager->pSprite;
 }
 
+Texture * D2DRenderManager::GetTexture(const wstring & _key)
+{
+	auto find = pD2DRenderManager->textureMap.find(_key);
+	if (find == pD2DRenderManager->textureMap.end())
+	{
+		// 로드되지 않은 스프라이트.
+		return nullptr;
+	}
+
+	return find->second;
+}
+
 HRESULT D2DRenderManager::LoadSprite(const wstring& filePath, const wstring& spriteKey, DWORD row, DWORD col)
 {
 	auto find = pD2DRenderManager->textureMap.find(spriteKey);

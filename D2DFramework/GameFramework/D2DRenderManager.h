@@ -20,6 +20,7 @@ public:
 
 	static LPDIRECT3DDEVICE9 GetDevice();
 	static LPD3DXSPRITE GetSprite();
+	static Texture* GetTexture(const wstring& _key);
 
 	static HRESULT LoadSprite(const wstring& filePath, const wstring& spriteKey, DWORD row, DWORD col);
 	static void DrawSprite(const wstring& spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);

@@ -9,3 +9,8 @@ Texture::Texture()
 Texture::~Texture()
 {
 }
+
+DWORD Texture::GetLastFrame()
+{
+	return colCount-1;
+}
