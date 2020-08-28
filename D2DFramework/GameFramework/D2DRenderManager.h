@@ -27,6 +27,7 @@ public:
 
 	static void DrawString(const string& text);
 	static void DrawString(const wstring& text);
+	static void DrawString(const wstring& text, float x, float y, D3DXCOLOR color);
 
 	static void DrawLine(float sx, float sy, float ex, float ey);
 	static void DrawLine(float sx, float sy, float ex, float ey, D3DXCOLOR color);

@@ -87,8 +87,8 @@ HRESULT D2DRenderManager::Initialize()
 	}
 	D3DXFONT_DESCW fontInfo;
 	ZeroMemory(&fontInfo, sizeof(D3DXFONT_DESCW));
-	fontInfo.Height = 20;
-	fontInfo.Width = 20;
+	fontInfo.Height = 10;
+	fontInfo.Width = 10;
 	fontInfo.Weight = FW_HEAVY;
 	fontInfo.CharSet = HANGUL_CHARSET;
 	lstrcpy(fontInfo.FaceName, L"¹ÙÅÁ");
@@ -266,6 +266,14 @@ void D2DRenderManager::DrawString(const wstring & text)
 	D3DXMatrixIdentity(&world);
 	pD2DRenderManager->pSprite->SetTransform(&world);
 	pD2DRenderManager->pFont->DrawTextW(pD2DRenderManager->pSprite, text.c_str(), lstrlen(text.c_str()), nullptr, 0, D3DCOLOR_ARGB(255, 0, 0, 0));
+}
+
+void D2DRenderManager::DrawString(const wstring & text, float x, float y, D3DXCOLOR color)
+{
+	Matrix world;
+	D3DXMatrixTranslation(&world, x, y, 0.f);
+	pD2DRenderManager->pSprite->SetTransform(&world);
+	pD2DRenderManager->pFont->DrawTextW(pD2DRenderManager->pSprite, text.c_str(), lstrlen(text.c_str()), nullptr, 0, color);
 }
 
 void D2DRenderManager::DrawLine(float sx, float sy, float ex, float ey)

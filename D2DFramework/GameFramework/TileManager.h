@@ -27,20 +27,11 @@ public:
 private:
 	static void RenderTile();
 	static void RenderCrossLine();
-//	static void RenderMousePosition();
-//	static void RenderTileSet();
+	static void RenderMousePosition();
 	static void RenderTileSelector();
-//	static void RenderSelectedTile();
-//public:
-//	static void ShowTileSet();
-//	static void SetEditMode(bool _isEdit);
-//	static RECT GetTileSetArea();
-//	static bool IsMouseOnTileSet();
-//	static POINT GetTileSetIndex();
-//	static void SelectTileFromTileSet(POINT pt);
-//	//static void SetTileSet(SpriteIndex _tileset);
-//
-//	static POINT GetTileIndexFromMouse();
+public:
+
+	static POINT GetTileIndexFromMouse();
 //
 //	static void CreateTile(int indexX, int indexY, int offset);
 //	//static void CreateTile(int indexX, int indexY,SpriteIndex tileSet, int offset, DWORD option, Point movePoint);

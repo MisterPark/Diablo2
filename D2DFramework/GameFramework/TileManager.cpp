@@ -43,7 +43,7 @@ void TileManager::Render()
 	// 격자
 	RenderCrossLine();
 	// 좌표(타일 인덱스)
-	//RenderMousePosition();
+	RenderMousePosition();
 	// 타일 선택창
 	//RenderTileSet();
 	// 타일 선택영역
@@ -139,39 +139,20 @@ void TileManager::RenderCrossLine()
 	}
 }
 
-//void TileManager::RenderMousePosition()
-//{
-//	// 좌표(타일 인덱스)
-//	POINT pt;
-//	GetCursorPos(&pt);
-//	ScreenToClient(g_hwnd, &pt);
-//
-//	POINT idx = GetTileIndexFromMouse();
-//
-//	WCHAR wstr[128];
-//	wsprintf(wstr, L"Mouse[%d,%d]   Camera[%d,%d]  Tile(%d,%d) Count:%d", pt.x, pt.y,Camera::GetX(),Camera::GetY(), idx.y, idx.x, pTileManager->tileMap.size());
-//	RenderManager::DrawString(wstr, 100, 0, RGB(254, 254, 254));
-//}
-//
-//void TileManager::RenderTileSet()
-//{
-//	if (!pTileManager->isShowTileSet) return;
-//
-//	int tileSetWidth;
-//	int tileSetHeight;
-//	RenderManager::GetSpriteSize(pTileManager->curTileSet, &tileSetWidth, &tileSetHeight);
-//	int tileSetX = dfEDIT_WIDTH - tileSetWidth;
-//	int tileSetY = dfEDIT_HEIGHT - tileSetHeight;
-//
-//	pTileManager->tileSetArea.left = tileSetX;
-//	pTileManager->tileSetArea.top = tileSetY;
-//	pTileManager->tileSetArea.right = tileSetX + tileSetWidth;
-//	pTileManager->tileSetArea.bottom = tileSetY + tileSetHeight;
-//	RenderManager::DrawRect(pTileManager->tileSetArea, RGB(255, 0, 255));
-//	RenderManager::DrawSprite(SpriteType::NORMAL, pTileManager->curTileSet, tileSetX, tileSetY);
-//
-//}
-//
+void TileManager::RenderMousePosition()
+{
+	// 좌표(타일 인덱스)
+	POINT pt;
+	GetCursorPos(&pt);
+	ScreenToClient(g_hwnd, &pt);
+
+	POINT idx = GetTileIndexFromMouse();
+
+	WCHAR wstr[128];
+	wsprintf(wstr, L"Mouse[%d,%d]   Camera[%d,%d]  Tile(%d,%d) Count:%d", pt.x, pt.y,Camera::GetX(),Camera::GetY(), idx.y, idx.x, pTileManager->tileMap.size());
+	D2DRenderManager::DrawString(wstr, 100, 0, D3DCOLOR_ARGB(255, 0, 0, 0));
+}
+
 void TileManager::RenderTileSelector()
 {
 	POINT pt;
@@ -180,20 +161,17 @@ void TileManager::RenderTileSelector()
 
 #ifdef ISOMETRIC
 
-	int worldX = pt.x;
-	int worldY = pt.y;
-	POINT idx;
-	idx.x = (worldX / dfTILE_W_HALF + worldY / dfTILE_H_HALF) / 2;
-	idx.y = (worldY / dfTILE_H_HALF - (worldX / dfTILE_W_HALF)) / 2;
+	float offsetX = (Camera::GetX());
+	float offsetY = (Camera::GetY());
+	POINT idx = GetTileIndexFromMouse();
 
-	int sx = (idx.x - idx.y) * dfTILE_W_HALF - (Camera::GetX() % dfTILE_W);
-	int sy = (idx.x + idx.y) * dfTILE_H_HALF - (Camera::GetY() % dfTILE_H);
+	float sx = (idx.x * dfTILE_W) + ((idx.y % 2) *(dfTILE_W_HALF)) - offsetX;
+	float sy = (idx.y * dfTILE_H_HALF) - offsetY;
 
-	D2DRenderManager::DrawLine(sx, sy, sx + dfTILE_W_HALF, sy + dfTILE_H_HALF, D3DCOLOR_ARGB(255, 0, 255, 0));
-	D2DRenderManager::DrawLine(sx + dfTILE_W_HALF, sy + dfTILE_H_HALF, sx, sy + dfTILE_H, D3DCOLOR_ARGB(255, 0, 255, 0));
-	D2DRenderManager::DrawLine(sx, sy + dfTILE_H, sx - dfTILE_W_HALF, sy + dfTILE_H_HALF, D3DCOLOR_ARGB(255, 0, 255, 0));
-	D2DRenderManager::DrawLine(sx - dfTILE_W_HALF, sy + dfTILE_H_HALF, sx, sy, D3DCOLOR_ARGB(255, 0, 255, 0));
-
+	D2DRenderManager::DrawLine(sx, sy + dfTILE_H_HALF, sx + dfTILE_W_HALF, sy, D3DCOLOR_ARGB(255, 0, 255, 0));
+	D2DRenderManager::DrawLine(sx+dfTILE_W_HALF, sy, sx + dfTILE_W, sy+dfTILE_H_HALF, D3DCOLOR_ARGB(255, 0, 255, 0));
+	D2DRenderManager::DrawLine(sx+dfTILE_W, sy+dfTILE_H_HALF, sx+dfTILE_W_HALF, sy+dfTILE_H, D3DCOLOR_ARGB(255, 0, 255, 0));
+	D2DRenderManager::DrawLine(sx+dfTILE_W_HALF, sy+dfTILE_H, sx, sy+dfTILE_H_HALF, D3DCOLOR_ARGB(255, 0, 255, 0));
 
 #else
 	int offsetX = Camera::GetX() % dfTILE_W;
@@ -213,95 +191,32 @@ void TileManager::RenderTileSelector()
 #endif // ISOMETRIC
 }
 
-//void TileManager::RenderSelectedTile()
-//{
-//	RenderManager::DrawTile(SpriteType::NORMAL, pTileManager->curTileSet, pTileManager->selectedTileIndex, 600, 0);
-//}
-//
-//void TileManager::ShowTileSet()
-//{
-//	pTileManager->isShowTileSet = !pTileManager->isShowTileSet;
-//
-//}
-//
-//void TileManager::SetEditMode(bool _isEdit)
-//{
-//	pTileManager->isVisible = _isEdit;
-//}
-//
-//RECT TileManager::GetTileSetArea()
-//{
-//	return pTileManager->tileSetArea;
-//}
-//
-//bool TileManager::IsMouseOnTileSet()
-//{
-//	POINT pt;
-//	GetCursorPos(&pt);
-//	ScreenToClient(g_hwnd, &pt);
-//
-//	if (pTileManager->tileSetArea.left > pt.x) return false;
-//	if (pTileManager->tileSetArea.right < pt.x) return false;
-//	if (pTileManager->tileSetArea.top > pt.y) return false;
-//	if (pTileManager->tileSetArea.bottom < pt.y) return false;
-//
-//	return true;
-//}
-//
-//POINT TileManager::GetTileSetIndex()
-//{
-//	POINT pt; // 클라이언트 기준 마우스 위치
-//	GetCursorPos(&pt);
-//	ScreenToClient(g_hwnd, &pt);
-//
-//	// 타일셋창 위치
-//	int offsetX = pt.x - pTileManager->tileSetArea.left;
-//	int offsetY = pt.y - pTileManager->tileSetArea.top;
-//
-//	POINT idx; // 타일 인덱스 
-//	idx.x = offsetX / dfTILE_W;
-//	idx.y = offsetY / dfTILE_H;
-//
-//	return idx;
-//}
-//
-//void TileManager::SelectTileFromTileSet(POINT pt)
-//{
-//	int w, h;
-//	RenderManager::GetSpriteSize(pTileManager->curTileSet, &w, &h);
-//	int colCount = w / dfTILE_W;
-//
-//	pTileManager->selectedTileIndex = colCount * pt.y + pt.x;
-//}
-//
-//void TileManager::SetTileSet(SpriteIndex _tileset)
-//{
-//	pTileManager->curTileSet = _tileset;
-//}
-//
-//POINT TileManager::GetTileIndexFromMouse()
-//{
-//	POINT pt;
-//	GetCursorPos(&pt);
-//	ScreenToClient(g_hwnd, &pt);
-//
-//	int worldX = (pt.x + Camera::GetX());
-//	int worldY = (pt.y + Camera::GetY());
-//
-//	POINT idx;
-//	#ifdef ISOMETRIC
-//		idx.x = (worldX / dfTILE_W_HALF + worldY / dfTILE_H_HALF) / 2;
-//		idx.y = (worldY / dfTILE_H_HALF - (worldX / dfTILE_W_HALF)) / 2;
-//	#else
-//		idx.x =  worldX / dfTILE_W;
-//		idx.y =  worldY / dfTILE_H;
-//	#endif // ISOMETRIC
-//
-//	
-//
-//	return idx;
-//}
-//
+POINT TileManager::GetTileIndexFromMouse()
+{
+	POINT pt;
+	GetCursorPos(&pt);
+	ScreenToClient(g_hwnd, &pt);
+
+	float worldX = (pt.x + Camera::GetX());
+	float worldY = (pt.y + Camera::GetY());
+
+	POINT idx;
+	#ifdef ISOMETRIC
+		//idx.x = (worldX / dfTILE_W_HALF + worldY / dfTILE_H_HALF) / 2;
+		//idx.y = (worldY / dfTILE_H_HALF - (worldX / dfTILE_W_HALF)) / 2;
+		
+		idx.y = worldY / dfTILE_H_HALF;
+		idx.x = (worldX - ((idx.y % 2)*(dfTILE_W_HALF))) / dfTILE_W;
+	#else
+		idx.x =  worldX / dfTILE_W;
+		idx.y =  worldY / dfTILE_H;
+	#endif // ISOMETRIC
+
+	
+
+	return idx;
+}
+
 //void TileManager::CreateTile(int indexX, int indexY, int offset)
 //{
 //	if (indexX < 0 || indexY < 0) return;
