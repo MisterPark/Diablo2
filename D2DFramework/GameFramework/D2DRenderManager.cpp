@@ -139,14 +139,30 @@ void D2DRenderManager::Clear()
 {
 	pD2DRenderManager->pDevice->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_ARGB(255, 0, 0, 255), 0.f, 0);
 	pD2DRenderManager->pDevice->BeginScene();
+}
+
+void D2DRenderManager::SpriteBegin()
+{
 	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
+}
+
+void D2DRenderManager::SpriteEnd()
+{
+	pD2DRenderManager->pSprite->End();
+}
+
+void D2DRenderManager::LineBegin()
+{
 	pD2DRenderManager->pLine->Begin();
+}
+
+void D2DRenderManager::LineEnd()
+{
+	pD2DRenderManager->pLine->End();
 }
 
 void D2DRenderManager::Present(HWND renderTarget)
 {
-	pD2DRenderManager->pLine->End();
-	pD2DRenderManager->pSprite->End();
 	pD2DRenderManager->pDevice->EndScene();
 	pD2DRenderManager->pDevice->Present(nullptr, nullptr, renderTarget, nullptr);
 }
@@ -246,6 +262,40 @@ void D2DRenderManager::DrawSprite(const wstring& spriteKey, Transform transform,
 	Matrix world, trans, rot, scale, parent;
 	D3DXMatrixScaling(&scale, transform.scale.x, transform.scale.y, 0.f);
 	D3DXMatrixTranslation(&trans, transform.position.x - Camera::GetX(), transform.position.y - Camera::GetY(), 0.f);
+	world = scale * trans;
+
+	pD2DRenderManager->pSprite->SetTransform(&world);
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &Vector3(centerX, centerY, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+}
+
+void D2DRenderManager::DrawTile(const wstring& spriteKey, Transform transform, DWORD row, DWORD col)
+{
+	auto find = pD2DRenderManager->textureMap.find(spriteKey);
+	if (find == pD2DRenderManager->textureMap.end())
+	{
+		// 로드되지 않은 스프라이트.
+		return;
+	}
+
+	const Texture* tex = find->second;
+
+	// 스프라이트 한장의 넓이와 높이, 위치
+	int w = int(tex->imageInfo.Width / tex->colCount);
+	int h = int(tex->imageInfo.Height / tex->rowCount);
+	int x = col * w;
+	int y = row * h;
+	RECT area;
+	area.left = x;
+	area.top = y;
+	area.right = x + w;
+	area.bottom = y + h;
+
+	float centerX = float(w >> 1);
+	float centerY = float(h >> 1);
+
+	Matrix world, trans, rot, scale, parent;
+	D3DXMatrixScaling(&scale, transform.scale.x, transform.scale.y, 0.f);
+	D3DXMatrixTranslation(&trans, transform.position.x - Camera::GetX()+dfTILE_W_HALF, transform.position.y - Camera::GetY()+dfTILE_H_HALF, 0.f);
 	world = scale * trans;
 
 	pD2DRenderManager->pSprite->SetTransform(&world);

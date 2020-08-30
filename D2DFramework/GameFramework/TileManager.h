@@ -24,16 +24,18 @@ public:
 
 	static void Update();
 	static void Render();
+	static void RenderLine();
 private:
 	static void RenderTile();
 	static void RenderCrossLine();
 	static void RenderMousePosition();
 	static void RenderTileSelector();
 public:
-
-	static POINT GetTileIndexFromMouse();
+	static Vector3 MouseToTilePosition();
+	static TableIndex MouseToTileIndex();
+	static Vector3 TileIndexToWorld(const TableIndex& index);
 //
-//	static void CreateTile(int indexX, int indexY, int offset);
+	static void CreateTile(const wstring& spriteKey, TableIndex worldIndex, TableIndex offset);
 //	//static void CreateTile(int indexX, int indexY,SpriteIndex tileSet, int offset, DWORD option, Point movePoint);
 //	static void DeleteTile(int indexX, int indexY);
 //	static void DeleteAllTiles();
@@ -50,6 +52,6 @@ public:
 	bool isVisible = false;
 	bool isShowTileSet = false;
 	RECT tileSetArea;
-	map<Point, Tile*> tileMap;
+	map<TableIndex, Tile*> tileMap;
 };
 

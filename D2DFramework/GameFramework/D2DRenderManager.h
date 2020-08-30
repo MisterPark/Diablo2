@@ -16,6 +16,10 @@ public:
 	static void Release();
 
 	static void Clear();
+	static void SpriteBegin();
+	static void SpriteEnd();
+	static void LineBegin();
+	static void LineEnd();
 	static void Present(HWND renderTarget = nullptr);
 
 	static LPDIRECT3DDEVICE9 GetDevice();
@@ -24,6 +28,7 @@ public:
 
 	static HRESULT LoadSprite(const wstring& filePath, const wstring& spriteKey, DWORD row, DWORD col);
 	static void DrawSprite(const wstring& spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
+	static void DrawTile(const wstring& spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
 
 	static void DrawString(const string& text);
 	static void DrawString(const wstring& text);

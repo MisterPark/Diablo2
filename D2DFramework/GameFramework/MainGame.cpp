@@ -60,6 +60,8 @@ void MainGame::Initialize()
 
 	SoundManager::GetInstance()->Initialize();
 
+	D2DRenderManager::LoadSprite(L"Sprites\\Tile\\Act1_Town_Floor.png", L"ACT1_TOWN_FLOOR", 37, 5);
+
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOBW.png", L"SOBW", 5, 6);
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SONUHTH.png", L"SONUHTH", 16, 8);
 	SceneManager::LoadScene<TestScene>();
@@ -98,8 +100,13 @@ void MainGame::Run()
 	{
 		//RenderManager::Clear();
 		D2DRenderManager::Clear();
-		ObjectManager::Render();
+		D2DRenderManager::SpriteBegin();
 		TileManager::Render();
+		ObjectManager::Render();
+		D2DRenderManager::SpriteEnd();
+		D2DRenderManager::LineBegin();
+		TileManager::RenderLine();
+		D2DRenderManager::LineEnd();
 		//RenderManager::Present();
 		D2DRenderManager::Present();
 		//RenderManager::Flip();

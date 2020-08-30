@@ -19,3 +19,22 @@ struct Point
 	int y = 0;
 };
 
+struct TableIndex
+{
+	TableIndex() {}
+	TableIndex(int row, int col)
+	{
+		this->row = row;
+		this->col = col;
+	}
+	bool operator<(const TableIndex& other) const
+	{
+		if (this->row != other.row)
+		{
+			return this->row < other.row;
+		}
+		return this->col < other.col;
+	}
+	int row = 0;
+	int col = 0;
+};
