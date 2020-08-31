@@ -40,6 +40,9 @@
     <Filter Include="Tile">
       <UniqueIdentifier>{9529c9d4-7b16-4973-ab6f-d3f2f5c03634}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{162c217e-4ee7-4c8d-a84e-5b299b8c3216}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -138,9 +141,6 @@
     <ClInclude Include="D2DRenderManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>MyLib</Filter>
     </ClInclude>
@@ -148,10 +148,13 @@
       <Filter>MyLib</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Tile</Filter>
     </ClInclude>
     <ClInclude Include="Character.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -212,9 +215,6 @@
     <ClCompile Include="D2DRenderManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Vector3.cpp">
       <Filter>MyLib</Filter>
     </ClCompile>
@@ -222,10 +222,13 @@
       <Filter>MyLib</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Tile</Filter>
     </ClCompile>
     <ClCompile Include="Character.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
