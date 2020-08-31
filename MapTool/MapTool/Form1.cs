@@ -40,14 +40,15 @@ namespace MapTool
             tileIndexLabel.Text =index.row.ToString() +", "+ index.col.ToString();
             
 
-            // 렌더링
+            // 메인 패널 렌더링
             RenderManager.Clear();
             TileManager.RenderCrossLine();
+            TileManager.Render();
             TileManager.RenderSelector(mainPanel);
             RenderManager.Present(mainPanel);
+            // 미니맵 렌더링
             RenderManager.Clear();
-            TileManager.RenderCrossLine();
-            TileManager.RenderSelector(mainPanel);
+            TileManager.Render();
             RenderManager.Present(miniPanel);
 
         }
@@ -76,21 +77,6 @@ namespace MapTool
             
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-            RenderManager.Clear();
-            TileManager.RenderCrossLine();
-            TileManager.RenderSelector(mainPanel);
-            RenderManager.Present(mainPanel);
-        }
-
-        private void miniPanel_Paint(object sender, PaintEventArgs e)
-        {
-            RenderManager.Clear();
-            TileManager.RenderCrossLine();
-            TileManager.RenderSelector(mainPanel);
-            RenderManager.Present(miniPanel);
-        }
 
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -120,9 +106,10 @@ namespace MapTool
            
         }
 
-        private void mainPanel_MouseMove(object sender, MouseEventArgs e)
+
+        private void mainPanel_MouseDown(object sender, MouseEventArgs e)
         {
-            
+            TileManager.CreateTile("ACT1_TOWN_FLOOR", TileManager.MouseToTileIndex(mainPanel), new TableIndex(0, 0));
         }
     }
 }

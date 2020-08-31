@@ -35,9 +35,9 @@ namespace MapTool
             PresentParameters pp = new PresentParameters();
             pp.Windowed = true;
             pp.SwapEffect = SwapEffect.Discard;
-            pp.EnableAutoDepthStencil = true;
-            pp.AutoDepthStencilFormat = DepthFormat.D16;
-            instance.device = new Device(0, DeviceType.Hardware, target, CreateFlags.SoftwareVertexProcessing, pp);
+            //pp.EnableAutoDepthStencil = true;
+            //pp.AutoDepthStencilFormat = DepthFormat.D16;
+            instance.device = new Device(0, DeviceType.Hardware, target, CreateFlags.HardwareVertexProcessing, pp);
 
             instance.sprite = new Sprite(instance.device);
             instance.line = new Line(instance.device);
@@ -45,7 +45,7 @@ namespace MapTool
 
         public static void Clear()
         {
-            instance.device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Blue, 1.0f, 0);
+            instance.device.Clear(ClearFlags.Target, Color.Blue, 0.0f, 0);
             instance.device.BeginScene();
         }
         public static void Present(Control target)
@@ -56,12 +56,25 @@ namespace MapTool
 
         public static void LoadSprite(string path, string key, TableIndex range)
         {
-            Texture texture = TextureLoader.FromFile(instance.device, Application.StartupPath+ path);
+            ImageInformation imageInfo = TextureLoader.ImageInformationFromFile(Application.StartupPath + path);
+
+            Texture texture = TextureLoader.FromFile(
+                instance.device,
+                Application.StartupPath + path,
+                imageInfo.Width,
+                imageInfo.Height,
+                imageInfo.MipLevels,
+                0,
+                imageInfo.Format,
+                Pool.Managed,
+                Filter.None,
+                Filter.None,
+                0);
             if (texture == null) return;
 
             SpriteImage image = new SpriteImage();
             image.texture = texture;
-            image.imageInfo = TextureLoader.ImageInformationFromFile(Application.StartupPath + path);
+            image.imageInfo = imageInfo;
             image.range = range;
             instance.spriteMap.Add(key, image);
         }
@@ -84,12 +97,11 @@ namespace MapTool
             rect.Width = w;
             rect.Height = h;
 
-            Matrix world, pos, rot, scale;
-            pos = Matrix.Translation(trans.position + Camera.Instance.transform.position);
-            rot = Matrix.RotationZ(trans.rotation.Z);
+            Matrix world, pos, scale;
+            pos = Matrix.Translation(trans.position - Camera.Instance.transform.position);
             scale = Matrix.Scaling(trans.scale);
 
-            world = scale * rot * pos;
+            world = scale * pos;
             
             instance.sprite.Begin(SpriteFlags.AlphaBlend);
             instance.sprite.Transform = world;

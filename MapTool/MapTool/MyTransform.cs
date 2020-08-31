@@ -20,9 +20,9 @@ namespace MapTool
             rotation.X = 0;
             rotation.Y = 0;
             rotation.Z = 0;
-            scale.X = 0;
-            scale.Y = 0;
-            scale.Z = 0;
+            scale.X = 1;
+            scale.Y = 1;
+            scale.Z = 1;
         }
     }
 }

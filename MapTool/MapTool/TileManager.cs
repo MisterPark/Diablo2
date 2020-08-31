@@ -124,5 +124,34 @@ namespace MapTool
 
 			return res;
 		}
+
+		public static Vector3 TileIndexToWorld(TableIndex index)
+		{
+			Vector3 v;
+			v.X = (index.col* Tile.Width) + ((index.row % 2) * (Tile.WidthHalf));
+			v.Y = index.row* Tile.HeightHalf;
+			v.Z = 0;
+			return v;
+		}
+
+		public static void CreateTile(string key, TableIndex worldIndex, TableIndex offset)
+        {
+			if (worldIndex.row < 0 || worldIndex.col < 0) return;
+
+			Tile tile = null;
+			if(instance.tileMap.TryGetValue(worldIndex, out tile))
+            {
+				return;
+            }
+
+			tile = new Tile();
+			tile.transform.position = TileIndexToWorld(worldIndex);
+			tile.key = key;
+			tile.index = worldIndex;
+			tile.offset = offset;
+
+			instance.tileMap.Add(worldIndex, tile);
+
+        }
 	}
 }

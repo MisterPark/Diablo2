@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.bottomPanel = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.screenPosLabel = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.panelPosLabel = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.tileIndexLabel = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.panelPosLabel = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.screenPosLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.LeftPanel = new System.Windows.Forms.Panel();
-            this.splitter1 = new System.Windows.Forms.Splitter();
-            this.centerPanel = new System.Windows.Forms.Panel();
+            this.splitter2 = new System.Windows.Forms.Splitter();
             this.miniPanel = new System.Windows.Forms.Panel();
             this.controlPanel = new System.Windows.Forms.Panel();
-            this.splitter2 = new System.Windows.Forms.Splitter();
+            this.splitter1 = new System.Windows.Forms.Splitter();
+            this.centerPanel = new System.Windows.Forms.Panel();
             this.mainPanel = new System.Windows.Forms.Panel();
             this.bottomPanel.SuspendLayout();
             this.LeftPanel.SuspendLayout();
@@ -62,49 +62,16 @@
             this.bottomPanel.Size = new System.Drawing.Size(800, 30);
             this.bottomPanel.TabIndex = 1;
             // 
-            // label1
+            // tileIndexLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label1.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(86, 12);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "SceenPos : ";
-            // 
-            // screenPosLabel
-            // 
-            this.screenPosLabel.AutoSize = true;
-            this.screenPosLabel.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.screenPosLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.screenPosLabel.Location = new System.Drawing.Point(104, 9);
-            this.screenPosLabel.Name = "screenPosLabel";
-            this.screenPosLabel.Size = new System.Drawing.Size(10, 12);
-            this.screenPosLabel.TabIndex = 1;
-            this.screenPosLabel.Text = ".";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label2.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label2.Location = new System.Drawing.Point(204, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 12);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "PanelPos : ";
-            // 
-            // panelPosLabel
-            // 
-            this.panelPosLabel.AutoSize = true;
-            this.panelPosLabel.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.panelPosLabel.ForeColor = System.Drawing.Color.FloralWhite;
-            this.panelPosLabel.Location = new System.Drawing.Point(292, 9);
-            this.panelPosLabel.Name = "panelPosLabel";
-            this.panelPosLabel.Size = new System.Drawing.Size(10, 12);
-            this.panelPosLabel.TabIndex = 3;
-            this.panelPosLabel.Text = ".";
+            this.tileIndexLabel.AutoSize = true;
+            this.tileIndexLabel.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.tileIndexLabel.ForeColor = System.Drawing.Color.FloralWhite;
+            this.tileIndexLabel.Location = new System.Drawing.Point(553, 9);
+            this.tileIndexLabel.Name = "tileIndexLabel";
+            this.tileIndexLabel.Size = new System.Drawing.Size(10, 12);
+            this.tileIndexLabel.TabIndex = 5;
+            this.tileIndexLabel.Text = ".";
             // 
             // label4
             // 
@@ -117,16 +84,49 @@
             this.label4.TabIndex = 4;
             this.label4.Text = "TileIndex : ";
             // 
-            // tileIndexLabel
+            // panelPosLabel
             // 
-            this.tileIndexLabel.AutoSize = true;
-            this.tileIndexLabel.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.tileIndexLabel.ForeColor = System.Drawing.Color.FloralWhite;
-            this.tileIndexLabel.Location = new System.Drawing.Point(553, 9);
-            this.tileIndexLabel.Name = "tileIndexLabel";
-            this.tileIndexLabel.Size = new System.Drawing.Size(10, 12);
-            this.tileIndexLabel.TabIndex = 5;
-            this.tileIndexLabel.Text = ".";
+            this.panelPosLabel.AutoSize = true;
+            this.panelPosLabel.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.panelPosLabel.ForeColor = System.Drawing.Color.FloralWhite;
+            this.panelPosLabel.Location = new System.Drawing.Point(292, 9);
+            this.panelPosLabel.Name = "panelPosLabel";
+            this.panelPosLabel.Size = new System.Drawing.Size(10, 12);
+            this.panelPosLabel.TabIndex = 3;
+            this.panelPosLabel.Text = ".";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label2.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label2.Location = new System.Drawing.Point(204, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(82, 12);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "PanelPos : ";
+            // 
+            // screenPosLabel
+            // 
+            this.screenPosLabel.AutoSize = true;
+            this.screenPosLabel.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.screenPosLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.screenPosLabel.Location = new System.Drawing.Point(104, 9);
+            this.screenPosLabel.Name = "screenPosLabel";
+            this.screenPosLabel.Size = new System.Drawing.Size(10, 12);
+            this.screenPosLabel.TabIndex = 1;
+            this.screenPosLabel.Text = ".";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(86, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "SceenPos : ";
             // 
             // LeftPanel
             // 
@@ -138,6 +138,34 @@
             this.LeftPanel.Name = "LeftPanel";
             this.LeftPanel.Size = new System.Drawing.Size(280, 420);
             this.LeftPanel.TabIndex = 10;
+            // 
+            // splitter2
+            // 
+            this.splitter2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.splitter2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitter2.Location = new System.Drawing.Point(0, 178);
+            this.splitter2.Name = "splitter2";
+            this.splitter2.Size = new System.Drawing.Size(280, 10);
+            this.splitter2.TabIndex = 13;
+            this.splitter2.TabStop = false;
+            // 
+            // miniPanel
+            // 
+            this.miniPanel.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.miniPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.miniPanel.Location = new System.Drawing.Point(0, 0);
+            this.miniPanel.Name = "miniPanel";
+            this.miniPanel.Size = new System.Drawing.Size(280, 178);
+            this.miniPanel.TabIndex = 12;
+            // 
+            // controlPanel
+            // 
+            this.controlPanel.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.controlPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.controlPanel.Location = new System.Drawing.Point(0, 0);
+            this.controlPanel.Name = "controlPanel";
+            this.controlPanel.Size = new System.Drawing.Size(280, 420);
+            this.controlPanel.TabIndex = 11;
             // 
             // splitter1
             // 
@@ -158,34 +186,6 @@
             this.centerPanel.Size = new System.Drawing.Size(510, 420);
             this.centerPanel.TabIndex = 12;
             // 
-            // miniPanel
-            // 
-            this.miniPanel.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.miniPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.miniPanel.Location = new System.Drawing.Point(0, 0);
-            this.miniPanel.Name = "miniPanel";
-            this.miniPanel.Size = new System.Drawing.Size(280, 178);
-            this.miniPanel.TabIndex = 12;
-            // 
-            // controlPanel
-            // 
-            this.controlPanel.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.controlPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.controlPanel.Location = new System.Drawing.Point(0, 0);
-            this.controlPanel.Name = "controlPanel";
-            this.controlPanel.Size = new System.Drawing.Size(280, 420);
-            this.controlPanel.TabIndex = 11;
-            // 
-            // splitter2
-            // 
-            this.splitter2.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.splitter2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitter2.Location = new System.Drawing.Point(0, 178);
-            this.splitter2.Name = "splitter2";
-            this.splitter2.Size = new System.Drawing.Size(280, 10);
-            this.splitter2.TabIndex = 13;
-            this.splitter2.TabStop = false;
-            // 
             // mainPanel
             // 
             this.mainPanel.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
@@ -194,6 +194,7 @@
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(510, 420);
             this.mainPanel.TabIndex = 6;
+            this.mainPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mainPanel_MouseDown);
             // 
             // Form1
             // 

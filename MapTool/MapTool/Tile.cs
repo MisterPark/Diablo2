@@ -11,6 +11,7 @@ namespace MapTool
         public MyTransform transform;
         public string key;
         public TableIndex offset;
+        public TableIndex index;
         public const int Width = 160;
         public const int Height = 80;
         public const int WidthHalf = 80;
