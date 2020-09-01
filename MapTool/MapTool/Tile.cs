@@ -27,5 +27,10 @@ namespace MapTool
         {
             RenderManager.DrawSprite(key, transform, offset);
         }
+
+        public void Render(float ratio)
+        {
+            RenderManager.DrawSprite(key, transform, offset, ratio);
+        }
     }
 }

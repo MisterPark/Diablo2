@@ -38,7 +38,7 @@ namespace MapTool
             //pp.EnableAutoDepthStencil = true;
             //pp.AutoDepthStencilFormat = DepthFormat.D16;
             instance.device = new Device(0, DeviceType.Hardware, target, CreateFlags.HardwareVertexProcessing, pp);
-
+         
             instance.sprite = new Sprite(instance.device);
             instance.line = new Line(instance.device);
         }
@@ -53,6 +53,13 @@ namespace MapTool
             instance.device.EndScene();
             instance.device.Present(target);
         }
+
+        public static void Present(Control target, int width,int height)
+        {
+            instance.device.EndScene();
+            instance.device.Present(new Rectangle(0, 0, width, height), target, false);
+        }
+
 
         public static void LoadSprite(string path, string key, TableIndex range)
         {
@@ -77,6 +84,17 @@ namespace MapTool
             image.imageInfo = imageInfo;
             image.range = range;
             instance.spriteMap.Add(key, image);
+        }
+
+        public static SpriteImage GetSpriteImage(string key)
+        {
+            SpriteImage img = null;
+            if(instance.spriteMap.TryGetValue(key, out img))
+            {
+                return img;
+            }
+
+            return null;
         }
 
         public static void DrawSprite(string key, MyTransform trans, TableIndex index)
@@ -109,6 +127,69 @@ namespace MapTool
             instance.sprite.End();
         }
 
+        public static void DrawSprite(string key, MyTransform trans, TableIndex index, float ratio)
+        {
+            SpriteImage image = null;
+            if (instance.spriteMap.TryGetValue(key, out image) == false)
+            {
+                return;
+            }
+
+            int w = image.imageInfo.Width / image.range.col;
+            int h = image.imageInfo.Height / image.range.row;
+            int x = index.col * w;
+            int y = index.row * h;
+            Rectangle rect = new Rectangle();
+            rect.X = x;
+            rect.Y = y;
+            rect.Width = w;
+            rect.Height = h;
+
+            Matrix world, pos, scale;
+            Vector3 vpos, vscale;
+            vpos = trans.position * ratio;
+            vscale = trans.scale * ratio;
+            pos = Matrix.Translation(vpos);
+            scale = Matrix.Scaling(vscale);
+
+            world = scale * pos;
+
+            instance.sprite.Begin(SpriteFlags.AlphaBlend);
+            instance.sprite.Transform = world;
+            instance.sprite.Draw(image.texture, rect, new Vector3(0, 0, 0), new Vector3(0, 0, 0), Color.FromArgb(255, 255, 255, 255));
+            instance.sprite.End();
+        }
+
+        public static void DrawImage(string key, MyTransform trans, TableIndex index)
+        {
+            SpriteImage image = null;
+            if (instance.spriteMap.TryGetValue(key, out image) == false)
+            {
+                return;
+            }
+
+            int w = image.imageInfo.Width / image.range.col;
+            int h = image.imageInfo.Height / image.range.row;
+            int x = index.col * w;
+            int y = index.row * h;
+            Rectangle rect = new Rectangle();
+            rect.X = x;
+            rect.Y = y;
+            rect.Width = w;
+            rect.Height = h;
+
+            Matrix world, pos, scale;
+            pos = Matrix.Translation(trans.position);
+            scale = Matrix.Scaling(trans.scale);
+
+            world = scale * pos;
+
+            instance.sprite.Begin(SpriteFlags.AlphaBlend);
+            instance.sprite.Transform = world;
+            instance.sprite.Draw(image.texture, rect, new Vector3(0, 0, 0), new Vector3(0, 0, 0), Color.FromArgb(255, 255, 255, 255));
+            instance.sprite.End();
+        }
+
         public static void DrawLine(float sx, float sy, float ex, float ey)
         {
             Vector2[] points = new Vector2[2];
@@ -122,6 +203,19 @@ namespace MapTool
             instance.line.End();
         }
 
+        public static void DrawLine(float sx, float sy, float ex, float ey, float ratio)
+        {
+            Vector2[] points = new Vector2[2];
+            points[0].X = sx * ratio;
+            points[0].Y = sy * ratio;
+            points[1].X = ex * ratio;
+            points[1].Y = ey * ratio;
+
+            instance.line.Begin();
+            instance.line.Draw(points, Color.Black);
+            instance.line.End();
+        }
+
         public static void DrawLine(float sx, float sy, float ex, float ey, Color color)
         {
             Vector2[] points = new Vector2[2];
@@ -129,6 +223,19 @@ namespace MapTool
             points[0].Y = sy;
             points[1].X = ex;
             points[1].Y = ey;
+
+            instance.line.Begin();
+            instance.line.Draw(points, color);
+            instance.line.End();
+        }
+
+        public static void DrawLine(float sx, float sy, float ex, float ey, float ratio, Color color)
+        {
+            Vector2[] points = new Vector2[2];
+            points[0].X = sx * ratio;
+            points[0].Y = sy * ratio;
+            points[1].X = ex * ratio;
+            points[1].Y = ey * ratio;
 
             instance.line.Begin();
             instance.line.Draw(points, color);

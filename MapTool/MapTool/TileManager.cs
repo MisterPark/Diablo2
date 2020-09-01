@@ -12,7 +12,8 @@ namespace MapTool
     {
         private static TileManager instance = new TileManager();
         public Dictionary<TableIndex, Tile> tileMap = new Dictionary<TableIndex, Tile>();
-        
+		public string spriteKey = string.Empty;
+
         public static TileManager Instance
         {
             get { return instance; }
@@ -30,8 +31,33 @@ namespace MapTool
                 pair.Value.Render();
             }
         }
+		public static void Render(float ratio)
+		{
+			foreach (KeyValuePair<TableIndex, Tile> pair in instance.tileMap)
+			{
+				pair.Value.Render(ratio);
+			}
+		}
 
-        public static void RenderCrossLine()
+		public static void RenderSelectedTile(string key, int offset)
+        {
+			SpriteImage img = RenderManager.GetSpriteImage(key);
+			if (img == null) return;
+
+			TableIndex tableIndex;
+			tableIndex.row = offset / img.range.col;
+			tableIndex.col = offset % img.range.col;
+
+			MyTransform trans = new MyTransform();
+			float wRatio = Form1.GetMainPanelWidth() / Tile.Width;
+			float hRatio = Form1.GetMainPanelHeight() / Tile.Height;
+			trans.scale.X = wRatio;
+			trans.scale.Y = hRatio;
+
+			RenderManager.DrawImage(key, trans, tableIndex);
+        }
+
+		public static void RenderCrossLine()
         {
 			int screenW = 1920;
 			int screenH = Form1.GetMainPanelHeight();
@@ -60,7 +86,7 @@ namespace MapTool
 			}
 		}
 
-        public static void RenderSelector(Control control)
+		public static void RenderSelector(Control control)
         {
 
 			float offsetX = Camera.X;
@@ -134,6 +160,34 @@ namespace MapTool
 			return v;
 		}
 
+		public static void CreateTile()
+		{
+			string key = Form1.selectedTileSet;
+			TableIndex worldIndex = MouseToTileIndex(Form1.g_mainPanel);
+
+			SpriteImage img = RenderManager.GetSpriteImage(key);
+			if (img == null) return;
+
+			int select = Form1.selectedOffset;
+			TableIndex offset = new TableIndex(select / img.range.col, select % img.range.col);
+
+			if (worldIndex.row < 0 || worldIndex.col < 0) return;
+
+			Tile tile = null;
+			if (instance.tileMap.TryGetValue(worldIndex, out tile))
+			{
+				return;
+			}
+
+			tile = new Tile();
+			tile.transform.position = TileIndexToWorld(worldIndex);
+			tile.key = key;
+			tile.index = worldIndex;
+			tile.offset = offset;
+
+			instance.tileMap.Add(worldIndex, tile);
+
+		}
 		public static void CreateTile(string key, TableIndex worldIndex, TableIndex offset)
         {
 			if (worldIndex.row < 0 || worldIndex.col < 0) return;
@@ -153,5 +207,10 @@ namespace MapTool
 			instance.tileMap.Add(worldIndex, tile);
 
         }
+
+		public static void DeleteTile(TableIndex worldIndex)
+        {
+			instance.tileMap.Remove(worldIndex);
+		}
 	}
 }
