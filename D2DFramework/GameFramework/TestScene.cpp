@@ -3,6 +3,9 @@
 
 void TestScene::OnLoaded()
 {
+
+	TileManager::Load("Act1Tile1.dat");
+
 	ObjectManager::CreateObject(ObjectType::CHARACTER);
 }
 

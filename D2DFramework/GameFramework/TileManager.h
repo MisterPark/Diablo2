@@ -35,21 +35,21 @@ public:
 	static TableIndex MouseToTileIndex();
 	static Vector3 TileIndexToWorld(const TableIndex& index);
 //
-	static void CreateTile(const wstring& spriteKey, TableIndex worldIndex, TableIndex offset);
+	static void CreateTile(SpriteType spriteKey, TableIndex worldIndex, TableIndex offset, int isMoveable);
 //	//static void CreateTile(int indexX, int indexY,SpriteIndex tileSet, int offset, DWORD option, Point movePoint);
 //	static void DeleteTile(int indexX, int indexY);
-//	static void DeleteAllTiles();
+	static void DeleteAllTiles();
 //	static Tile* FindTile(int indexX, int indexY);
 //
 //	static void Save(const char* _fileName);
-//	static void Load(const char* _fileName);
+	static void Load(const char* _fileName);
 //	static void LoadToGameScene(const char* _fileName);
 
 public:
 	
 	int selectedTileIndex = 0;
 	//SpriteIndex curTileSet;
-	bool isVisible = false;
+	bool isVisible = true;
 	bool isShowTileSet = false;
 	RECT tileSetArea;
 	map<TableIndex, Tile*> tileMap;

@@ -5,9 +5,11 @@
 
 enum class ObjectType
 {
-	// 렌더링 순서 중요
+	// 렌더링 순서 중요 X ( Y 정렬)
 	NONE,
+	SUB_TILE,
 	CHARACTER,
+	
 	END
 };
 

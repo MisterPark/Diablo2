@@ -1,5 +1,5 @@
 #pragma once
-
+#include "D2DRenderManager.h"
 class GameObject;
 class Texture;
 
@@ -7,21 +7,21 @@ class Animation
 {
 public:
 	Animation();
-	Animation(const wstring& _spriteKey, GameObject* _ref);
+	Animation(SpriteType _spriteKey, GameObject* _ref);
 	~Animation();
 
 	void Update();
 	void Render();
 
-	wstring GetSpriteKey();
-	void SetSpriteKey(const wstring& _spriteKey);
+	SpriteType GetSpriteKey();
+	void SetSpriteKey(SpriteType _spriteKey);
 
 	void SetReferenceObject(GameObject* _target);
 	void SetLoop(bool _loop);
 	void SetDelay(float _delay);
 
 private:
-	wstring spriteKey;
+	SpriteType spriteKey;
 	GameObject* ref = nullptr;
 	Texture* tex = nullptr;
 	int currentFrame = 0;

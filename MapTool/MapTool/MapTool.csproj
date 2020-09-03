@@ -66,6 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderManager.cs" />
     <Compile Include="SpriteImage.cs" />
+    <Compile Include="SubTile.cs" />
     <Compile Include="TableIndex.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TileManager.cs" />

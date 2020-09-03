@@ -13,7 +13,14 @@ using System.Runtime.InteropServices;
 
 namespace MapTool
 {
-    
+    public enum DrawMode
+    {
+        Tile,
+        Move,
+        Spawn,
+        Object,
+    }
+
     public partial class Form1 : Form
     {
         
@@ -26,8 +33,9 @@ namespace MapTool
         bool isLButtonDown = false;
         bool isRButtonDown = false;
         float miniRatio = 1.0f;
-        public static string selectedTileSet = "ACT1_TOWN_FLOOR";
+        public static SpriteType selectedTileSet = SpriteType.ACT1_TOWN_FLOOR;
         public static int selectedOffset = 0;
+        DrawMode mode = DrawMode.Tile;
 
         //==============================
         // 생성자
@@ -39,10 +47,20 @@ namespace MapTool
             g_updown = numericUpDown1;
             numericUpDown1.Increment = 1m / SystemInformation.MouseWheelScrollLines;// 휠이 3개씩 올라서 증분함
 
-            RenderManager.Initialize(mainPanel);
-            RenderManager.LoadSprite("\\Sprites\\Tile\\Act1_Town_Floor.png", "ACT1_TOWN_FLOOR", new TableIndex(37, 5));
+            comboBox2.Items.Add("타일");
+            comboBox2.SelectedItem = "타일";
+            comboBox2.Items.Add("이동");
+            comboBox2.Items.Add("스폰");
+            comboBox2.Items.Add("오브젝트");
 
-            SetSelectionRange(37 * 5); // 나중에 이거 지우고 타일셋 셀렉션 만들면 거기에서 넣어줄것.
+            openFileDialog1.Filter = "데이터파일|*.dat";
+
+            RenderManager.Initialize(mainPanel);
+
+            LoadTileSet("\\Sprites\\Tile\\Act1_Town_Floor.png", SpriteType.ACT1_TOWN_FLOOR, new TableIndex(37, 5));
+            LoadTileSet("\\Sprites\\Tile\\Act1_Outdoor_Floor.png", SpriteType.ACT1_OUTDOOR_FLOOR, new TableIndex(25, 5));
+            LoadTileSet("\\Sprites\\Tile\\Act1_Town_Fence.png", SpriteType.ACT1_TOWN_FENCE, new TableIndex(1, 31));
+
 
             timer.Interval = 20;
             timer.Tick += new EventHandler(Loop); //주기마다 실행되는 이벤트 등록
@@ -62,20 +80,24 @@ namespace MapTool
             tileIndexLabel.Text =index.row.ToString() +", "+ index.col.ToString();
 
             Input.Update();
+            TileManager.Update();
             
             // 메인 패널 렌더링
             RenderManager.Clear();
-            TileManager.RenderCrossLine();
             TileManager.Render();
+            TileManager.RenderObject();
+            //TileManager.RenderCrossLine();
             TileManager.RenderSelector(mainPanel);
+            
             RenderManager.Present(mainPanel);
             // 미니맵 렌더링
             RenderManager.Clear();
             TileManager.Render(miniRatio);
+            TileManager.RenderObject(miniRatio);
             RenderManager.Present(miniPanel);
             // 타일 선택창 렌더
             RenderManager.Clear();
-            TileManager.RenderSelectedTile(selectedTileSet, selectedOffset);
+            TileManager.RenderSelectedTile(selectedTileSet, selectedOffset, tilePanel.Width, tilePanel.Height);
             RenderManager.Present(tilePanel);
 
         }
@@ -105,57 +127,92 @@ namespace MapTool
             g_updown.Value = 0;
         }
 
+        private void LoadTileSet(string path, SpriteType key, TableIndex range)
+        {
+            RenderManager.LoadSprite(path, key, range);
+            comboBox1.Items.Add(key);
+
+            comboBox1.SelectedIndex = 0;
+            
+        }
+
+        private void CreateTile()
+        {
+            SpriteImage img = RenderManager.GetSpriteImage(selectedTileSet);
+            if (img == null) return;
+            TableIndex offset = new TableIndex(selectedOffset / img.range.col, selectedOffset % img.range.col);
+            TileManager.CreateTile(selectedTileSet, TileManager.MouseToTileIndex(mainPanel), offset, 1);
+        }
+
+        private void CreateObject()
+        {
+            SpriteImage img = RenderManager.GetSpriteImage(selectedTileSet);
+            if (img == null) return;
+            TableIndex offset = new TableIndex(selectedOffset / img.range.col, selectedOffset % img.range.col);
+            TileManager.CreateObject(selectedTileSet, TileManager.MouseToTileIndex(mainPanel), offset, 1);
+        }
+
+        private void LButton()
+        {
+            switch (mode)
+            {
+                case DrawMode.Tile:
+                    CreateTile();
+                    break;
+                case DrawMode.Move:
+                    Tile tile = TileManager.FindTile(TileManager.MouseToTileIndex(mainPanel));
+                    if (tile == null) return;
+                    tile.isMoveable = 1;
+                    break;
+                case DrawMode.Spawn:
+                    break;
+                case DrawMode.Object:
+                    CreateObject();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void RButton()
+        {
+            switch (mode)
+            {
+                case DrawMode.Tile:
+                    TileManager.DeleteTile(TileManager.MouseToTileIndex(mainPanel));
+                    break;
+                case DrawMode.Move:
+                    Tile tile = TileManager.FindTile(TileManager.MouseToTileIndex(mainPanel));
+                    if (tile == null) return;
+                    tile.isMoveable = 0;
+                    break;
+                case DrawMode.Spawn:
+                    break;
+                case DrawMode.Object:
+                    TileManager.DeleteObject(TileManager.MouseToTileIndex(mainPanel));
+                    break;
+                default:
+                    break;
+            }
+        }
+
 
         //==============================
         // 이벤트
         //==============================
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-        }
-
-
-
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.A) // Left
-            {
-                Camera.X -= 10;
-            }
-            else if(e.KeyCode == Keys.D) // Right
-            {
-                Camera.X += 10;
-            }
-            else if (e.KeyCode == Keys.W) // Up
-            {
-                Camera.Y -= 10;
-            }
-            else if (e.KeyCode == Keys.S) // Down
-            {
-                Camera.Y += 10;
-            }
-            else if(e.KeyCode == Keys.Q)
-            {
-                Camera.X = 0;
-                Camera.Y = 0;
-            }
-
-           
-        }
-
 
         private void mainPanel_MouseDown(object sender, MouseEventArgs e)
         {
             switch (e.Button)
             {
                 case MouseButtons.Left:
-                    TileManager.CreateTile();
+                    LButton();
                     isLButtonDown = true;
                     break;
                 case MouseButtons.None:
                     break;
                 case MouseButtons.Right:
-                    TileManager.DeleteTile(TileManager.MouseToTileIndex(mainPanel));
+                    RButton();
                     isRButtonDown = true;
                     break;
                 case MouseButtons.Middle:
@@ -175,11 +232,11 @@ namespace MapTool
         {
             if(isLButtonDown)
             {
-                TileManager.CreateTile();
+                LButton();
             }
             else if(isRButtonDown)
             {
-                TileManager.DeleteTile(TileManager.MouseToTileIndex(mainPanel));
+                RButton();
             }
         }
 
@@ -214,6 +271,56 @@ namespace MapTool
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             selectedOffset = (int)numericUpDown1.Value;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SpriteType key = (SpriteType)comboBox1.SelectedIndex + 1;
+            SpriteImage img = RenderManager.GetSpriteImage(key);
+            if (img == null) return;
+
+            SetSelectionRange(img.range.row * img.range.col);
+            selectedTileSet = key;
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string select = comboBox2.SelectedItem.ToString();
+
+            if(select == "타일")
+            {
+                mode = DrawMode.Tile;
+            }
+            else if (select == "이동")
+            {
+                mode = DrawMode.Move;
+            }
+            else if (select == "스폰")
+            {
+                mode = DrawMode.Spawn;
+            }
+            else if(select == "오브젝트")
+            {
+                mode = DrawMode.Object;
+            }
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            TileManager.Save(textBox1.Text);
+        }
+
+        private void loadButton_Click(object sender, EventArgs e)
+        {
+            TileManager.Load(textBox1.Text);
+        }
+
+        private void openFileButton_Click(object sender, EventArgs e)
+        {
+            if(openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                textBox1.Text = openFileDialog1.FileName;
+            }
         }
 
         // 뉴메릭업다운 휠이 3개씩 증가해서 찾은건데 수정해야할듯

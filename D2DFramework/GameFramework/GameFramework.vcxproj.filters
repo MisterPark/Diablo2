@@ -156,6 +156,9 @@
     <ClInclude Include="Character.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="SubTile.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -229,6 +232,9 @@
     </ClCompile>
     <ClCompile Include="Character.cpp">
       <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SubTile.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

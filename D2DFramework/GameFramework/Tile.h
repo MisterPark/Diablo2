@@ -9,9 +9,10 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
-
-	wstring spriteKey;
+public:
+	SpriteType spriteKey;
 	TableIndex worldIndex;
 	TableIndex offsetIndex;
+	int isMoveable = 1;
 };
 

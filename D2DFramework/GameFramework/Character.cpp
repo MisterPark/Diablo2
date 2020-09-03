@@ -3,7 +3,7 @@
 
 Character::Character()
 {
-	anim->SetSpriteKey(L"SONUHTH");
+	anim->SetSpriteKey(SpriteType::SO_NU_HTH);
 	anim->SetLoop(true);
 }
 

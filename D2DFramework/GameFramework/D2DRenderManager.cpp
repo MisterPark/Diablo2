@@ -177,7 +177,7 @@ LPD3DXSPRITE D2DRenderManager::GetSprite()
 	return pD2DRenderManager->pSprite;
 }
 
-Texture * D2DRenderManager::GetTexture(const wstring & _key)
+Texture * D2DRenderManager::GetTexture(SpriteType _key)
 {
 	auto find = pD2DRenderManager->textureMap.find(_key);
 	if (find == pD2DRenderManager->textureMap.end())
@@ -189,7 +189,7 @@ Texture * D2DRenderManager::GetTexture(const wstring & _key)
 	return find->second;
 }
 
-HRESULT D2DRenderManager::LoadSprite(const wstring& filePath, const wstring& spriteKey, DWORD row, DWORD col)
+HRESULT D2DRenderManager::LoadSprite(const wstring& filePath, SpriteType spriteKey, DWORD row, DWORD col)
 {
 	auto find = pD2DRenderManager->textureMap.find(spriteKey);
 
@@ -234,7 +234,7 @@ HRESULT D2DRenderManager::LoadSprite(const wstring& filePath, const wstring& spr
 	return S_OK;
 }
 
-void D2DRenderManager::DrawSprite(const wstring& spriteKey, Transform transform, DWORD row, DWORD col)
+void D2DRenderManager::DrawSprite(SpriteType spriteKey, Transform transform, DWORD row, DWORD col)
 {
 	auto find = pD2DRenderManager->textureMap.find(spriteKey);
 	if (find == pD2DRenderManager->textureMap.end())
@@ -268,7 +268,7 @@ void D2DRenderManager::DrawSprite(const wstring& spriteKey, Transform transform,
 	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &Vector3(centerX, centerY, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 }
 
-void D2DRenderManager::DrawTile(const wstring& spriteKey, Transform transform, DWORD row, DWORD col)
+void D2DRenderManager::DrawTile(SpriteType spriteKey, Transform transform, DWORD row, DWORD col)
 {
 	auto find = pD2DRenderManager->textureMap.find(spriteKey);
 	if (find == pD2DRenderManager->textureMap.end())

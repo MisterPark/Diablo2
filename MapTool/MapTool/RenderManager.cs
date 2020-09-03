@@ -9,6 +9,17 @@ using System.Drawing;
 
 namespace MapTool
 {
+    public enum SpriteType
+    {
+        NONE,
+        ACT1_TOWN_FLOOR,
+        ACT1_OUTDOOR_FLOOR,
+        ACT1_TOWN_FENCE,
+
+        SO_BW,
+        SO_NU_HTH,
+    }
+
     class RenderManager
     {
         // 멤버
@@ -16,7 +27,7 @@ namespace MapTool
         private Device device = null;
         private Sprite sprite = null;
         private Line line = null;
-        private Dictionary<string, SpriteImage> spriteMap = new Dictionary<string, SpriteImage>();
+        private Dictionary<SpriteType, SpriteImage> spriteMap = new Dictionary<SpriteType, SpriteImage>();
         // 프로퍼티
         public static RenderManager Instance
         {
@@ -61,7 +72,7 @@ namespace MapTool
         }
 
 
-        public static void LoadSprite(string path, string key, TableIndex range)
+        public static void LoadSprite(string path, SpriteType key, TableIndex range)
         {
             ImageInformation imageInfo = TextureLoader.ImageInformationFromFile(Application.StartupPath + path);
 
@@ -86,7 +97,7 @@ namespace MapTool
             instance.spriteMap.Add(key, image);
         }
 
-        public static SpriteImage GetSpriteImage(string key)
+        public static SpriteImage GetSpriteImage(SpriteType key)
         {
             SpriteImage img = null;
             if(instance.spriteMap.TryGetValue(key, out img))
@@ -97,10 +108,77 @@ namespace MapTool
             return null;
         }
 
-        public static void DrawSprite(string key, MyTransform trans, TableIndex index)
+        public static void DrawSprite(SpriteType key, MyTransform trans, TableIndex index)
         {
             SpriteImage image = null;
             if(instance.spriteMap.TryGetValue(key, out image) == false)
+            {
+                return;
+            }
+
+            int w = image.imageInfo.Width / image.range.col;
+            int h = image.imageInfo.Height / image.range.row;
+            int x = index.col * w;
+            int y = index.row * h;
+            Rectangle rect = new Rectangle();
+            rect.X = x;
+            rect.Y = y;
+            rect.Width = w;
+            rect.Height = h;
+
+            Matrix world, pos, scale;
+            Vector3 vpos = trans.position;
+            vpos.Y -= (h - Tile.Height);
+            pos = Matrix.Translation(vpos - Camera.Instance.transform.position);
+            scale = Matrix.Scaling(trans.scale);
+
+            world = scale * pos;
+            
+            instance.sprite.Begin(SpriteFlags.AlphaBlend);
+            instance.sprite.Transform = world;
+            instance.sprite.Draw(image.texture, rect, new Vector3(0, 0, 0), new Vector3(0, 0, 0), Color.FromArgb(255, 255, 255, 255));
+            instance.sprite.End();
+        }
+
+        public static void DrawSprite(SpriteType key, MyTransform trans, TableIndex index, float ratio)
+        {
+            SpriteImage image = null;
+            if (instance.spriteMap.TryGetValue(key, out image) == false)
+            {
+                return;
+            }
+
+            int w = image.imageInfo.Width / image.range.col;
+            int h = image.imageInfo.Height / image.range.row;
+            int x = index.col * w;
+            int y = index.row * h;
+            Rectangle rect = new Rectangle();
+            rect.X = x;
+            rect.Y = y;
+            rect.Width = w;
+            rect.Height = h;
+
+            Matrix world, pos, scale;
+            Vector3 vpos = trans.position;
+            Vector3 vscale;
+            vpos.Y -= (h - Tile.Height);
+            vpos *= ratio;
+            vscale = trans.scale * ratio;
+            pos = Matrix.Translation(vpos);
+            scale = Matrix.Scaling(vscale);
+            
+            world = scale * pos;
+
+            instance.sprite.Begin(SpriteFlags.AlphaBlend);
+            instance.sprite.Transform = world;
+            instance.sprite.Draw(image.texture, rect, new Vector3(0, 0, 0), new Vector3(0, 0, 0), Color.FromArgb(255, 255, 255, 255));
+            instance.sprite.End();
+        }
+
+        public static void DrawSubTileSprite(SpriteType key, MyTransform trans, TableIndex index)
+        {
+            SpriteImage image = null;
+            if (instance.spriteMap.TryGetValue(key, out image) == false)
             {
                 return;
             }
@@ -120,47 +198,14 @@ namespace MapTool
             scale = Matrix.Scaling(trans.scale);
 
             world = scale * pos;
-            
-            instance.sprite.Begin(SpriteFlags.AlphaBlend);
-            instance.sprite.Transform = world;
-            instance.sprite.Draw(image.texture, rect, new Vector3(0, 0, 0), new Vector3(0, 0, 0), Color.FromArgb(255, 255, 255, 255));
-            instance.sprite.End();
-        }
-
-        public static void DrawSprite(string key, MyTransform trans, TableIndex index, float ratio)
-        {
-            SpriteImage image = null;
-            if (instance.spriteMap.TryGetValue(key, out image) == false)
-            {
-                return;
-            }
-
-            int w = image.imageInfo.Width / image.range.col;
-            int h = image.imageInfo.Height / image.range.row;
-            int x = index.col * w;
-            int y = index.row * h;
-            Rectangle rect = new Rectangle();
-            rect.X = x;
-            rect.Y = y;
-            rect.Width = w;
-            rect.Height = h;
-
-            Matrix world, pos, scale;
-            Vector3 vpos, vscale;
-            vpos = trans.position * ratio;
-            vscale = trans.scale * ratio;
-            pos = Matrix.Translation(vpos);
-            scale = Matrix.Scaling(vscale);
-
-            world = scale * pos;
 
             instance.sprite.Begin(SpriteFlags.AlphaBlend);
             instance.sprite.Transform = world;
-            instance.sprite.Draw(image.texture, rect, new Vector3(0, 0, 0), new Vector3(0, 0, 0), Color.FromArgb(255, 255, 255, 255));
+            instance.sprite.Draw(image.texture, rect, new Vector3(0, h-Tile.Height, 0), new Vector3(0, 0, 0), Color.FromArgb(255, 255, 255, 255));
             instance.sprite.End();
         }
 
-        public static void DrawImage(string key, MyTransform trans, TableIndex index)
+        public static void DrawImage(SpriteType key, MyTransform trans, TableIndex index)
         {
             SpriteImage image = null;
             if (instance.spriteMap.TryGetValue(key, out image) == false)

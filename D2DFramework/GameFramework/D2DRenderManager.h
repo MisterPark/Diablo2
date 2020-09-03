@@ -2,6 +2,18 @@
 
 class Texture;
 
+enum class SpriteType
+{
+	NONE,
+	ACT1_TOWN_FLOOR,
+	ACT1_OUTDOOR_FLOOR,
+	ACT1_TOWN_FENCE,
+
+
+	SO_BW,
+	SO_NU_HTH,
+};
+
 class D2DRenderManager
 {
 private:
@@ -24,11 +36,11 @@ public:
 
 	static LPDIRECT3DDEVICE9 GetDevice();
 	static LPD3DXSPRITE GetSprite();
-	static Texture* GetTexture(const wstring& _key);
+	static Texture* GetTexture(SpriteType _key);
 
-	static HRESULT LoadSprite(const wstring& filePath, const wstring& spriteKey, DWORD row, DWORD col);
-	static void DrawSprite(const wstring& spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
-	static void DrawTile(const wstring& spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
+	static HRESULT LoadSprite(const wstring& filePath, SpriteType spriteKey, DWORD row, DWORD col);
+	static void DrawSprite(SpriteType spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
+	static void DrawTile(SpriteType spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
 
 	static void DrawString(const string& text);
 	static void DrawString(const wstring& text);
@@ -46,6 +58,6 @@ private:
 	LPD3DXFONT	pFont = nullptr;
 	LPD3DXLINE pLine = nullptr;
 
-	map<wstring, Texture*> textureMap;
+	map<SpriteType, Texture*> textureMap;
 };
 

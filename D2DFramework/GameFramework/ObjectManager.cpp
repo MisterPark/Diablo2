@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ObjectManager.h"
 #include "Character.h"
+#include "SubTile.h"
 
 ObjectManager* pObjectManager = nullptr;
 int lastUid = 0;
@@ -27,6 +28,9 @@ GameObject * ObjectManager::CreateObject(ObjectType _type)
 	GameObject* pObj = nullptr;
 	switch (_type)
 	{
+	case ObjectType::SUB_TILE:
+		pObj = new SubTile;
+		break;
 	case ObjectType::CHARACTER:
 		pObj = new Character;
 		break;

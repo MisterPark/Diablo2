@@ -183,6 +183,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SoundMgr.h" />
+    <ClInclude Include="SubTile.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
@@ -215,6 +216,7 @@
     </ClCompile>
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SoundMgr.cpp" />
+    <ClCompile Include="SubTile.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Tile.cpp" />

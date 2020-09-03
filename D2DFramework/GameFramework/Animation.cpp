@@ -7,7 +7,7 @@ Animation::Animation()
 {
 }
 
-Animation::Animation(const wstring & _spriteKey, GameObject * _ref)
+Animation::Animation(SpriteType _spriteKey, GameObject * _ref)
 {
 	SetSpriteKey(_spriteKey);
 	SetReferenceObject(_ref);
@@ -52,12 +52,12 @@ void Animation::Render()
 	D2DRenderManager::DrawSprite(spriteKey, ref->transform, directionIndex, currentFrame);
 }
 
-wstring Animation::GetSpriteKey()
+SpriteType Animation::GetSpriteKey()
 {
 	return spriteKey;
 }
 
-void Animation::SetSpriteKey(const wstring& _spriteKey)
+void Animation::SetSpriteKey(SpriteType _spriteKey)
 {
 	tex = D2DRenderManager::GetTexture(_spriteKey);
 	this->spriteKey = _spriteKey;

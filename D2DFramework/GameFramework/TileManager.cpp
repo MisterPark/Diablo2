@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "TileManager.h"
+#include "SubTile.h"
 
 TileManager* pTileManager = nullptr;
 
@@ -37,9 +38,9 @@ void TileManager::Update()
 
 	if (InputManager::GetKeyDown(VK_LBUTTON))
 	{
-		TableIndex pt = MouseToTileIndex();
-
-		CreateTile(L"ACT1_TOWN_FLOOR", pt, TableIndex(0, 0));
+		//TableIndex pt = MouseToTileIndex();
+		//
+		//CreateTile(SpriteType::ACT1_TOWN_FLOOR, pt, TableIndex(0, 0), 1);
 	}
 }
 
@@ -245,13 +246,6 @@ TableIndex TileManager::MouseToTileIndex()
 
 #ifdef ISOMETRIC
 	
-	// 인터넷
-	//idx.x = (worldX / dfTILE_W_HALF + worldY / dfTILE_H_HALF) / 2;
-	//idx.y = (worldY / dfTILE_H_HALF - (worldX / dfTILE_W_HALF)) / 2;
-	// 쌤코드
-	//idx.row = worldY / dfTILE_H_HALF;
-	//idx.col = (worldX - ((idx.row % 2) * (dfTILE_W_HALF))) / dfTILE_W;
-	// 내코드
 	Vector3 tilePos = MouseToTilePosition();
 	idx.row = tilePos.y / dfTILE_H_HALF;
 	idx.col = tilePos.x / dfTILE_W;
@@ -279,7 +273,7 @@ Vector3 TileManager::TileIndexToWorld(const TableIndex& index)
 	return v;
 }
 
-void TileManager::CreateTile(const wstring& spriteKey, TableIndex worldIndex, TableIndex offset)
+void TileManager::CreateTile(SpriteType spriteKey, TableIndex worldIndex, TableIndex offset, int isMoveable)
 {
 	if (worldIndex.row < 0 || worldIndex.col < 0) return;
 	 
@@ -299,50 +293,17 @@ void TileManager::CreateTile(const wstring& spriteKey, TableIndex worldIndex, Ta
 	pTileManager->tileMap.insert(make_pair(worldIndex, tile));
 }
 
-//void TileManager::CreateTile(int indexX, int indexY,SpriteIndex tileSet, int offset, DWORD option, Point movePoint)
-//{
-//	auto target = pTileManager->tileMap.find(Point(indexX, indexY));
-//
-//	if (target != pTileManager->tileMap.end())
-//	{
-//		return;
-//	}
-//
-//	Tile* tile = new Tile;
-//	//tile->transform.x = indexX * dfTILE_W;
-//	//tile->transform.y = indexY * dfTILE_H;
-//	//tile->tileset = tileSet;
-//	//tile->offsetIndex = offset;
-//	//tile->option = option;
-//	//tile->ePoint = movePoint;
-//	//tile->sPoint = { indexX,indexY };
-//
-//	pTileManager->tileMap.insert(make_pair(Point(indexX, indexY), tile));
-//}
-//
-//void TileManager::DeleteTile(int indexX, int indexY)
-//{
-//	auto target = pTileManager->tileMap.find(Point(indexX, indexY));
-//	
-//	if (target != pTileManager->tileMap.end())
-//	{
-//		delete target->second;
-//		pTileManager->tileMap.erase(target);
-//	}
-//	
-//}
-//
-//void TileManager::DeleteAllTiles()
-//{
-//	auto iter = pTileManager->tileMap.begin();
-//	auto end = pTileManager->tileMap.end();
-//	for (; iter != end;)
-//	{
-//		delete iter->second;
-//		iter = pTileManager->tileMap.erase(iter);
-//	}
-//}
-//
+void TileManager::DeleteAllTiles()
+{
+	auto iter = pTileManager->tileMap.begin();
+	auto end = pTileManager->tileMap.end();
+	for (; iter != end;)
+	{
+		delete iter->second;
+		iter = pTileManager->tileMap.erase(iter);
+	}
+}
+
 //Tile* TileManager::FindTile(int indexX, int indexY)
 //{
 //	auto iter = pTileManager->tileMap.find(Point(indexX, indexY));
@@ -352,79 +313,71 @@ void TileManager::CreateTile(const wstring& spriteKey, TableIndex worldIndex, Ta
 //	}
 //	return nullptr;
 //}
-//
-//void TileManager::Save(const char* _fileName)
-//{
-//	FileManager::MakeDirectory("SaveData");
-//	
-//	char fullName[128] = { 0, };
-//	strcat_s(fullName, "SaveData");
-//	strcat_s(fullName, "/");
-//	strcat_s(fullName, _fileName);
-//
-//	FileManager::SetDirectory(fullName);
-//	FileManager::OpenFile("wb");
-//
-//	// 헤더
-//	int tileCount = pTileManager->tileMap.size();
-//	FileManager::WriteFile(&tileCount, sizeof(int), 1);
-//
-//	// 데이터
-//	for (auto iter : pTileManager->tileMap)
-//	{
-//		Point index = iter.first;
-//		Tile* tile = iter.second;
-//
-//		//FileManager::WriteFile(&index.x, sizeof(int), 1);
-//		//FileManager::WriteFile(&index.y, sizeof(int), 1);
-//		//FileManager::WriteFile(&tile->tileset, sizeof(SpriteIndex), 1);
-//		//FileManager::WriteFile(&tile->offsetIndex, sizeof(int), 1);
-//		//FileManager::WriteFile(&tile->option, sizeof(DWORD), 1);
-//		//FileManager::WriteFile(&tile->ePoint, sizeof(Point), 1);
-//	}
-//
-//	FileManager::CloseFile();
-//}
-//
-//void TileManager::Load(const char* _fileName)
-//{
-//	DeleteAllTiles();
-//
-//	char fullName[128] = { 0, };
-//	strcat_s(fullName, "SaveData");
-//	strcat_s(fullName, "/");
-//	strcat_s(fullName, _fileName);
-//
-//	FileManager::MakeDirectory("SaveData");
-//	FileManager::SetDirectory(fullName);
-//	FileManager::OpenFile("rb");
-//
-//	// 헤더
-//	int tileCount;
-//	FileManager::ReadFile(&tileCount, sizeof(int), 1);
-//
-//	// 데이터
-//	for (int i = 0; i < tileCount; i++)
-//	{
-//		Point index;
-//		SpriteIndex tileSet;
-//		int offsetIndex;
-//		DWORD option;
-//		Point movePoint;
-//
-//		FileManager::ReadFile(&index.x, sizeof(int), 1);
-//		FileManager::ReadFile(&index.y, sizeof(int), 1);
-//		FileManager::ReadFile(&tileSet, sizeof(SpriteIndex), 1);
-//		FileManager::ReadFile(&offsetIndex, sizeof(int), 1);
-//		FileManager::ReadFile(&option, sizeof(DWORD), 1);
-//		FileManager::ReadFile(&movePoint, sizeof(Point), 1);
-//
-//		CreateTile(index.x, index.y, tileSet, offsetIndex, option, movePoint);
-//	}
-//
-//	FileManager::CloseFile();
-//}
-//
+
+void TileManager::Load(const char* _fileName)
+{
+	DeleteAllTiles();
+	ObjectManager::DestroyAll(ObjectType::SUB_TILE);
+
+	char fullName[128] = { 0, };
+	strcat_s(fullName, "Data");
+	strcat_s(fullName, "/");
+	strcat_s(fullName, _fileName);
+
+	FileManager::MakeDirectory("Data");
+	FileManager::SetDirectory(fullName);
+	FileManager::OpenFile("rb");
+
+	// 헤더
+	int tileCount;
+	FileManager::ReadFile(&tileCount, sizeof(int), 1);
+
+	// 데이터
+	for (int i = 0; i < tileCount; i++)
+	{
+		SpriteType tileSet;
+		TableIndex offset;
+		TableIndex index;
+		int isMoveable = 1;
+
+		FileManager::ReadFile(&tileSet, sizeof(SpriteType), 1);
+		FileManager::ReadFile(&offset.row, sizeof(int), 1);
+		FileManager::ReadFile(&offset.col, sizeof(int), 1);
+		FileManager::ReadFile(&index.row, sizeof(int), 1);
+		FileManager::ReadFile(&index.col, sizeof(int), 1);
+		FileManager::ReadFile(&isMoveable, sizeof(int), 1);
+
+		CreateTile(tileSet,index,offset,isMoveable);
+	}
+
+	FileManager::ReadFile(&tileCount, sizeof(int), 1);
+
+	// 데이터
+	for (int i = 0; i < tileCount; i++)
+	{
+		SpriteType tileSet;
+		TableIndex offset;
+		TableIndex index;
+		int isMoveable = 1;
+
+		FileManager::ReadFile(&tileSet, sizeof(SpriteType), 1);
+		FileManager::ReadFile(&offset.row, sizeof(int), 1);
+		FileManager::ReadFile(&offset.col, sizeof(int), 1);
+		FileManager::ReadFile(&index.row, sizeof(int), 1);
+		FileManager::ReadFile(&index.col, sizeof(int), 1);
+
+		CreateTile(tileSet, index, offset, isMoveable);
+		SubTile* tile = (SubTile*)ObjectManager::CreateObject(ObjectType::SUB_TILE);
+		tile->transform.position = TileIndexToWorld(index);
+		tile->spriteKey = tileSet;
+		tile->offsetIndex = offset;
+		tile->worldIndex = index;
+		
+	}
+
+	FileManager::CloseFile();
+}
+
 //void TileManager::LoadToGameScene(const char* _fileName)
 //{
 //	ObjectManager::DestroyAll(ObjectType::TILE);
