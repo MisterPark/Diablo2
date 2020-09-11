@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "SubTile.h"
 
+SubTile::SubTile()
+{
+}
+
+
 void SubTile::Update()
 {
 	anim->SetSpriteKey(spriteKey);

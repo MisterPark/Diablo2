@@ -22,13 +22,17 @@ public:
 	static void Release();
 	static void Update();
 	static void LateUpdate();
+	static void PreRender();
 	static void Render();
+
+	static bool Compare(GameObject* a, GameObject* b);
 
 	static bool IsVisibleCollider();
 	static void SetVisibleCollider(bool _isVisible);
 
 private:
 	list<GameObject*>objectTable[MaxOfEnum<ObjectType>()];
+	list<GameObject*> renderList;
 	bool isVisibleCollider = false;
 	Player* player = nullptr;
 };

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "SoundMgr.h"
+#include "fmod.h"
 
 SoundManager* SoundManager::pSoundManager = nullptr;
 SoundManager::SoundManager()
@@ -37,7 +38,7 @@ void SoundManager::Release()
 
 
 
-void SoundManager::PlaySound(TCHAR * pSoundKey, CHANNELID eID)
+void SoundManager::PlaySound(TCHAR * pSoundKey, SoundChannel eID)
 {
 	map<TCHAR*, FMOD_SOUND*>::iterator iter; 
 
@@ -74,7 +75,7 @@ void SoundManager::PlayBGM(TCHAR * pSoundKey)
 	FMOD_System_Update(m_pSystem);
 }
 
-void SoundManager::StopSound(CHANNELID eID)
+void SoundManager::StopSound(SoundChannel eID)
 {
 	FMOD_Channel_Stop(m_pChannelArr[eID]);
 }
@@ -84,6 +85,12 @@ void SoundManager::StopAll()
 	for (int i = 0 ; i < MAXCHANNEL ; ++i)
 		FMOD_Channel_Stop(m_pChannelArr[i]);
 }
+
+void SoundManager::SetVolume(SoundChannel channel, float per)
+{
+	FMOD_Channel_SetVolume(m_pChannelArr[channel], per);
+}
+
 
 void SoundManager::LoadSoundFile()
 {

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "MainGame.h"
 #include "TestScene.h"
+#include "TitleScene.h"
+#include "IntroScene.h"
 
 MainGame* pMainGame = nullptr;
 
@@ -66,11 +68,32 @@ void MainGame::Initialize()
 	D2DRenderManager::LoadSprite(L"Sprites\\Tile\\Act1_Outdoor_Floor.png", SpriteType::ACT1_OUTDOOR_FLOOR, 25, 5);
 	D2DRenderManager::LoadSprite(L"Sprites\\Tile\\Act1_Town_Fence.png", SpriteType::ACT1_TOWN_FENCE, 1, 31);
 
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\background.bmp", SpriteType::BG_BLACK, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\trademarkscreen.png", SpriteType::BG_INTRO, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\gameselectscreen.png", SpriteType::BG_TITLE, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\charactercreationscreen.png", SpriteType::BG_CHAR_CREATION, 1, 1);
+
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\logo.png", SpriteType::UI_LOGO, 30, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\WideButton.png", SpriteType::UI_BTN_WIDE, 1, 2);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\mediumSelButton.png", SpriteType::UI_BTN_MEDIUM, 1, 2);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\HalfWideButton.png", SpriteType::UI_BTN_HALFWIDE, 1, 2);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\NarrowButton.png", SpriteType::UI_BTN_NARROW, 1, 2);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\buysell_button.png", SpriteType::UI_BTN_BUYSELL, 1, 18);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\buysell_tabs.png", SpriteType::UI_TAB_BUYSELL, 1, 8);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\textbox.png", SpriteType::UI_TEXTBOX, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\800BorderLeft.png", SpriteType::UI_PANEL_800L, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\800BorderRight.png", SpriteType::UI_PANEL_800R, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\status_panel.png", SpriteType::UI_PANEL_STATUS, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\inven_panel.png", SpriteType::UI_PANEL_INVEN, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\buysell_panel.png", SpriteType::UI_PANEL_BUYSELL, 1, 1);
+
+
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOBW.png", SpriteType::SO_BW, 5, 6);
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SONUHTH.png", SpriteType::SO_NU_HTH, 16, 8);
+	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SORNHTH.png", SpriteType::SO_RN_HTH, 16, 8);
 	
-	
-	SceneManager::LoadScene<TestScene>();
+	SceneManager::LoadScene<IntroScene>();
+	//SceneManager::LoadScene<TestScene>();
 }
 
 void MainGame::Release()
@@ -94,28 +117,27 @@ void MainGame::Run()
 	
 	InputManager::Update();
 	TileManager::Update();
-	if (pMainGame->isPause == false)
-	{
-		ObjectManager::Update();
-	}
+	ObjectManager::Update();
 	Camera::Update();
 	CollisionManager::Update();
 	ObjectManager::LateUpdate();
 	
 	if (!TimeManager::SkipFrame())
 	{
-		//RenderManager::Clear();
 		D2DRenderManager::Clear();
-		D2DRenderManager::SpriteBegin();
+		//D2DRenderManager::GetSprite()->Begin(D3DXSPRITE_ALPHABLEND);
+
+		ObjectManager::PreRender();
 		TileManager::Render();
 		ObjectManager::Render();
-		D2DRenderManager::SpriteEnd();
-		D2DRenderManager::LineBegin();
+		//D2DRenderManager::GetSprite()->End();
+
+		//D2DRenderManager::GetLine()->Begin();
 		TileManager::RenderLine();
-		D2DRenderManager::LineEnd();
-		//RenderManager::Present();
+		//D2DRenderManager::GetLine()->End();
+
+		
 		D2DRenderManager::Present();
-		//RenderManager::Flip();
 	}
 	
 	SceneManager::Update();

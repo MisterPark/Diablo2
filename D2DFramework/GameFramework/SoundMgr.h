@@ -1,4 +1,7 @@
 #pragma once
+
+enum SoundChannel { BGM, PLAYER, MONSTER, EFFECT, UI, MAXCHANNEL };
+
 class SoundManager
 {
 public:
@@ -17,8 +20,7 @@ public:
 			pSoundManager = nullptr; 
 		}
 	}
-public:
-	enum CHANNELID {BGM, PLAYER, MONSTER, EFFECT, UI, MAXCHANNEL};
+	
 private:
 	SoundManager();
 	~SoundManager();
@@ -28,10 +30,11 @@ public:
 
 	void Release(); 
 public:
-	void PlaySound(TCHAR* pSoundKey, CHANNELID eID);
+	void PlaySound(TCHAR* pSoundKey, SoundChannel eID);
 	void PlayBGM(TCHAR* pSoundKey);
-	void StopSound(CHANNELID eID);
+	void StopSound(SoundChannel eID);
 	void StopAll();
+	void SetVolume(SoundChannel channel, float per);
 
 private:
 	void LoadSoundFile(); 

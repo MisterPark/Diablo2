@@ -85,6 +85,11 @@ int Camera::GetY()
 	return pCamera->transform.position.y;
 }
 
+Vector3 Camera::GetPosition()
+{
+	return pCamera->transform.position;
+}
+
 void Camera::FollowTarget()
 {
 	if (pCamera->target == nullptr)return;
@@ -93,21 +98,4 @@ void Camera::FollowTarget()
 	pCamera->transform.position.x = pCamera->target->transform.position.x - (dfCLIENT_WIDTH / 2);
 	pCamera->transform.position.y = pCamera->target->transform.position.y - (dfCLIENT_HEIGHT / 2);
 
-	if (pCamera->transform.position.x < pCamera->minPos.x)
-	{
-		pCamera->transform.position.x = pCamera->minPos.x;
-	}
-	else if (pCamera->transform.position.x > pCamera->maxPos.x)
-	{
-		pCamera->transform.position.x = pCamera->maxPos.x;
-	}
-
-	if (pCamera->transform.position.y < pCamera->minPos.y)
-	{
-		pCamera->transform.position.y = pCamera->minPos.y;
-	}
-	else if (pCamera->transform.position.y > pCamera->maxPos.y)
-	{
-		pCamera->transform.position.y = pCamera->maxPos.y;
-	}
 }

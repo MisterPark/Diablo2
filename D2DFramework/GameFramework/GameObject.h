@@ -8,8 +8,12 @@ enum class ObjectType
 	// 렌더링 순서 중요 X ( Y 정렬)
 	NONE,
 	SUB_TILE,
-	CHARACTER,
+	SORCERESS,
 	
+	UI_LOGO,
+	BUTTON,
+	LABEL,
+
 	END
 };
 
@@ -28,7 +32,13 @@ public:
 
 	void SetPosition(float _x, float _y);
 	void SetTarget(GameObject* _target);
+	void RotateToMouse();
 	Vector3 GetPositionFromCamera();
+
+	void FaceTarget(Vector3 targetPos);
+	void Move(Vector3 targetPos);
+	// 길찾기용 이동
+	void Move(TableIndex targetIndex);
 
 
 public:
@@ -36,7 +46,7 @@ public:
 	Transform transform;
 	//radian
 	float direction = 0.f;
-	
+	float speed = 100.f;
 	ObjectType type = ObjectType::NONE;
 	
 	int uid = 0;
@@ -55,6 +65,10 @@ public:
 
 	// 타겟팅
 	GameObject* target = nullptr;
+
+	// 길찾기 관련
+	TableIndex nextPos;
+	bool isMoving = false;
 
 
 };

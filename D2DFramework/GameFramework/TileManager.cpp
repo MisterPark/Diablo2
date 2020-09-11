@@ -1,15 +1,18 @@
 #include "pch.h"
 #include "TileManager.h"
 #include "SubTile.h"
+#include "JPS.h"
 
 TileManager* pTileManager = nullptr;
 
 TileManager::TileManager()
 {
+	pJPS = new JPS;
 }
 
 TileManager::~TileManager()
 {
+	delete pJPS;
 }
 
 TileManager * TileManager::GetInstance()
@@ -42,6 +45,38 @@ void TileManager::Update()
 		//
 		//CreateTile(SpriteType::ACT1_TOWN_FLOOR, pt, TableIndex(0, 0), 1);
 	}
+
+	if (InputManager::GetKeyDown(VK_LBUTTON))
+	{
+		//Player* pPlayer = Player::GetInstance();
+		//pTileManager->pathList.clear();
+
+		//Vector3 leftTop = pPlayer->pChar->transform.position;
+		//leftTop.x -= dfCLIENT_WIDTH / 2;
+		//leftTop.y -= dfCLIENT_HEIGHT / 2;
+		//TableIndex leftTopIndex = TileManager::PositionToWallIndex(leftTop);
+
+		//Vector3 rightBottom = pPlayer->pChar->transform.position;
+		//rightBottom.x += dfCLIENT_WIDTH / 2;
+		//rightBottom.y += dfCLIENT_HEIGHT / 2;
+		//TableIndex endPos = TileManager::PositionToWallIndex(rightBottom);
+
+		//TableIndex myPos = TileManager::PositionToWallIndex(pPlayer->pChar->transform.position);
+		//TableIndex targetPos = TileManager::PositionToWallIndex(InputManager::GetMousePosOnWorld());
+		//
+		//TileManager::SetSearchSize(leftTopIndex.col, leftTopIndex.row, endPos.col, endPos.row);
+		//if (TileManager::PathFinding(myPos.col, myPos.row, targetPos.col, targetPos.row))
+		//{
+		//	int count = TileManager::GetPathListCount();
+		//	TableIndex path;
+		//	for (int i = 0; i < count; i++)
+		//	{
+		//		TileManager::GetPath(i, &path.col, &path.row);
+		//		pTileManager->pathList.push_back(path);
+		//	}
+		//}
+
+	}
 }
 
 void TileManager::Render()
@@ -51,6 +86,7 @@ void TileManager::Render()
 	// 타일
 	RenderTile();
 
+	if (pTileManager->isDebugMode == false) return;
 	// 좌표(타일 인덱스)
 	RenderMousePosition();
 	// 타일 선택창
@@ -62,17 +98,31 @@ void TileManager::Render()
 
 void TileManager::RenderLine()
 {
+	if (pTileManager->isVisible == false) return;
+	if (pTileManager->isDebugMode == false) return;
+	RenderWall();
 	// 격자
 	RenderCrossLine();
 	// 타일 선택영역
 	RenderTileSelector();
+
+	RenderPath();
 }
 
 void TileManager::RenderTile()
 {
+	Vector3 camPos = Camera::GetPosition();
+
 	for (auto iter : pTileManager->tileMap)
 	{
 		Tile* tile = iter.second;
+
+		if (!tile->isVisible)continue;
+		if (tile->transform.position.x < camPos.x - dfCLIENT_WIDTH / 2) continue;
+		if (tile->transform.position.y < camPos.y - dfCLIENT_HEIGHT / 2) continue;
+		if (tile->transform.position.x > camPos.x + dfCLIENT_WIDTH + dfCLIENT_WIDTH / 2) continue;
+		if (tile->transform.position.y > camPos.y + dfCLIENT_HEIGHT + dfCLIENT_HEIGHT / 2) continue;
+
 		tile->Render();
 	}
 }
@@ -202,6 +252,42 @@ void TileManager::RenderTileSelector()
 #endif // ISOMETRIC
 }
 
+void TileManager::RenderWall()
+{
+	for (auto iter : pTileManager->wallList)
+	{
+		TableIndex idx = iter;
+		Vector3 vec = WallIndexToWorld(idx);
+
+		float x = vec.x - Camera::GetX();
+		float y = vec.y - Camera::GetY();
+
+		D2DRenderManager::DrawLine(x, y + dfTILE_H_Q, x + dfTILE_W_HALF, y + dfTILE_H_Q, D3DCOLOR_ARGB(255, 255, 0, 0));
+		D2DRenderManager::DrawLine(x + dfTILE_W_Q, y, x + dfTILE_W_Q, y + dfTILE_H_HALF, D3DCOLOR_ARGB(255, 255, 0, 0));
+	}
+}
+
+void TileManager::RenderPath()
+{
+	bool isStart = true;
+	int count = pTileManager->pathList.size();
+	int i = 0;
+	Vector3 start;
+	for (auto iter : pTileManager->pathList)
+	{
+		if (isStart)
+		{
+			start = WallIndexToWorldCenter(iter) - Camera::GetPosition();
+			isStart = false;
+			continue;
+		}
+		int blue = (255 / count) * (i+1);
+		Vector3 end = WallIndexToWorldCenter(iter) - Camera::GetPosition();
+		D2DRenderManager::DrawLine(start.x, start.y, end.x, end.y, D3DCOLOR_ARGB(255, 255, 0, blue));
+		start = end;
+	}
+}
+
 Vector3 TileManager::MouseToTilePosition()
 {
 	Vector3 res;
@@ -273,7 +359,91 @@ Vector3 TileManager::TileIndexToWorld(const TableIndex& index)
 	return v;
 }
 
-void TileManager::CreateTile(SpriteType spriteKey, TableIndex worldIndex, TableIndex offset, int isMoveable)
+Vector3 TileManager::MouseToWallPosition()
+{
+	Vector3 res;
+	POINT pt;
+	GetCursorPos(&pt);
+	ScreenToClient(g_hwnd, &pt);
+
+	float worldX = (pt.x + Camera::GetX());
+	float worldY = (pt.y + Camera::GetY());
+
+	// y절편
+	// b = -ax + y;
+	int interceptDown = worldX * -0.5f + worldY; // ↘
+	int interceptUp = worldX * 0.5f + worldY; // ↗
+	// 대각선 라인 번호 
+	int downNum = interceptDown / dfTILE_H_HALF;
+	int upNum = interceptUp / dfTILE_H_HALF;
+
+	if (interceptDown < 0) downNum--;
+	if (interceptUp < 0) upNum--;
+
+	// 대각라인 절편(딱떨어지는)
+	downNum *= dfTILE_H_HALF;
+	upNum *= dfTILE_H_HALF;
+
+	// y = ax + b
+	res.x = upNum - downNum;
+	res.y = (upNum - downNum) * 0.5f + downNum;
+
+	// 보정 // 다이아몬드 위꼭지 => 직사각형 좌상단
+	res.x -= dfTILE_W_Q;
+	// 보정 // 첫타일 좌상단 0,0 기준으로 할때
+	res.y += dfTILE_H_Q;
+
+	return res;
+}
+
+TableIndex TileManager::MouseToWallIndex()
+{
+	TableIndex idx;
+
+	Vector3 tilePos = MouseToWallPosition();
+	idx.row = tilePos.y / dfTILE_H_Q;
+	idx.col = tilePos.x / dfTILE_W_HALF;
+
+	return idx;
+}
+
+Vector3 TileManager::WallIndexToWorld(const TableIndex& index)
+{
+	Vector3 v;
+	v.x = (index.col * dfTILE_W_HALF) + ((index.row % 2) * (dfTILE_W_Q));
+	v.y = index.row * dfTILE_H_Q - dfTILE_H_Q;
+	return v;
+}
+
+Vector3 TileManager::WallIndexToWorldCenter(const TableIndex& index)
+{
+	Vector3 v;
+	v.x = (index.col * dfTILE_W_HALF) + ((index.row % 2) * (dfTILE_W_Q)) + dfTILE_W_Q;
+	v.y = index.row * dfTILE_H_Q;
+	return v;
+}
+
+TableIndex TileManager::PositionToWallIndex(Vector3 pos)
+{
+	TableIndex idx;
+
+	idx.row = pos.y / dfTILE_H_Q;
+	idx.col = pos.x / dfTILE_W_HALF;
+
+	return idx;
+}
+
+TableIndex TileManager::PositionToWallIndex(POINT pos)
+{
+	TableIndex idx;
+
+	idx.row = pos.y / dfTILE_H_Q;
+	idx.col = pos.x / dfTILE_W_HALF;
+
+	return idx;
+}
+
+void TileManager::CreateTile(SpriteType spriteKey, TableIndex worldIndex, TableIndex offset)
 {
 	if (worldIndex.row < 0 || worldIndex.col < 0) return;
 	 
@@ -304,6 +474,37 @@ void TileManager::DeleteAllTiles()
 	}
 }
 
+void TileManager::AddWall(TableIndex idx)
+{
+	auto target = pTileManager->wallList.find(idx);
+
+	if (target != pTileManager->wallList.end())
+	{
+		return;
+	}
+
+	pTileManager->wallList.insert(idx);
+
+	pTileManager->pJPS->PushWall(idx.col, idx.row);
+}
+
+void TileManager::RemoveWall(TableIndex idx)
+{
+	auto target = pTileManager->wallList.find(idx);
+
+	if (target != pTileManager->wallList.end())
+	{
+		pTileManager->wallList.erase(target);
+	}
+}
+
+void TileManager::RemoveAllWall()
+{
+	pTileManager->wallList.clear();
+}
+
+
+
 //Tile* TileManager::FindTile(int indexX, int indexY)
 //{
 //	auto iter = pTileManager->tileMap.find(Point(indexX, indexY));
@@ -318,6 +519,7 @@ void TileManager::Load(const char* _fileName)
 {
 	DeleteAllTiles();
 	ObjectManager::DestroyAll(ObjectType::SUB_TILE);
+	RemoveAllWall();
 
 	char fullName[128] = { 0, };
 	strcat_s(fullName, "Data");
@@ -338,16 +540,14 @@ void TileManager::Load(const char* _fileName)
 		SpriteType tileSet;
 		TableIndex offset;
 		TableIndex index;
-		int isMoveable = 1;
 
 		FileManager::ReadFile(&tileSet, sizeof(SpriteType), 1);
 		FileManager::ReadFile(&offset.row, sizeof(int), 1);
 		FileManager::ReadFile(&offset.col, sizeof(int), 1);
 		FileManager::ReadFile(&index.row, sizeof(int), 1);
 		FileManager::ReadFile(&index.col, sizeof(int), 1);
-		FileManager::ReadFile(&isMoveable, sizeof(int), 1);
 
-		CreateTile(tileSet,index,offset,isMoveable);
+		CreateTile(tileSet,index,offset);
 	}
 
 	FileManager::ReadFile(&tileCount, sizeof(int), 1);
@@ -358,7 +558,6 @@ void TileManager::Load(const char* _fileName)
 		SpriteType tileSet;
 		TableIndex offset;
 		TableIndex index;
-		int isMoveable = 1;
 
 		FileManager::ReadFile(&tileSet, sizeof(SpriteType), 1);
 		FileManager::ReadFile(&offset.row, sizeof(int), 1);
@@ -366,7 +565,6 @@ void TileManager::Load(const char* _fileName)
 		FileManager::ReadFile(&index.row, sizeof(int), 1);
 		FileManager::ReadFile(&index.col, sizeof(int), 1);
 
-		CreateTile(tileSet, index, offset, isMoveable);
 		SubTile* tile = (SubTile*)ObjectManager::CreateObject(ObjectType::SUB_TILE);
 		tile->transform.position = TileIndexToWorld(index);
 		tile->spriteKey = tileSet;
@@ -375,7 +573,40 @@ void TileManager::Load(const char* _fileName)
 		
 	}
 
+	FileManager::ReadFile(&tileCount, sizeof(int), 1);
+
+	// 데이터
+	for (int i = 0; i < tileCount; i++)
+	{
+		TableIndex index;
+
+		FileManager::ReadFile(&index.row, sizeof(int), 1);
+		FileManager::ReadFile(&index.col, sizeof(int), 1);
+
+		AddWall(index);
+	}
+
 	FileManager::CloseFile();
+}
+
+bool TileManager::PathFinding(int sx, int sy, int ex, int ey)
+{
+	return pTileManager->pJPS->Search(sx, sy, ex, ey);
+}
+
+void TileManager::SetSearchSize(int left, int top, int right, int bottom)
+{
+	pTileManager->pJPS->SetMapSize(left, top, right, bottom);
+}
+
+int TileManager::GetPathListCount()
+{
+	return pTileManager->pJPS->GetPathListSize();
+}
+
+bool TileManager::GetPath(int index, int* outX, int* outY)
+{
+	return pTileManager->pJPS->GetPath(index, outX, outY);
 }
 
 //void TileManager::LoadToGameScene(const char* _fileName)

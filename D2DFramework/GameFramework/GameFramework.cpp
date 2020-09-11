@@ -151,6 +151,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             EndPaint(hWnd, &ps);
         }
         break;
+    case WM_LBUTTONDOWN:
+        InputManager::GetInstance()->mouse[(int)Keys::LBUTTON_DOWN] = true;
+        InputManager::GetInstance()->mouse[(int)Keys::LBUTTON] = true;
+        break;
+    case WM_RBUTTONDOWN:
+        InputManager::GetInstance()->mouse[(int)Keys::RBUTTON_DOWN] = true;
+        InputManager::GetInstance()->mouse[(int)Keys::RBUTTON] = true;
+        break;
+    case WM_LBUTTONUP:
+        InputManager::GetInstance()->mouse[(int)Keys::LBUTTON_UP] = true;
+        InputManager::GetInstance()->mouse[(int)Keys::LBUTTON] = false;
+        break;
+    case WM_RBUTTONUP:
+        InputManager::GetInstance()->mouse[(int)Keys::RBUTTON_UP] = true;
+        InputManager::GetInstance()->mouse[(int)Keys::RBUTTON] = false;
+        break;
+    case WM_LBUTTONDBLCLK:
+        InputManager::GetInstance()->mouse[(int)Keys::LBUTTON_DOUBLE] = true;
+        break;
+    case WM_RBUTTONDBLCLK:
+        InputManager::GetInstance()->mouse[(int)Keys::RBUTTON_DOUBLE] = true;
+        break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;

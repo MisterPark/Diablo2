@@ -10,7 +10,12 @@ Texture::~Texture()
 {
 }
 
-DWORD Texture::GetLastFrame()
+int Texture::GetSpriteWidth()const
 {
-	return colCount-1;
+	return imageInfo.Width / colCount;
+}
+
+int Texture::GetSpriteHeight()const
+{
+	return imageInfo.Height / rowCount;
 }

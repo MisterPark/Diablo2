@@ -11,7 +11,9 @@ public:
 	~Animation();
 
 	void Update();
-	void Render();
+	void RenderCharacter();
+	void RenderImage();
+	void RenderSprite();
 
 	SpriteType GetSpriteKey();
 	void SetSpriteKey(SpriteType _spriteKey);
@@ -25,6 +27,7 @@ private:
 	GameObject* ref = nullptr;
 	Texture* tex = nullptr;
 	int currentFrame = 0;
+	int lastFrame = 0;
 	float tick = 0.f;
 	float delay = 0.1f;
 	bool isLoop = false;

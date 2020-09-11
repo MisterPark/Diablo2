@@ -75,9 +75,11 @@ namespace MapTool
         {
             // 좌표정보 출력
             TableIndex index = TileManager.MouseToTileIndex(g_mainPanel);
+            TableIndex moveIndex = TileManager.MouseToMoveableTileIndex(g_mainPanel);
             screenPosLabel.Text = Cursor.Position.ToString();
             panelPosLabel.Text = GetPositionToMainPanel().ToString();
             tileIndexLabel.Text =index.row.ToString() +", "+ index.col.ToString();
+            label6.Text = moveIndex.row.ToString() + ", " + moveIndex.col.ToString();
 
             Input.Update();
             TileManager.Update();
@@ -86,8 +88,9 @@ namespace MapTool
             RenderManager.Clear();
             TileManager.Render();
             TileManager.RenderObject();
-            //TileManager.RenderCrossLine();
-            TileManager.RenderSelector(mainPanel);
+            TileManager.RenderMoveableTile();
+            TileManager.RenderCrossLine();
+            RenderSelecter();
             
             RenderManager.Present(mainPanel);
             // 미니맵 렌더링
@@ -141,7 +144,7 @@ namespace MapTool
             SpriteImage img = RenderManager.GetSpriteImage(selectedTileSet);
             if (img == null) return;
             TableIndex offset = new TableIndex(selectedOffset / img.range.col, selectedOffset % img.range.col);
-            TileManager.CreateTile(selectedTileSet, TileManager.MouseToTileIndex(mainPanel), offset, 1);
+            TileManager.CreateTile(selectedTileSet, TileManager.MouseToTileIndex(mainPanel), offset);
         }
 
         private void CreateObject()
@@ -149,7 +152,28 @@ namespace MapTool
             SpriteImage img = RenderManager.GetSpriteImage(selectedTileSet);
             if (img == null) return;
             TableIndex offset = new TableIndex(selectedOffset / img.range.col, selectedOffset % img.range.col);
-            TileManager.CreateObject(selectedTileSet, TileManager.MouseToTileIndex(mainPanel), offset, 1);
+            TileManager.CreateObject(selectedTileSet, TileManager.MouseToTileIndex(mainPanel), offset);
+        }
+
+        private void RenderSelecter()
+        {
+            switch (mode)
+            {
+                case DrawMode.Tile:
+                    TileManager.RenderSelector(mainPanel);
+                    break;
+                case DrawMode.Move:
+                    TileManager.RenderMoveableTileSelector(mainPanel);
+                    break;
+                case DrawMode.Spawn:
+                    TileManager.RenderSelector(mainPanel);
+                    break;
+                case DrawMode.Object:
+                    TileManager.RenderSelector(mainPanel);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void LButton()
@@ -160,9 +184,7 @@ namespace MapTool
                     CreateTile();
                     break;
                 case DrawMode.Move:
-                    Tile tile = TileManager.FindTile(TileManager.MouseToTileIndex(mainPanel));
-                    if (tile == null) return;
-                    tile.isMoveable = 1;
+                    TileManager.CreateMoveableTile(TileManager.MouseToMoveableTileIndex(mainPanel));
                     break;
                 case DrawMode.Spawn:
                     break;
@@ -182,9 +204,7 @@ namespace MapTool
                     TileManager.DeleteTile(TileManager.MouseToTileIndex(mainPanel));
                     break;
                 case DrawMode.Move:
-                    Tile tile = TileManager.FindTile(TileManager.MouseToTileIndex(mainPanel));
-                    if (tile == null) return;
-                    tile.isMoveable = 0;
+                    TileManager.DeleteMoveableTile(TileManager.MouseToMoveableTileIndex(mainPanel));
                     break;
                 case DrawMode.Spawn:
                     break;

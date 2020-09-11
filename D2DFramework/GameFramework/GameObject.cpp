@@ -29,6 +29,16 @@ void GameObject::SetTarget(GameObject* _target)
 	this->target = _target;
 }
 
+void GameObject::RotateToMouse()
+{
+	POINT pt;
+	GetCursorPos(&pt);
+	ScreenToClient(g_hwnd, &pt);
+	Vector3 dir = { float(pt.x) + Camera::GetX(),float(pt.y) + Camera::GetY(),0.f };
+	dir -= transform.position;
+	direction = atan2f(dir.y, dir.x);
+}
+
 
 Vector3 GameObject::GetPositionFromCamera()
 {
@@ -36,4 +46,28 @@ Vector3 GameObject::GetPositionFromCamera()
 	pos.x -= Camera::GetX();
 	pos.y -= Camera::GetY();
 	return pos;
+}
+
+void GameObject::FaceTarget(Vector3 targetPos)
+{
+	Vector3 dir = targetPos;
+	dir -= transform.position;
+	direction = atan2f(dir.y, dir.x);
+}
+
+void GameObject::Move(Vector3 targetPos)
+{
+	Vector3 dir = targetPos;
+	dir -= transform.position;
+	transform.position.x += cosf(dir.x) * speed * TimeManager::DeltaTime();
+	transform.position.y += sinf(dir.y) * speed * TimeManager::DeltaTime();
+}
+
+void GameObject::Move(TableIndex targetIndex)
+{
+	Vector3 dir = TileManager::WallIndexToWorldCenter(targetIndex);
+	dir -= transform.position;
+	direction = atan2f(dir.y, dir.x);
+	transform.position.x += cosf(direction) * speed * TimeManager::DeltaTime();
+	transform.position.y += sinf(direction) * speed * TimeManager::DeltaTime();
 }

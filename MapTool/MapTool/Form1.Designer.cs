@@ -38,6 +38,8 @@
             this.LeftPanel = new System.Windows.Forms.Panel();
             this.controlPanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.openFileButton = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.loadButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -54,9 +56,9 @@
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.centerPanel = new System.Windows.Forms.Panel();
             this.mainPanel = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.openFileButton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.bottomPanel.SuspendLayout();
             this.LeftPanel.SuspendLayout();
             this.controlPanel.SuspendLayout();
@@ -72,6 +74,8 @@
             // bottomPanel
             // 
             this.bottomPanel.BackColor = System.Drawing.SystemColors.Highlight;
+            this.bottomPanel.Controls.Add(this.label6);
+            this.bottomPanel.Controls.Add(this.label5);
             this.bottomPanel.Controls.Add(this.tileIndexLabel);
             this.bottomPanel.Controls.Add(this.label4);
             this.bottomPanel.Controls.Add(this.panelPosLabel);
@@ -187,6 +191,24 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(263, 67);
             this.panel1.TabIndex = 4;
+            // 
+            // openFileButton
+            // 
+            this.openFileButton.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.openFileButton.Location = new System.Drawing.Point(167, 9);
+            this.openFileButton.Name = "openFileButton";
+            this.openFileButton.Size = new System.Drawing.Size(75, 23);
+            this.openFileButton.TabIndex = 3;
+            this.openFileButton.Text = "Find";
+            this.openFileButton.UseVisualStyleBackColor = true;
+            this.openFileButton.Click += new System.EventHandler(this.openFileButton_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(29, 11);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(132, 21);
+            this.textBox1.TabIndex = 2;
             // 
             // loadButton
             // 
@@ -361,27 +383,31 @@
             this.mainPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mainPanel_MouseMove);
             this.mainPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mainPanel_MouseUp);
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(29, 11);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(132, 21);
-            this.textBox1.TabIndex = 2;
-            // 
-            // openFileButton
-            // 
-            this.openFileButton.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.openFileButton.Location = new System.Drawing.Point(167, 9);
-            this.openFileButton.Name = "openFileButton";
-            this.openFileButton.Size = new System.Drawing.Size(75, 23);
-            this.openFileButton.TabIndex = 3;
-            this.openFileButton.Text = "Find";
-            this.openFileButton.UseVisualStyleBackColor = true;
-            this.openFileButton.Click += new System.EventHandler(this.openFileButton_Click);
-            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label5.Location = new System.Drawing.Point(660, 9);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(91, 12);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "MoveIndex : ";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label6.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label6.Location = new System.Drawing.Point(757, 9);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(44, 12);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "label6";
             // 
             // Form1
             // 
@@ -443,6 +469,8 @@
         private System.Windows.Forms.Button openFileButton;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
     }
 }
 

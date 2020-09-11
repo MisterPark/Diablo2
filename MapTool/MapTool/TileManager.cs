@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
@@ -15,6 +16,7 @@ namespace MapTool
         private static TileManager instance = new TileManager();
         public SortedDictionary<TableIndex, Tile> tileMap = new SortedDictionary<TableIndex, Tile>();
 		public SortedDictionary<TableIndex, SubTile> subTileMap = new SortedDictionary<TableIndex, SubTile>();
+		public SortedDictionary<TableIndex, TableIndex> wallMap = new SortedDictionary<TableIndex, TableIndex>();
 		public string spriteKey = string.Empty;
 
         public static TileManager Instance
@@ -62,6 +64,21 @@ namespace MapTool
 				pair.Value.Render(ratio);
 			}
 		}
+
+		public static void RenderMoveableTile()
+        {
+			foreach(var wall in instance.wallMap)
+            {
+				TableIndex idx = wall.Key;
+				Vector3 vec = MoveableTileIndexToWorld(idx);
+
+				float x = vec.X - Camera.X;
+				float y = vec.Y - Camera.Y;
+
+				RenderManager.DrawLine(x, y + Tile.HeightQuarter, x + Tile.WidthHalf, y + Tile.HeightQuarter, Color.Red);
+				RenderManager.DrawLine(x + Tile.WidthQuarter, y, x + Tile.WidthQuarter, y + Tile.HeightHalf, Color.Red);
+            }
+        }
 
 		public static void RenderSelectedTile(SpriteType key, int offset, int targetW, int targetH)
         {
@@ -113,15 +130,34 @@ namespace MapTool
 			float offsetX = Camera.X;
 			float offsetY = Camera.Y;
 			TableIndex idx = MouseToTileIndex(control);
+			Vector3 vec = TileIndexToWorld(idx);
 
-			float sx = (idx.col * Tile.Width) + ((idx.row % 2) * (Tile.WidthHalf)) - offsetX;
-			float sy = (idx.row * Tile.HeightHalf) - offsetY;
+			float sx = vec.X - offsetX;
+			float sy = vec.Y - offsetY;
 
 			RenderManager.DrawLine(sx, sy + Tile.HeightHalf, sx + Tile.WidthHalf, sy, Color.Green);
 			RenderManager.DrawLine(sx + Tile.WidthHalf, sy, sx + Tile.Width, sy + Tile.HeightHalf, Color.Green);
 			RenderManager.DrawLine(sx + Tile.Width, sy + Tile.HeightHalf, sx + Tile.WidthHalf, sy + Tile.Height, Color.Green);
 			RenderManager.DrawLine(sx + Tile.WidthHalf, sy + Tile.Height, sx, sy + Tile.HeightHalf, Color.Green);
 
+
+		}
+
+		public static void RenderMoveableTileSelector(Control control)
+        {
+
+			float offsetX = Camera.X;
+			float offsetY = Camera.Y;
+			TableIndex idx = MouseToMoveableTileIndex(control);
+			Vector3 vec = MoveableTileIndexToWorld(idx);
+
+			float sx = vec.X - offsetX;
+			float sy = vec.Y - offsetY;
+
+			RenderManager.DrawLine(sx, sy + Tile.HeightQuarter, sx + Tile.WidthQuarter, sy, Color.Green);
+			RenderManager.DrawLine(sx + Tile.WidthQuarter, sy, sx + Tile.WidthHalf, sy + Tile.HeightQuarter, Color.Green);
+			RenderManager.DrawLine(sx + Tile.WidthHalf, sy + Tile.HeightQuarter, sx + Tile.WidthQuarter, sy + Tile.HeightHalf, Color.Green);
+			RenderManager.DrawLine(sx + Tile.WidthQuarter, sy + Tile.HeightHalf, sx, sy + Tile.HeightQuarter, Color.Green);
 
 		}
 
@@ -139,7 +175,7 @@ namespace MapTool
 
 		public static Vector3 MouseToTilePosition(Control control)
 		{
-			Vector3 res = new Vector3();
+			Vector3 tilePos = new Vector3();
 			Point pt = Cursor.Position;
 
 			float worldX = (control.PointToClient(pt).X + Camera.X);
@@ -161,15 +197,15 @@ namespace MapTool
 			upNum *= Tile.Height;
 
 			// y = ax + b
-			res.X = upNum - downNum;
-			res.Y = (upNum - downNum) * 0.5f + downNum;
+			tilePos.X = upNum - downNum;
+			tilePos.Y = (upNum - downNum) * 0.5f + downNum;
 
 			// 보정 // 다이아몬드 위꼭지 => 직사각형 좌상단
-			res.X -= Tile.WidthHalf;
+			tilePos.X -= Tile.WidthHalf;
 			// 보정 // 첫타일 좌상단 0,0 기준으로 할때
-			res.Y += Tile.HeightHalf;
+			tilePos.Y += Tile.HeightHalf;
 
-			return res;
+			return tilePos;
 		}
 
 		public static Vector3 TileIndexToWorld(TableIndex index)
@@ -181,7 +217,63 @@ namespace MapTool
 			return v;
 		}
 
-		public static void CreateTile(SpriteType key, TableIndex worldIndex, TableIndex offset, int moveable)
+		public static TableIndex MouseToMoveableTileIndex(Control control)
+		{
+			TableIndex idx = new TableIndex(0, 0);
+
+			Vector3 tilePos = MouseToMoveableTilePosition(control);
+			idx.row = (int)(tilePos.Y / Tile.HeightQuarter);
+			idx.col = (int)(tilePos.X / Tile.WidthHalf);
+
+			return idx;
+		}
+
+
+		public static Vector3 MouseToMoveableTilePosition(Control control)
+		{
+			Vector3 tilePos = new Vector3();
+			Point pt = Cursor.Position;
+
+			float worldX = (control.PointToClient(pt).X + Camera.X);
+			float worldY = (control.PointToClient(pt).Y + Camera.Y);
+
+			// y절편
+			// b = -ax + y;
+			int interceptDown = (int)(worldX * -0.5f + worldY ); // ↘
+			int interceptUp = (int)(worldX * 0.5f + worldY ); // ↗
+																			   // 대각선 라인 번호 
+			int downNum = interceptDown / Tile.HeightHalf;
+			int upNum = interceptUp / Tile.HeightHalf;
+
+			if (interceptDown < 0) downNum--;
+			if (interceptUp < 0) upNum--;
+
+			// 대각라인 절편(딱떨어지는)
+			downNum *= Tile.HeightHalf;
+			upNum *= Tile.HeightHalf;
+
+			// y = ax + b
+			tilePos.X = upNum - downNum;
+			tilePos.Y = (upNum - downNum) * 0.5f + downNum;
+
+			//// 보정 // 다이아몬드 위꼭지 => 직사각형 좌상단
+			tilePos.X -= Tile.WidthQuarter;
+			//// 보정 // 첫타일 좌상단 0,0 기준으로 할때
+			tilePos.Y += Tile.HeightQuarter;
+
+			return tilePos;
+		}
+
+		public static Vector3 MoveableTileIndexToWorld(TableIndex index)
+		{
+			Vector3 v;
+			v.X = (index.col * Tile.WidthHalf) + ((index.row % 2) * (Tile.WidthQuarter));
+			v.Y = index.row * Tile.HeightQuarter - Tile.HeightQuarter;
+			v.Z = 0;
+			return v;
+		}
+
+		public static void CreateTile(SpriteType key, TableIndex worldIndex, TableIndex offset)
         {
 			if (worldIndex.row < 0 || worldIndex.col < 0) return;
 
@@ -196,7 +288,6 @@ namespace MapTool
 			tile.key = key;
 			tile.index = worldIndex;
 			tile.offset = offset;
-			tile.isMoveable = moveable;
 
 			instance.tileMap.Add(worldIndex, tile);
 
@@ -209,7 +300,7 @@ namespace MapTool
 
 		public static Tile FindTile(TableIndex worldIndex)
         {
-			Tile tile = null;
+			Tile tile;
 			if(instance.tileMap.TryGetValue(worldIndex, out tile) == true)
             {
 				return tile;
@@ -217,11 +308,11 @@ namespace MapTool
 			return null;
         }
 
-		public static void CreateObject(SpriteType key, TableIndex worldIndex, TableIndex offset, int moveable)
+		public static void CreateObject(SpriteType key, TableIndex worldIndex, TableIndex offset)
 		{
 			if (worldIndex.row < 0 || worldIndex.col < 0) return;
 
-			SubTile tile = null;
+			SubTile tile;
 			if (instance.subTileMap.TryGetValue(worldIndex, out tile))
 			{
 				return;
@@ -232,7 +323,6 @@ namespace MapTool
 			tile.key = key;
 			tile.index = worldIndex;
 			tile.offset = offset;
-			tile.isMoveable = moveable;
 
 			instance.subTileMap.Add(worldIndex, tile);
 
@@ -251,6 +341,32 @@ namespace MapTool
 				return tile;
 			}
 			return null;
+		}
+
+		public static void CreateMoveableTile(TableIndex idx)
+        {
+			TableIndex val;
+			if(instance.wallMap.TryGetValue(idx,out val))
+            {
+				return;
+            }
+
+			instance.wallMap.Add(idx, idx);
+        }
+
+		public static void DeleteMoveableTile(TableIndex idx)
+        {
+			instance.wallMap.Remove(idx);
+        }
+
+		public static bool FindMoveableTile(TableIndex idx)
+        {
+			TableIndex val;
+			if (instance.wallMap.TryGetValue(idx, out val))
+			{
+				return true;
+			}
+			return false;
 		}
 
 		public static void Save(string path)
@@ -277,8 +393,6 @@ namespace MapTool
 				fs.Write(buffer, 0, buffer.Length);
 				buffer = BitConverter.GetBytes(tile.index.col);
 				fs.Write(buffer, 0, buffer.Length);
-				buffer = BitConverter.GetBytes(tile.isMoveable);
-				fs.Write(buffer, 0, buffer.Length);
 			}
 
 			count = instance.subTileMap.Count;
@@ -298,6 +412,19 @@ namespace MapTool
 				buffer = BitConverter.GetBytes(tile.index.row);
 				fs.Write(buffer, 0, buffer.Length);
 				buffer = BitConverter.GetBytes(tile.index.col);
+				fs.Write(buffer, 0, buffer.Length);
+			}
+
+			count = instance.wallMap.Count;
+			buffer = BitConverter.GetBytes(count);
+			fs.Write(buffer, 0, buffer.Length);
+
+			foreach (var pair in instance.wallMap)
+			{
+				TableIndex idx = pair.Key;
+				buffer = BitConverter.GetBytes(idx.row);
+				fs.Write(buffer, 0, buffer.Length);
+				buffer = BitConverter.GetBytes(idx.col);
 				fs.Write(buffer, 0, buffer.Length);
 			}
 
@@ -323,7 +450,6 @@ namespace MapTool
 				SpriteType key = 0;
 				TableIndex offset = new TableIndex(0, 0);
 				TableIndex index = new TableIndex(0, 0);
-				int moveable = 1;
 
 				fs.Read(buffer, 0, 4);
 				key = (SpriteType)BitConverter.ToInt32(buffer, 0);
@@ -335,10 +461,8 @@ namespace MapTool
 				index.row = BitConverter.ToInt32(buffer, 0);
 				fs.Read(buffer, 0, 4);
 				index.col = BitConverter.ToInt32(buffer, 0);
-				fs.Read(buffer, 0, 4);
-				moveable = BitConverter.ToInt32(buffer, 0);
 
-				CreateTile(key, index, offset, moveable);
+				CreateTile(key, index, offset);
             }
 
 
@@ -350,7 +474,6 @@ namespace MapTool
 				SpriteType key = 0;
 				TableIndex offset = new TableIndex(0, 0);
 				TableIndex index = new TableIndex(0, 0);
-				int moveable = 0;
 
 				fs.Read(buffer, 0, 4);
 				key = (SpriteType)BitConverter.ToInt32(buffer, 0);
@@ -363,7 +486,22 @@ namespace MapTool
 				fs.Read(buffer, 0, 4);
 				index.col = BitConverter.ToInt32(buffer, 0);
 
-				CreateObject(key, index, offset, moveable);
+				CreateObject(key, index, offset);
+			}
+
+			fs.Read(buffer, 0, 4);
+			count = BitConverter.ToInt32(buffer, 0);
+
+			for (int i = 0; i < count; i++)
+			{
+				TableIndex index = new TableIndex(0, 0);
+
+				fs.Read(buffer, 0, 4);
+				index.row = BitConverter.ToInt32(buffer, 0);
+				fs.Read(buffer, 0, 4);
+				index.col = BitConverter.ToInt32(buffer, 0);
+
+				CreateMoveableTile(index);
 			}
 
 			fs.Close();

@@ -35,6 +35,14 @@ void InputManager::Update()
 	
 }
 
+void InputManager::Initialize()
+{
+	memset(pInputManager->keys, 0, RANGE_OF_KEYS);
+	memset(pInputManager->keyDowns, 0, RANGE_OF_KEYS);
+	memset(pInputManager->keyUps, 0, RANGE_OF_KEYS);
+
+}
+
 void InputManager::Release()
 {
 	delete pInputManager;
@@ -46,6 +54,27 @@ void InputManager::Clear()
 	memset(pInputManager->keys, 0, RANGE_OF_KEYS);
 	memset(pInputManager->keyDowns, 0, RANGE_OF_KEYS);
 	memset(pInputManager->keyUps, 0, RANGE_OF_KEYS);
+
+	ClearMouseState();
+}
+
+void InputManager::ClearMouseState()
+{
+	int count = MaxOfEnum<Keys>();
+	for (int i = 2; i < count; i++)
+	{
+		if (pInputManager->mouse[i])
+		{
+			pInputManager->mouseFrameCount[i]++;
+			if (pInputManager->mouseFrameCount[i] == dfINPUT_LIFE_FRAME)
+			{
+				pInputManager->mouseFrameCount[i] = 0;
+				pInputManager->mouse[i] = false;
+			}
+		}
+	}
+		
+
 }
 
 bool InputManager::GetKey(int _vkey)
@@ -63,6 +92,46 @@ bool InputManager::GetKeyUp(int _vkey)
 	return pInputManager->keyUps[_vkey];
 }
 
+bool InputManager::GetMouseLButton()
+{
+	return pInputManager->mouse[(int)Keys::LBUTTON];
+}
+
+bool InputManager::GetMouseLButtonUp()
+{
+	return pInputManager->mouse[(int)Keys::LBUTTON_UP];
+}
+
+bool InputManager::GetMouseLButtonDown()
+{
+	return pInputManager->mouse[(int)Keys::LBUTTON_DOWN];
+}
+
+bool InputManager::GetMouseLButtonDouble()
+{
+	return pInputManager->mouse[(int)Keys::LBUTTON_DOUBLE];
+}
+
+bool InputManager::GetMouseRButton()
+{
+	return pInputManager->mouse[(int)Keys::RBUTTON];
+}
+
+bool InputManager::GetMouseRButtonUp()
+{
+	return pInputManager->mouse[(int)Keys::RBUTTON_UP];
+}
+
+bool InputManager::GetMouseRButtonDown()
+{
+	return pInputManager->mouse[(int)Keys::RBUTTON_DOWN];
+}
+
+bool InputManager::GetMouseRButtonDouble()
+{
+	return pInputManager->mouse[(int)Keys::RBUTTON_DOUBLE];
+}
+
 bool InputManager::GetTileIndex(POINT * _outPoint)
 {
 	if (_outPoint == nullptr) return false;
@@ -78,4 +147,24 @@ bool InputManager::GetTileIndex(POINT * _outPoint)
 	*_outPoint = idx;
 
 	return true;
+}
+
+POINT InputManager::GetMousePosOnClient()
+{
+	POINT pt;
+	GetCursorPos(&pt);
+	ScreenToClient(g_hwnd, &pt);
+	return pt;
+}
+
+POINT InputManager::GetMousePosOnWorld()
+{
+	POINT pt;
+	GetCursorPos(&pt);
+	ScreenToClient(g_hwnd, &pt);
+
+	pt.x += Camera::GetX();
+	pt.y += Camera::GetY();
+
+	return pt;
 }

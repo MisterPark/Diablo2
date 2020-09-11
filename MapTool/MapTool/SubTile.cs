@@ -17,6 +17,11 @@ namespace MapTool
 
         public new void Render()
         {
+            if (transform.position.X < Camera.X - Tile.Width) return;
+            if (transform.position.Y < Camera.Y - Tile.Height) return;
+            if (transform.position.X > Camera.X + Form1.GetMainPanelWidth()) return;
+            if (transform.position.Y > Camera.Y + Form1.GetMainPanelHeight()) return;
+
             RenderManager.DrawSubTileSprite(key, transform, offset);
         }
     }

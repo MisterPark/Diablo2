@@ -2,16 +2,26 @@
 #include "ObjectManager.h"
 #include "Character.h"
 #include "SubTile.h"
+#include "Sorceress.h"
+#include "Player.h"
+#include "BackGround.h"
+#include "UI_Logo.h"
+#include "Button.h"
+#include "Label.h"
 
 ObjectManager* pObjectManager = nullptr;
 int lastUid = 0;
 
 ObjectManager::ObjectManager()
 {
+	Player::GetInstance();
+	BackGround::GetInstance();
 }
 
 ObjectManager::~ObjectManager()
 {
+	Player::DestroyInstance();
+	BackGround::DestroyInstance();
 }
 
 ObjectManager * ObjectManager::GetInstance()
@@ -31,8 +41,17 @@ GameObject * ObjectManager::CreateObject(ObjectType _type)
 	case ObjectType::SUB_TILE:
 		pObj = new SubTile;
 		break;
-	case ObjectType::CHARACTER:
-		pObj = new Character;
+	case ObjectType::SORCERESS:
+		pObj = new Sorceress();
+		break;
+	case ObjectType::UI_LOGO:
+		pObj = new UI_Logo;
+		break;
+	case ObjectType::BUTTON:
+		pObj = new Button();
+		break;
+	case ObjectType::LABEL:
+		pObj = new Label();
 		break;
 	default:
 		return nullptr;
@@ -41,7 +60,7 @@ GameObject * ObjectManager::CreateObject(ObjectType _type)
 	pObj->type = _type;
 	pObj->uid = ++lastUid;
 	pObjectManager->objectTable[(int)_type].push_back(pObj);
-
+	pObjectManager->renderList.push_back(pObj);
 	//if (dynamic_cast<Character*>(pObj) != nullptr)
 	//{
 	//	CollisionManager::RegisterObject(pObj);
@@ -92,6 +111,8 @@ void ObjectManager::Release()
 
 void ObjectManager::Update()
 {
+	Player::Update();
+	BackGround::GetInstance()->Update();
 
 	auto& objTable = pObjectManager->objectTable;
 	for (auto& objList : objTable)
@@ -140,20 +161,48 @@ void ObjectManager::LateUpdate()
 	
 }
 
+void ObjectManager::PreRender()
+{
+	BackGround::GetInstance()->Render();
+}
+
 void ObjectManager::Render()
 {
+	pObjectManager->renderList.clear();
+
+	Vector3 camPos = Camera::GetPosition();
+	
 	auto& objTable = pObjectManager->objectTable;
 	for (auto& objList : objTable)
 	{
 		for (auto& iter : objList)
 		{
 			if (!iter->isVisible)continue;
-			iter->Render();
+			if (iter->transform.position.x < camPos.x - dfCLIENT_WIDTH/2) continue;
+			if (iter->transform.position.y < camPos.y - dfCLIENT_HEIGHT/2) continue;
+			if (iter->transform.position.x > camPos.x + dfCLIENT_WIDTH + dfCLIENT_WIDTH / 2) continue;
+			if (iter->transform.position.y > camPos.y + dfCLIENT_HEIGHT + dfCLIENT_HEIGHT / 2) continue;
+
+			pObjectManager->renderList.push_back(iter);
 		}
+	}
+
+	pObjectManager->renderList.sort(Compare);
+
+	
+
+	for (auto& obj : pObjectManager->renderList)
+	{
+		obj->Render();
 	}
 
 	// 디버그용
 	//TimeManager::RenderFPS();
+}
+
+bool ObjectManager::Compare(GameObject* a, GameObject* b)
+{
+	return a->transform.position.y < b->transform.position.y;
 }
 
 bool ObjectManager::IsVisibleCollider()

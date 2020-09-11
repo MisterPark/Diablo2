@@ -19,6 +19,7 @@ public:
 	static void SetRangeY(int minY, int maxY);
 	static int GetX();
 	static int GetY();
+	static Vector3 GetPosition();
 
 	static void FollowTarget();
 
