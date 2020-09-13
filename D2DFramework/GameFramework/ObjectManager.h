@@ -24,6 +24,7 @@ public:
 	static void LateUpdate();
 	static void PreRender();
 	static void Render();
+	static void PostRender();
 
 	static bool Compare(GameObject* a, GameObject* b);
 

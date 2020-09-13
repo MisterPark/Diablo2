@@ -34,7 +34,7 @@ void TileManager::Update()
 {
 	if (InputManager::GetKeyDown('T'))
 	{
-		pTileManager->isVisible = !pTileManager->isVisible;
+		pTileManager->isDebugMode = !pTileManager->isDebugMode;
 	}
 
 	if (pTileManager->isVisible == false) return;
@@ -359,6 +359,14 @@ Vector3 TileManager::TileIndexToWorld(const TableIndex& index)
 	return v;
 }
 
+Vector3 TileManager::TileIndexToWorldCenter(const TableIndex& index)
+{
+	Vector3 v;
+	v.x = (index.col * dfTILE_W) + ((index.row % 2) * (dfTILE_W_HALF)) + dfTILE_W_HALF;
+	v.y = index.row * dfTILE_H_HALF + dfTILE_H_HALF;
+	return v;
+}
+
 Vector3 TileManager::MouseToWallPosition()
 {
 	Vector3 res;
@@ -566,7 +574,7 @@ void TileManager::Load(const char* _fileName)
 		FileManager::ReadFile(&index.col, sizeof(int), 1);
 
 		SubTile* tile = (SubTile*)ObjectManager::CreateObject(ObjectType::SUB_TILE);
-		tile->transform.position = TileIndexToWorld(index);
+		tile->transform.position = TileIndexToWorldCenter(index);
 		tile->spriteKey = tileSet;
 		tile->offsetIndex = offset;
 		tile->worldIndex = index;

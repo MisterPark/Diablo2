@@ -55,7 +55,7 @@ void GameObject::FaceTarget(Vector3 targetPos)
 	direction = atan2f(dir.y, dir.x);
 }
 
-void GameObject::Move(Vector3 targetPos)
+void GameObject::Run(Vector3 targetPos)
 {
 	Vector3 dir = targetPos;
 	dir -= transform.position;
@@ -63,7 +63,7 @@ void GameObject::Move(Vector3 targetPos)
 	transform.position.y += sinf(dir.y) * speed * TimeManager::DeltaTime();
 }
 
-void GameObject::Move(TableIndex targetIndex)
+void GameObject::Run(TableIndex targetIndex)
 {
 	Vector3 dir = TileManager::WallIndexToWorldCenter(targetIndex);
 	dir -= transform.position;

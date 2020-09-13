@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Player.h"
 #include "Sorceress.h"
+#include "Label.h"
 
 Player* pPlayer = nullptr;
 
@@ -16,12 +17,14 @@ Player::~Player()
 
 void Player::Initialize()
 {
+	label = new Label();
 
+	barTrans.position.y = dfCLIENT_HEIGHT - 103;
 }
 
 void Player::Release()
 {
-
+	delete label;
 }
 
 Player* Player::GetInstance()
@@ -47,6 +50,8 @@ void Player::Update()
     if (pPlayer->isEnable == false) return;
 	if (pPlayer->pChar == nullptr) return;
 
+	
+
 	if (InputManager::GetKey(VK_UP))
 	{
 		pPlayer->pChar->transform.position.y -= 100.f * TimeManager::DeltaTime();
@@ -63,16 +68,44 @@ void Player::Update()
 	{
 		pPlayer->pChar->transform.position.x += 100.f * TimeManager::DeltaTime();
 	}
-	if (InputManager::GetKey(VK_LBUTTON))
+	if (InputManager::GetMouseLButton())
 	{
-		//pPlayer->pChar->PathFInding(InputManager::GetMousePosOnWorld());
-		pPlayer->pChar->pathList.clear();
-		pPlayer->pChar->nextPos = TileManager::MouseToWallIndex();
-		pPlayer->pChar->isMoving = true;
+		if (InputManager::GetKey(VK_SHIFT))
+		{
+			pPlayer->pChar->Attack();
+		}
+		else
+		{
+			//pPlayer->pChar->PathFInding(InputManager::GetMousePosOnWorld());
+			pPlayer->pChar->pathList.clear();
+			pPlayer->pChar->nextPos = TileManager::MouseToWallIndex();
+			pPlayer->pChar->isMoving = true;
+		}
+		
 	}
+	
 
 	
 
+}
+
+void Player::RenderStatusBar()
+{
+	D2DRenderManager::DrawUI(SpriteType::UI_PANEL_STATUS_BAR, pPlayer->barTrans, 0);
+	if (pPlayer->pChar == nullptr) return;
+
+	
+	
+}
+
+void Player::RenderDebug()
+{
+	if (pPlayer->pChar == nullptr) return;
+	WCHAR wstr[64] = {};
+	swprintf_s(wstr, L"%f", D3DXToDegree(pPlayer->pChar->direction));
+	pPlayer->label->SetText(wstr);
+	pPlayer->label->SetColor(Color(255, 255, 0, 0));
+	pPlayer->label->Render();
 }
 
 

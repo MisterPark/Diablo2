@@ -36,9 +36,9 @@ public:
 	Vector3 GetPositionFromCamera();
 
 	void FaceTarget(Vector3 targetPos);
-	void Move(Vector3 targetPos);
+	void Run(Vector3 targetPos);
 	// 길찾기용 이동
-	void Move(TableIndex targetIndex);
+	void Run(TableIndex targetIndex);
 
 
 public:

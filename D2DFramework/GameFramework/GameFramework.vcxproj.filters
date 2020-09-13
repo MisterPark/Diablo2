@@ -201,6 +201,9 @@
     <ClInclude Include="Label.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -306,6 +309,9 @@
       <Filter>GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="Label.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -200,6 +200,12 @@ void ObjectManager::Render()
 	//TimeManager::RenderFPS();
 }
 
+void ObjectManager::PostRender()
+{
+	Player::RenderStatusBar();
+	Player::RenderDebug();
+}
+
 bool ObjectManager::Compare(GameObject* a, GameObject* b)
 {
 	return a->transform.position.y < b->transform.position.y;

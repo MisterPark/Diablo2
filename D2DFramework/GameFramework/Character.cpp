@@ -12,11 +12,12 @@ Character::~Character()
 
 void Character::Update()
 {
-	
+	attackTick += TimeManager::DeltaTime();
+
 	if (isMoving)
 	{
 		state = CharacterState::RN;
-		Move(nextPos);
+		Run(nextPos);
 
 		Vector3 nPos = TileManager::WallIndexToWorldCenter(nextPos);
 		float gapX = fabsf(nPos.x - transform.position.x);
@@ -76,6 +77,7 @@ void Character::PathFInding(Vector3 _targetPos)
 		TableIndex path;
 		for (int i = 0; i < count; i++)
 		{
+			if (i == 0)continue;
 			TileManager::GetPath(i, &path.col, &path.row);
 			pathList.push_back(path);
 		}
@@ -84,4 +86,25 @@ void Character::PathFInding(Vector3 _targetPos)
 	{
 
 	}
+}
+
+void Character::Attack()
+{
+	if (attackTick > attackDelay)
+	{
+		attackTick = 0.f;
+		FaceTarget(InputManager::GetMousePosOnWorld());
+		state = CharacterState::A1_STF;
+	}
+	
+}
+
+void Character::UpdateAttack()
+{
+
+	attackTick += TimeManager::DeltaTime();
+}
+
+void Character::SkillCast()
+{
 }

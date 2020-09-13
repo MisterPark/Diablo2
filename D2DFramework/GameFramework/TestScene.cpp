@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "TestScene.h"
 #include "BackGround.h"
-
+#include "Label.h"
 
 void TestScene::OnLoaded()
 {
@@ -17,6 +17,9 @@ void TestScene::OnLoaded()
 	Player::SetCharacter(ObjectType::SORCERESS);
 	Player::SetVisible(true);
 	Player::SetEnable(true);
+
+
+
 }
 
 void TestScene::OnUnloaded()

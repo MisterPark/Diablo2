@@ -27,7 +27,7 @@ void Animation::Update()
 	{
 		tick = 0.f;
 
-		if (currentFrame == lastFrame) // 마지막프레임이면
+		if (currentFrame >= lastFrame) // 마지막프레임이면
 		{
 			if (isLoop) // 루프면
 			{
@@ -48,10 +48,10 @@ void Animation::RenderCharacter()
 
 	lastFrame = tex->colCount - 1;
 
-	float angle = D3DXToDegree(ref->direction) + 630;
-	//angle += (360.f / 16.f / 2.f);
+	float angle = D3DXToDegree(ref->direction) + 630.f;
+	angle += (360.f / 32.f);
 	angle = fmodf(angle, 360.f);
-	int directionIndex = angle / (360 / 16) - 1;
+	int directionIndex = angle / (360.f / 16.f);// -1;
 	D2DRenderManager::DrawCharacter(spriteKey, ref->transform, directionIndex, currentFrame);
 }
 

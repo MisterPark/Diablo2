@@ -3,6 +3,7 @@
 
 Label::Label()
 {
+	SetFont(L"µ¸¿ò", 11, FW_BOLD);
 }
 
 Label::~Label()

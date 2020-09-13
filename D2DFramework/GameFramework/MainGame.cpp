@@ -48,12 +48,12 @@ void MainGame::Initialize()
 {
 	TimeManager::GetInstance();
 	TimeManager::SetFrame(dfFPS);
-
+	D2DRenderManager::GetInstance();
 	CollisionManager::GetInstance();
 	InputManager::GetInstance();
 	ObjectManager::GetInstance();
 	//RenderManager::GetInstance();
-	D2DRenderManager::GetInstance();
+	
 	SceneManager::GetInstance();
 	
 	Camera::GetInstance();
@@ -86,12 +86,21 @@ void MainGame::Initialize()
 	D2DRenderManager::LoadSprite(L"Sprites\\ui\\status_panel.png", SpriteType::UI_PANEL_STATUS, 1, 1);
 	D2DRenderManager::LoadSprite(L"Sprites\\ui\\inven_panel.png", SpriteType::UI_PANEL_INVEN, 1, 1);
 	D2DRenderManager::LoadSprite(L"Sprites\\ui\\buysell_panel.png", SpriteType::UI_PANEL_BUYSELL, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\StatusBar.png", SpriteType::UI_PANEL_STATUS_BAR, 1, 1);
 
 
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOBW.png", SpriteType::SO_BW, 5, 6);
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SONUHTH.png", SpriteType::SO_NU_HTH, 16, 8);
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SORNHTH.png", SpriteType::SO_RN_HTH, 16, 8);
-	
+	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOTNSTF.png", SpriteType::SO_TN_STF, 16, 16);
+	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SORNSTF.png", SpriteType::SO_RN_STF, 16, 8);
+	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOA1STF.png", SpriteType::SO_A1_STF, 16, 18);
+	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOA2STF.png", SpriteType::SO_A2_STF, 16, 18);
+	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOSCSTF.png", SpriteType::SO_SC_STF, 16, 19);
+	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOGHSTF.png", SpriteType::SO_GH_STF, 16, 8);
+
+
+
 	SceneManager::LoadScene<IntroScene>();
 	//SceneManager::LoadScene<TestScene>();
 }
@@ -130,6 +139,7 @@ void MainGame::Run()
 		ObjectManager::PreRender();
 		TileManager::Render();
 		ObjectManager::Render();
+		ObjectManager::PostRender();
 		//D2DRenderManager::GetSprite()->End();
 
 		//D2DRenderManager::GetLine()->Begin();

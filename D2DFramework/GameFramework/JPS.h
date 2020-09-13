@@ -35,11 +35,19 @@ typedef struct JPSNode
 	}
 	int G(int sx, int sy)
 	{
-		return sqrt(pow(sx - x, 2) + pow(sy - y, 2)) * 10;
+		float fx = (x * dfTILE_W_HALF) + ((y % 2) * (dfTILE_W_Q)) + dfTILE_W_Q;
+		float fy = y * dfTILE_H_Q;
+		float fsx = (sx * dfTILE_W_HALF) + ((sy % 2) * (dfTILE_W_Q)) + dfTILE_W_Q;
+		float fsy = sy * dfTILE_H_Q;
+		return sqrt(pow(fsx - fx, 2) + pow(fsy - fy, 2)) * 10;
 	}
 	int H(int ex, int ey)
 	{
-		return (abs(x - ex) + abs(y - ey)) * 10;
+		float fx = (x * dfTILE_W_HALF) + ((y % 2) * (dfTILE_W_Q)) + dfTILE_W_Q;
+		float fy = y * dfTILE_H_Q;
+		float fex = (ex * dfTILE_W_HALF) + ((ey % 2) * (dfTILE_W_Q)) + dfTILE_W_Q;
+		float fey = ey * dfTILE_H_Q;
+		return (abs(fx - fex) + abs(fy - fey)) * 10;
 	}
 	int F(int sx, int sy, int ex, int ey)
 	{

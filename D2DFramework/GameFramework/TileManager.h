@@ -39,6 +39,7 @@ public:
 	static Vector3 MouseToTilePosition();
 	static TableIndex MouseToTileIndex();
 	static Vector3 TileIndexToWorld(const TableIndex& index);
+	static Vector3 TileIndexToWorldCenter(const TableIndex& index);
 
 	static Vector3 MouseToWallPosition();
 	static TableIndex MouseToWallIndex();

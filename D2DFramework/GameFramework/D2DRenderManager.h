@@ -27,10 +27,18 @@ enum class SpriteType
 	UI_PANEL_STATUS,
 	UI_PANEL_INVEN,
 	UI_PANEL_BUYSELL,
+	UI_PANEL_STATUS_BAR,
 
 	SO_BW,
 	SO_NU_HTH,
 	SO_RN_HTH,
+	
+	SO_TN_STF,
+	SO_RN_STF,
+	SO_A1_STF,
+	SO_A2_STF,
+	SO_SC_STF,
+	SO_GH_STF,
 };
 
 class D2DRenderManager
@@ -59,6 +67,7 @@ public:
 	static void DrawUI(SpriteType spriteKey, Transform transform, int index);
 	static void DrawCharacter(SpriteType spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
 	static void DrawTile(SpriteType spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
+	static void DrawSubTile(SpriteType spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
 
 	static void DrawImage(SpriteType spriteKey, Transform transform);
 
