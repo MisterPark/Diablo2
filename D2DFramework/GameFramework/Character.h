@@ -46,5 +46,11 @@ public:
 
     float attackTick = 0.f;
     float attackDelay = 1.0f;
+
+    // stat
+    wstring nick;
+    wstring className;
+
+    int stat[MaxOfEnum<StatType>()] = {  };
 };
 

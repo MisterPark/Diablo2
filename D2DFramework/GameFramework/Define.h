@@ -27,3 +27,27 @@ enum class Direction
 
 	END
 };
+
+enum class StatType
+{
+	LEVEL,
+	EXP,
+	MAX_EXP,
+	STRENGTH,
+	DEXTERITY,
+	VITALITY,
+	ENERGY,
+	STAT_POINT,
+	STEMINA,
+	MAX_STEMINA,
+	LIFE,
+	MAX_LIFE,
+	MANA,
+	MAX_MANA,
+	FIRE_RES,
+	COLD_RES,
+	LIGHT_RES,
+	POISON_RES,
+
+	END
+};

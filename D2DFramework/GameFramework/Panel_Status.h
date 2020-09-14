@@ -1,5 +1,8 @@
 #pragma once
 #include "UI.h"
+
+class Label;
+
 class Panel_Status :
     public UI
 {
@@ -20,5 +23,11 @@ public:
     virtual void OnHover();
     virtual void OnLeave();
     virtual void OnChangedText();
+
+
+    
+    Label* nick                   =nullptr;
+    Label* className              =nullptr;
+    Label* labels[MaxOfEnum<StatType>()] = {};
 };
 

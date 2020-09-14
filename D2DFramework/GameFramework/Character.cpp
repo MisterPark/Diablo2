@@ -4,6 +4,9 @@
 Character::Character()
 {
 	direction = 180.f;
+
+	stat[(int)StatType::LIFE] = stat[(int)StatType::MAX_LIFE];
+	stat[(int)StatType::MANA] = stat[(int)StatType::MAX_MANA];
 }
 
 Character::~Character()

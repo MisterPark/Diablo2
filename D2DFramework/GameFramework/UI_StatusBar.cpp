@@ -31,6 +31,11 @@ void UI_StatusBar::Destroy()
 void UI_StatusBar::Update()
 {
 	anim->Update();
+
+	if (Player::GetInstance()->pChar == nullptr) return;
+	SetHPPercent(Player::GetInstance()->pChar->stat[(int)StatType::MAX_LIFE], Player::GetInstance()->pChar->stat[(int)StatType::LIFE]);
+	SetMPPercent(Player::GetInstance()->pChar->stat[(int)StatType::MAX_MANA], Player::GetInstance()->pChar->stat[(int)StatType::MANA]);
+
 }
 
 void UI_StatusBar::Render()
@@ -69,10 +74,20 @@ void UI_StatusBar::OnChangedText()
 
 void UI_StatusBar::SetHPPercent(int max, int hp)
 {
+	if (max == 0 || hp ==0)
+	{
+		pBar->perHP = 0.f;
+		return;
+	}
 	pBar->perHP = (float)hp / max;
 }
 
 void UI_StatusBar::SetMPPercent(int max, int mp)
 {
+	if (max == 0 || mp == 0)
+	{
+		pBar->perMP = 0.f;
+		return;
+	}
 	pBar->perMP = (float)mp / max;
 }

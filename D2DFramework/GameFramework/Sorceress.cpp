@@ -18,6 +18,13 @@ Sorceress::Sorceress()
 	sprites[(int)CharacterState::SC_STF] = SpriteType::SO_SC_STF;
 	sprites[(int)CharacterState::GH_STF] = SpriteType::SO_GH_STF;
 
+    // stat
+	nick = L"닉네임";
+    className = L"소서리스";
+
+
+	stat[(int)StatType::LIFE] = stat[(int)StatType::MAX_LIFE];
+	stat[(int)StatType::MANA] = stat[(int)StatType::MAX_MANA];
 }
 
 Sorceress::~Sorceress()
