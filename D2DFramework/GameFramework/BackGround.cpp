@@ -20,7 +20,7 @@ BackGround* BackGround::GetInstance()
 	return pBG;
 }
 
-void BackGround::DestroyInstance()
+void BackGround::Destroy()
 {
 	delete pBG;
 }

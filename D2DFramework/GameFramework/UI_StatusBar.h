@@ -8,7 +8,7 @@ private:
     virtual ~UI_StatusBar();
 public:
     static UI_StatusBar* GetInstance();
-    static void DestroyInstance();
+    static void Destroy();
 
     virtual void Update();
     virtual void Render();
@@ -20,9 +20,10 @@ public:
     virtual void OnLeave();
     virtual void OnChangedText();
 
+    static void SetHPPercent(int max, int hp);
+    static void SetMPPercent(int max, int mp);
+
     float perHP = 1.f;
     float perMP = 1.f;
-    int hpX = 50;
-    int hpY = 530;
 };
 

@@ -207,7 +207,10 @@
     <ClInclude Include="UI_StatusBar.h">
       <Filter>GameObject\UI</Filter>
     </ClInclude>
-    <ClInclude Include="UI_HP.h">
+    <ClInclude Include="Panel_Status.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -323,7 +326,10 @@
     <ClCompile Include="UI_StatusBar.cpp">
       <Filter>GameObject\UI</Filter>
     </ClCompile>
-    <ClCompile Include="UI_HP.cpp">
+    <ClCompile Include="Panel_Status.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

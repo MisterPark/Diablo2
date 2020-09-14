@@ -9,7 +9,7 @@ private:
 
 public:
     static BackGround* GetInstance();
-    static void DestroyInstance();
+    static void Destroy();
     
     static void SetSprite(SpriteType _type);
 

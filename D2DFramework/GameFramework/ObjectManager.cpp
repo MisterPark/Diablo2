@@ -9,6 +9,8 @@
 #include "Button.h"
 #include "Label.h"
 #include "UI_StatusBar.h"
+#include "Panel_Status.h"
+#include "Inventory.h"
 
 ObjectManager* pObjectManager = nullptr;
 int lastUid = 0;
@@ -18,13 +20,18 @@ ObjectManager::ObjectManager()
 	Player::GetInstance();
 	BackGround::GetInstance();
 	UI_StatusBar::GetInstance();
+	Panel_Status::GetInstance();
+	Inventory::GetInstance();
+
 }
 
 ObjectManager::~ObjectManager()
 {
-	Player::DestroyInstance();
-	BackGround::DestroyInstance();
-	UI_StatusBar::DestroyInstance();
+	Player::Destroy();
+	BackGround::Destroy();
+	UI_StatusBar::Destroy();
+	Panel_Status::Destroy();
+	Inventory::Destroy();
 }
 
 ObjectManager * ObjectManager::GetInstance()
@@ -117,6 +124,8 @@ void ObjectManager::Update()
 	Player::Update();
 	BackGround::GetInstance()->Update();
 	UI_StatusBar::GetInstance()->Update();
+	Inventory::GetInstance()->Update();
+	Panel_Status::GetInstance()->Update();
 
 	auto& objTable = pObjectManager->objectTable;
 	for (auto& objList : objTable)
@@ -202,8 +211,10 @@ void ObjectManager::Render()
 	}
 	// UI ·»´õ¸µ
 
+	Inventory::GetInstance()->Render();
+	Panel_Status::GetInstance()->Render();
 	UI_StatusBar::GetInstance()->Render();
-
+	
 	int begin = (int)ObjectType::UI_LOGO;
 	int end = (int)ObjectType::END;
 	

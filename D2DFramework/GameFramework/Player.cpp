@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "Sorceress.h"
 #include "Label.h"
+#include "Panel_Status.h"
+#include "Inventory.h"
 
 Player* pPlayer = nullptr;
 
@@ -35,7 +37,7 @@ Player* Player::GetInstance()
     return pPlayer;
 }
 
-void Player::DestroyInstance()
+void Player::Destroy()
 {
     if (pPlayer)
     {
@@ -82,6 +84,7 @@ void Player::Update()
 		}
 		
 	}
+
 	
 
 	

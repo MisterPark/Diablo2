@@ -13,7 +13,7 @@ private:
 	void Release();
 public:
 	static Player* GetInstance();
-	static void DestroyInstance();
+	static void Destroy();
 
 	static void Update();
 	static void RenderDebug();

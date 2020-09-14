@@ -177,6 +177,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="IntroScene.h" />
+    <ClInclude Include="Inventory.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="IState.h" />
     <ClInclude Include="JPS.h" />
@@ -184,6 +185,7 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MemoryPool.h" />
     <ClInclude Include="ObjectManager.h" />
+    <ClInclude Include="Panel_Status.h" />
     <ClInclude Include="PathFinder.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
@@ -202,7 +204,6 @@
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UI.h" />
-    <ClInclude Include="UI_HP.h" />
     <ClInclude Include="UI_Logo.h" />
     <ClInclude Include="UI_StatusBar.h" />
     <ClInclude Include="Vector3.h" />
@@ -222,12 +223,14 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="IntroScene.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="IScene.cpp" />
     <ClCompile Include="IState.cpp" />
     <ClCompile Include="JPS.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="Panel_Status.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -247,7 +250,6 @@
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UI.cpp" />
-    <ClCompile Include="UI_HP.cpp" />
     <ClCompile Include="UI_Logo.cpp" />
     <ClCompile Include="UI_StatusBar.cpp" />
     <ClCompile Include="Vector3.cpp" />

@@ -23,7 +23,7 @@ UI_StatusBar* UI_StatusBar::GetInstance()
 	return pBar;
 }
 
-void UI_StatusBar::DestroyInstance()
+void UI_StatusBar::Destroy()
 {
 	delete pBar;
 }
@@ -31,23 +31,6 @@ void UI_StatusBar::DestroyInstance()
 void UI_StatusBar::Update()
 {
 	anim->Update();
-
-	if (InputManager::GetKeyDown(VK_UP))
-	{
-		hpY--;
-	}
-	if (InputManager::GetKeyDown(VK_DOWN))
-	{
-		hpY++;
-	}
-	if (InputManager::GetKeyDown(VK_LEFT))
-	{
-		hpX--;
-	}
-	if (InputManager::GetKeyDown(VK_RIGHT))
-	{
-		hpX++;
-	}
 }
 
 void UI_StatusBar::Render()
@@ -82,4 +65,14 @@ void UI_StatusBar::OnLeave()
 
 void UI_StatusBar::OnChangedText()
 {
+}
+
+void UI_StatusBar::SetHPPercent(int max, int hp)
+{
+	pBar->perHP = (float)hp / max;
+}
+
+void UI_StatusBar::SetMPPercent(int max, int mp)
+{
+	pBar->perMP = (float)mp / max;
 }

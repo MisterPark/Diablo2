@@ -67,6 +67,7 @@ public:
 	static HRESULT LoadSprite(const wstring& filePath, SpriteType spriteKey, DWORD row, DWORD col);
 	static void DrawSprite(SpriteType spriteKey, Transform transform, int index);
 	static void DrawUI(SpriteType spriteKey, Transform transform, int index);
+	static void DrawUI(SpriteType spriteKey, Vector3 pos, int index);
 	static void DrawCharacter(SpriteType spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
 	static void DrawTile(SpriteType spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
 	static void DrawSubTile(SpriteType spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
