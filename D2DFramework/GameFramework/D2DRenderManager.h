@@ -28,6 +28,8 @@ enum class SpriteType
 	UI_PANEL_INVEN,
 	UI_PANEL_BUYSELL,
 	UI_PANEL_STATUS_BAR,
+	UI_HP_BALL,
+	UI_MP_BALL,
 
 	SO_BW,
 	SO_NU_HTH,
@@ -70,6 +72,7 @@ public:
 	static void DrawSubTile(SpriteType spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
 
 	static void DrawImage(SpriteType spriteKey, Transform transform);
+	static void DrawImage(SpriteType spriteKey, float x, float y, float verticalPer);
 
 	static void DrawString(const string& text);
 	static void DrawString(const wstring& text);

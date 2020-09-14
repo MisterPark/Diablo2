@@ -202,7 +202,9 @@
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="UI_HP.h" />
     <ClInclude Include="UI_Logo.h" />
+    <ClInclude Include="UI_StatusBar.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
@@ -245,7 +247,9 @@
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="UI_HP.cpp" />
     <ClCompile Include="UI_Logo.cpp" />
+    <ClCompile Include="UI_StatusBar.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>

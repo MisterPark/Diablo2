@@ -16,7 +16,6 @@ public:
 	static void DestroyInstance();
 
 	static void Update();
-	static void RenderStatusBar();
 	static void RenderDebug();
 
 	static void SetCharacter(ObjectType _type);
@@ -24,7 +23,6 @@ public:
 	static void SetEnable(bool _val);
 
 //private:
-	Transform barTrans;
 	Character* pChar = nullptr;
 	ObjectType type = ObjectType::NONE;
 	bool isVisible = false;

@@ -2,6 +2,7 @@
 #include "TestScene.h"
 #include "BackGround.h"
 #include "Label.h"
+#include "UI_StatusBar.h"
 
 void TestScene::OnLoaded()
 {
@@ -18,8 +19,8 @@ void TestScene::OnLoaded()
 	Player::SetVisible(true);
 	Player::SetEnable(true);
 
-
-
+	UI_StatusBar::GetInstance()->isVisible = true;
+	UI_StatusBar::GetInstance()->isEnable = true;
 }
 
 void TestScene::OnUnloaded()

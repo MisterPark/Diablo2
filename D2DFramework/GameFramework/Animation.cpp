@@ -20,7 +20,6 @@ Animation::~Animation()
 void Animation::Update()
 {
 	if (ref == nullptr)return;
-	if (tex == nullptr)return;
 
 	tick += TimeManager::DeltaTime();
 	if (tick >= delay)
@@ -44,6 +43,7 @@ void Animation::Update()
 void Animation::RenderCharacter()
 {
 	if (ref == nullptr)return;
+	Texture* tex = D2DRenderManager::GetTexture(spriteKey);
 	if (tex == nullptr)return;
 
 	lastFrame = tex->colCount - 1;
@@ -57,6 +57,7 @@ void Animation::RenderCharacter()
 
 void Animation::RenderImage()
 {
+	Texture* tex = D2DRenderManager::GetTexture(spriteKey);
 	if (tex == nullptr)return;
 	
 	D2DRenderManager::DrawImage(spriteKey, ref->transform);
@@ -64,6 +65,7 @@ void Animation::RenderImage()
 
 void Animation::RenderSprite()
 {
+	Texture* tex = D2DRenderManager::GetTexture(spriteKey);
 	if (tex == nullptr)return;
 
 	lastFrame = tex->rowCount * tex->colCount - 1;
@@ -79,7 +81,6 @@ SpriteType Animation::GetSpriteKey()
 
 void Animation::SetSpriteKey(SpriteType _spriteKey)
 {
-	tex = D2DRenderManager::GetTexture(_spriteKey);
 	this->spriteKey = _spriteKey;
 }
 

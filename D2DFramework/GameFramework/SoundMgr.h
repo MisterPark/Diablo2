@@ -1,6 +1,6 @@
 #pragma once
 
-enum SoundChannel { BGM, PLAYER, MONSTER, EFFECT, UI, MAXCHANNEL };
+enum SoundChannel { BGM, PLAYER, MONSTER, EFFECT, MAXCHANNEL };
 
 class SoundManager
 {

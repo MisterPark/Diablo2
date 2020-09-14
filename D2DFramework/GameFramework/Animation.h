@@ -25,7 +25,7 @@ public:
 private:
 	SpriteType spriteKey;
 	GameObject* ref = nullptr;
-	Texture* tex = nullptr;
+	
 	int currentFrame = 0;
 	int lastFrame = 0;
 	float tick = 0.f;

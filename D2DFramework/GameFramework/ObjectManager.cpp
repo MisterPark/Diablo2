@@ -8,6 +8,7 @@
 #include "UI_Logo.h"
 #include "Button.h"
 #include "Label.h"
+#include "UI_StatusBar.h"
 
 ObjectManager* pObjectManager = nullptr;
 int lastUid = 0;
@@ -16,12 +17,14 @@ ObjectManager::ObjectManager()
 {
 	Player::GetInstance();
 	BackGround::GetInstance();
+	UI_StatusBar::GetInstance();
 }
 
 ObjectManager::~ObjectManager()
 {
 	Player::DestroyInstance();
 	BackGround::DestroyInstance();
+	UI_StatusBar::DestroyInstance();
 }
 
 ObjectManager * ObjectManager::GetInstance()
@@ -113,6 +116,7 @@ void ObjectManager::Update()
 {
 	Player::Update();
 	BackGround::GetInstance()->Update();
+	UI_StatusBar::GetInstance()->Update();
 
 	auto& objTable = pObjectManager->objectTable;
 	for (auto& objList : objTable)
@@ -133,27 +137,27 @@ void ObjectManager::LateUpdate()
 	auto& objTable = pObjectManager->objectTable;
 	for (auto& objList : objTable)
 	{
-			auto iter = objList.begin();
-			auto end = objList.end();
-			for (; iter != end;)
+		auto iter = objList.begin();
+		auto end = objList.end();
+		for (; iter != end;)
+		{
+			target = *iter;
+			if (target->isDead)
 			{
-				target = *iter;
-				if (target->isDead)
-				{
-					iter = objList.erase(iter);
+				iter = objList.erase(iter);
 
-			/*		if (dynamic_cast<Character*>(target) != nullptr)
-					{
-						CollisionManager::DisregisterObject(target);
-					}*/
-
-					delete target;
-				}
-				else
+		/*		if (dynamic_cast<Character*>(target) != nullptr)
 				{
-					++iter;
-				}
+					CollisionManager::DisregisterObject(target);
+				}*/
+
+				delete target;
 			}
+			else
+			{
+				++iter;
+			}
+		}
 	}
 
 	
@@ -177,24 +181,41 @@ void ObjectManager::Render()
 	{
 		for (auto& iter : objList)
 		{
-			if (!iter->isVisible)continue;
-			if (iter->transform.position.x < camPos.x - dfCLIENT_WIDTH/2) continue;
-			if (iter->transform.position.y < camPos.y - dfCLIENT_HEIGHT/2) continue;
+			if (dynamic_cast<UI*>(iter))continue; // UI제외
+			if (!iter->isVisible)continue; 
+			if (iter->transform.position.x < camPos.x - dfCLIENT_WIDTH / 2) continue;
+			if (iter->transform.position.y < camPos.y - dfCLIENT_HEIGHT / 2) continue;
 			if (iter->transform.position.x > camPos.x + dfCLIENT_WIDTH + dfCLIENT_WIDTH / 2) continue;
 			if (iter->transform.position.y > camPos.y + dfCLIENT_HEIGHT + dfCLIENT_HEIGHT / 2) continue;
+			
 
 			pObjectManager->renderList.push_back(iter);
 		}
 	}
 
+	// y값으로 정렬
 	pObjectManager->renderList.sort(Compare);
-
-	
-
+	// 오브젝트 렌더링
 	for (auto& obj : pObjectManager->renderList)
 	{
 		obj->Render();
 	}
+	// UI 렌더링
+
+	UI_StatusBar::GetInstance()->Render();
+
+	int begin = (int)ObjectType::UI_LOGO;
+	int end = (int)ObjectType::END;
+	
+	for (int i = begin; i < end; i++)
+	{
+		auto& uiList = pObjectManager->objectTable[i];
+		for (auto& iter : uiList)
+		{
+			iter->Render();
+		}
+	}
+	
 
 	// 디버그용
 	//TimeManager::RenderFPS();
@@ -202,7 +223,6 @@ void ObjectManager::Render()
 
 void ObjectManager::PostRender()
 {
-	Player::RenderStatusBar();
 	Player::RenderDebug();
 }
 

@@ -432,6 +432,35 @@ void D2DRenderManager::DrawImage(SpriteType spriteKey, Transform transform)
 	pD2DRenderManager->pSprite->End();
 }
 
+void D2DRenderManager::DrawImage(SpriteType spriteKey, float x, float y, float verticalPer)
+{
+	auto find = pD2DRenderManager->textureMap.find(spriteKey);
+	if (find == pD2DRenderManager->textureMap.end())
+	{
+		// 로드되지 않은 스프라이트.
+		return;
+	}
+
+	const Texture* tex = find->second;
+
+	// 스프라이트 한장의 넓이와 높이, 위치
+	int w = tex->imageInfo.Width;
+	int h = tex->imageInfo.Height;
+	RECT rt;
+	rt.left = 0;
+	rt.top = h-h*verticalPer;
+	rt.right = w;
+	rt.bottom =  h;
+	Matrix world, trans, rot, scale, parent;
+	D3DXMatrixTranslation(&trans, x, y, 0.f);
+	world = trans;
+
+	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
+	pD2DRenderManager->pSprite->SetTransform(&world);
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, &rt, &Vector3(0.f, 0.f, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	pD2DRenderManager->pSprite->End();
+}
+
 void D2DRenderManager::DrawString(const string & text)
 {
 	Matrix world;

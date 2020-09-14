@@ -87,7 +87,8 @@ void MainGame::Initialize()
 	D2DRenderManager::LoadSprite(L"Sprites\\ui\\inven_panel.png", SpriteType::UI_PANEL_INVEN, 1, 1);
 	D2DRenderManager::LoadSprite(L"Sprites\\ui\\buysell_panel.png", SpriteType::UI_PANEL_BUYSELL, 1, 1);
 	D2DRenderManager::LoadSprite(L"Sprites\\ui\\StatusBar.png", SpriteType::UI_PANEL_STATUS_BAR, 1, 1);
-
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\HPBall.png", SpriteType::UI_HP_BALL, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\MPBall.png", SpriteType::UI_MP_BALL, 1, 1);
 
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOBW.png", SpriteType::SO_BW, 5, 6);
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SONUHTH.png", SpriteType::SO_NU_HTH, 16, 8);

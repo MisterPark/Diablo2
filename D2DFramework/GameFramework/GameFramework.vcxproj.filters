@@ -199,9 +199,15 @@
       <Filter>GameObject\UI</Filter>
     </ClInclude>
     <ClInclude Include="Label.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>GameObject\UI</Filter>
     </ClInclude>
     <ClInclude Include="Color.h">
+      <Filter>MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_StatusBar.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_HP.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -309,9 +315,15 @@
       <Filter>GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="Label.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="Color.cpp">
+      <Filter>MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_StatusBar.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_HP.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

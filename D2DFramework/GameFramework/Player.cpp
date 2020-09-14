@@ -19,7 +19,6 @@ void Player::Initialize()
 {
 	label = new Label();
 
-	barTrans.position.y = dfCLIENT_HEIGHT - 103;
 }
 
 void Player::Release()
@@ -89,14 +88,6 @@ void Player::Update()
 
 }
 
-void Player::RenderStatusBar()
-{
-	D2DRenderManager::DrawUI(SpriteType::UI_PANEL_STATUS_BAR, pPlayer->barTrans, 0);
-	if (pPlayer->pChar == nullptr) return;
-
-	
-	
-}
 
 void Player::RenderDebug()
 {
