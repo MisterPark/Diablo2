@@ -185,6 +185,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="JPS.h" />
     <ClInclude Include="Label.h" />
+    <ClInclude Include="LeatherCap.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MemoryPool.h" />
     <ClInclude Include="ObjectManager.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="JPS.cpp" />
     <ClCompile Include="Label.cpp" />
+    <ClCompile Include="LeatherCap.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Panel_Status.cpp" />
@@ -250,7 +252,6 @@
     <ClCompile Include="Sorceress.cpp" />
     <ClCompile Include="SoundMgr.cpp" />
     <ClCompile Include="SubTile.cpp" />
-    <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileManager.cpp" />

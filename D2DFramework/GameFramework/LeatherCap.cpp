@@ -1,8 +1,7 @@
 #include "pch.h"
-#include "ShortStaff.h"
+#include "LeatherCap.h"
 
-
-ShortStaff::ShortStaff()
+LeatherCap::LeatherCap()
 {
 	anim->SetSpriteKey(SpriteType::ITEM_FLP_SST);
 	invenSprite = SpriteType::ITEM_INV_SST;
@@ -12,7 +11,6 @@ ShortStaff::ShortStaff()
 	label->SetText(L"이상하네");
 }
 
-ShortStaff::~ShortStaff()
+LeatherCap::~LeatherCap()
 {
 }
-

@@ -222,10 +222,13 @@
     <ClInclude Include="Inventory.h">
       <Filter>GameObject\Item</Filter>
     </ClInclude>
-    <ClInclude Include="ShortStaff.h">
+    <ClInclude Include="Cursor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Cursor.h">
+    <ClInclude Include="ShortStaff.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="LeatherCap.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -277,9 +280,6 @@
     </ClCompile>
     <ClCompile Include="SoundMgr.cpp">
       <Filter>FMOD</Filter>
-    </ClCompile>
-    <ClCompile Include="TestScene.cpp">
-      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework.cpp">
       <Filter>소스 파일</Filter>
@@ -353,10 +353,13 @@
     <ClCompile Include="Item.cpp">
       <Filter>GameObject\Item</Filter>
     </ClCompile>
-    <ClCompile Include="ShortStaff.cpp">
+    <ClCompile Include="Cursor.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Cursor.cpp">
+    <ClCompile Include="ShortStaff.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="LeatherCap.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

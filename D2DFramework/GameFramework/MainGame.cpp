@@ -95,8 +95,16 @@ void MainGame::Initialize()
 	D2DRenderManager::LoadSprite(L"Sprites\\ui\\BlackRect.png", SpriteType::UI_RECT_BLACK_ALPHA, 1, 1);
 
 
-	D2DRenderManager::LoadSprite(L"Sprites\\ui\\invsst.png", SpriteType::ITEM_INV_SST, 1, 1);
-	D2DRenderManager::LoadSprite(L"Sprites\\ui\\flpsst.png", SpriteType::ITEM_FLP_SST, 1, 17);
+	D2DRenderManager::LoadSprite(L"Sprites\\Item\\invsst.png", SpriteType::ITEM_INV_SST, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\Item\\flpsst.png", SpriteType::ITEM_FLP_SST, 1, 17);
+	D2DRenderManager::LoadSprite(L"Sprites\\Item\\invcap.png", SpriteType::ITEM_INV_CAP, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\Item\\flpcap.png", SpriteType::ITEM_FLP_CAP, 1, 17);
+	D2DRenderManager::LoadSprite(L"Sprites\\Item\\invqlt.png", SpriteType::ITEM_INV_QLT, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\Item\\flpqlt.png", SpriteType::ITEM_FLP_QLT, 1, 17);
+	D2DRenderManager::LoadSprite(L"Sprites\\Item\\invlbl.png", SpriteType::ITEM_INV_LBL, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\Item\\flplbl.png", SpriteType::ITEM_FLP_LBL, 1, 17);
+	D2DRenderManager::LoadSprite(L"Sprites\\Item\\invlbt.png", SpriteType::ITEM_INV_LBT, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\Item\\flplbt.png", SpriteType::ITEM_FLP_LBT, 1, 17);
 
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOBW.png", SpriteType::SO_BW, 5, 6);
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SONUHTH.png", SpriteType::SO_NU_HTH, 16, 8);

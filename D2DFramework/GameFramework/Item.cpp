@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Item.h"
 #include "Inventory.h"
-#include "Label.h"
 
 Item::Item()
 {

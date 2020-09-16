@@ -26,7 +26,7 @@ void Label::Render()
 	{
 		float sx = transform.position.x - 5;
 		float sy = transform.position.y - 5;
-		float ex = transform.position.x + Width() + 5;
+		float ex = transform.position.x + Width()*2 + 5;
 		float ey = transform.position.y + Height() + 5;
 		D2DRenderManager::DrawRect(sx, sy, ex, ey);
 	}
@@ -64,7 +64,7 @@ int Label::Width()
 	if (pFont == nullptr) return 0;
 	TEXTMETRICW tm = {};
 	pFont->GetTextMetricsW(&tm);
-	int w = tm.tmAveCharWidth * lstrlenW(text)*2;
+	int w = tm.tmAveCharWidth * lstrlenW(text);
 	return w;
 }
 

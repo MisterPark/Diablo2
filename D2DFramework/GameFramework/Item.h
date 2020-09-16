@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Label.h"
 
 #define dfITEM_W 40
 #define dfITEM_H 40

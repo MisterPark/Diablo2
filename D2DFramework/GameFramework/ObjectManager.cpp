@@ -13,6 +13,7 @@
 #include "Inventory.h"
 #include "ShortStaff.h"
 #include "Cursor.h"
+#include "LeatherCap.h"
 
 ObjectManager* pObjectManager = nullptr;
 int lastUid = 0;
@@ -60,6 +61,9 @@ GameObject * ObjectManager::CreateObject(ObjectType _type)
 
 	case ObjectType::ITEM_SHORT_STAFF:
 		pObj = new ShortStaff;
+		break;
+	case ObjectType::ITEM_CAP:
+		pObj = new LeatherCap;
 		break;
 	case ObjectType::UI_LOGO:
 		pObj = new UI_Logo;

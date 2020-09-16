@@ -64,17 +64,17 @@ void UI::SetSpriteImage(SpriteType _type)
 void UI::SetText(const wstring& _text)
 {
 	wmemset(text, 0, 64);
-	wmemcpy(text, _text.c_str(), _text.length());
+	wmemcpy(text, _text.c_str(), lstrlenW(_text.c_str()));
 }
 
-void UI::SetText(const int& _val)
+void UI::SetText(int _val)
 {
 	WCHAR t[16] = {};
 	swprintf_s(t, L"%d", _val);
 	wmemcpy(text, t, lstrlenW(t));
 }
 
-void UI::SetText(const int& _val1, const int& _val2)
+void UI::SetText(int _val1, int _val2)
 {
 	WCHAR t[32] = {};
 	swprintf_s(t, L"%d - %d", _val1, _val2);

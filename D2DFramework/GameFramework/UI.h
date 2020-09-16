@@ -15,10 +15,11 @@ public:
     virtual int Width();
     virtual int Height();
     void SetSpriteImage(SpriteType _type);
+
     void SetText(const wstring& _text);
-    void SetText(const int& _val);
+    void SetText(int _val);
     // XXX - XXX
-    void SetText(const int& _val1, const int& _val2);
+    void SetText(int _val1, int _val2);
 
     // 이벤트 관련
     void ClearEvent();
