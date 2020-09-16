@@ -194,6 +194,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="QuiltedArmor.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShortStaff.h" />
@@ -247,11 +248,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="QuiltedArmor.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShortStaff.cpp" />
     <ClCompile Include="Sorceress.cpp" />
     <ClCompile Include="SoundMgr.cpp" />
     <ClCompile Include="SubTile.cpp" />
+    <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileManager.cpp" />

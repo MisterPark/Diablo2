@@ -9,7 +9,7 @@ ShortStaff::ShortStaff()
 	slotW = 1;
 	slotH = 3;
 
-	label->SetText(L"이상하네");
+	label->SetText(L"숏스태프");
 }
 
 ShortStaff::~ShortStaff()

@@ -21,10 +21,10 @@ void TestScene::OnLoaded()
 	Player::SetEnable(true);
 
 	GameObject* item = ObjectManager::CreateObject(ObjectType::ITEM_SHORT_STAFF);
-	item->transform.position = { 2880,750,0 };
-	item = ObjectManager::CreateObject(ObjectType::ITEM_SHORT_STAFF);
+	item->transform.position = { 2700,750,0 };
+	item = ObjectManager::CreateObject(ObjectType::ITEM_CAP);
 	item->transform.position = { 2800,750,0 };
-	item = ObjectManager::CreateObject(ObjectType::ITEM_SHORT_STAFF);
+	item = ObjectManager::CreateObject(ObjectType::ITEM_QUILTED_ARMOR);
 	item->transform.position = { 2900,750,0 };
 
 	UI_StatusBar::GetInstance()->isVisible = true;

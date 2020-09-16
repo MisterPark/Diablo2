@@ -3,12 +3,12 @@
 
 LeatherCap::LeatherCap()
 {
-	anim->SetSpriteKey(SpriteType::ITEM_FLP_SST);
-	invenSprite = SpriteType::ITEM_INV_SST;
-	slotW = 1;
-	slotH = 3;
+	anim->SetSpriteKey(SpriteType::ITEM_FLP_CAP);
+	invenSprite = SpriteType::ITEM_INV_CAP;
+	slotW = 2;
+	slotH = 2;
 
-	label->SetText(L"ÀÌ»óÇÏ³×");
+	label->SetText(L"Ä¸");
 }
 
 LeatherCap::~LeatherCap()

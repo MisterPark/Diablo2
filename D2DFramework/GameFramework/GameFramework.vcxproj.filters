@@ -231,6 +231,9 @@
     <ClInclude Include="LeatherCap.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="QuiltedArmor.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -360,6 +363,12 @@
       <Filter>GameObject\Item</Filter>
     </ClCompile>
     <ClCompile Include="LeatherCap.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="QuiltedArmor.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
