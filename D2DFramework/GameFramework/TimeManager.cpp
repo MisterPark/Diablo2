@@ -56,7 +56,7 @@ bool TimeManager::SkipFrame()
 	}
 
 	// 프레임당 걸린시간 (마이크로 세컨)
-	elapse = (curTime - pTimeManager->oldTime) / 10000;
+	elapse = (curTime - pTimeManager->oldTime) / (pTimeManager->frequency.QuadPart / 1000);
 
 	pTimeManager->elapseSum += elapse;
 	// 올드타임 갱신
