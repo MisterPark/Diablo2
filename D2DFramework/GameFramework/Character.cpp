@@ -4,7 +4,7 @@
 Character::Character()
 {
 	direction = 180.f;
-
+	currentAnim = &anims[(int)state];
 	stat[(int)StatType::LIFE] = stat[(int)StatType::MAX_LIFE];
 	stat[(int)StatType::MANA] = stat[(int)StatType::MAX_MANA];
 }
@@ -16,6 +16,7 @@ Character::~Character()
 void Character::Update()
 {
 	attackTick += TimeManager::DeltaTime();
+	skillTick += TimeManager::DeltaTime();
 
 	if (isMoving)
 	{
@@ -27,7 +28,7 @@ void Character::Update()
 		float gapY = fabsf(nPos.y - transform.position.y);
 		if (gapX < 10.f && gapY <10.f)
 		{
-			state = CharacterState::NU;
+			state = CharacterState::TN;
 			isMoving = false;
 		}
 	}
@@ -43,17 +44,34 @@ void Character::Update()
 	}
 	
 	UpdateAnimation();
-	anim->Update();
+	currentAnim->Update();
 }
 
 void Character::Render()
 {
-	anim->RenderCharacter();
+
+	float angle = D3DXToDegree(direction) + 630.f;
+	angle += (360.f / 32.f);
+	angle = fmodf(angle, 360.f);
+	int directionIndex = angle / (360.f / 16.f);// -1;
+	D2DRenderManager::DrawCharacter(currentAnim->GetSpriteKey(), transform, directionIndex, currentAnim->GetCurrentFrame());
 }
 
 void Character::UpdateAnimation()
 {
-	anim->SetSpriteKey(sprites[(int)state]);
+	Animation* oldAnim = currentAnim;
+	currentAnim = &anims[(int)state];
+	if (oldAnim != currentAnim)
+	{
+		oldAnim->SetCurrentFrame(0);
+	}
+	if (!currentAnim->IsLoop() && currentAnim->GetCurrentFrame() == currentAnim->GetLastFrame())
+	{
+		state = CharacterState::TN;
+		currentAnim->SetCurrentFrame(0);
+		currentAnim = &anims[(int)state];
+	}
+	
 }
 
 void Character::PathFInding(Vector3 _targetPos)
@@ -102,12 +120,12 @@ void Character::Attack()
 	
 }
 
-void Character::UpdateAttack()
-{
-
-	attackTick += TimeManager::DeltaTime();
-}
-
 void Character::SkillCast()
 {
+	if (skillTick > skillDelay)
+	{
+		skillTick = 0.f;
+		FaceTarget(InputManager::GetMousePosOnWorld());
+		state = CharacterState::SC_STF;
+	}
 }

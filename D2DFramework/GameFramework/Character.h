@@ -37,15 +37,18 @@ public:
     void PathFInding(Vector3 _targetPos);
 
     void Attack();
-    void UpdateAttack();
     void SkillCast();
 
     list<TableIndex> pathList;
     CharacterState state = CharacterState::NU;
-    SpriteType sprites[MaxOfEnum<CharacterState>()];
+
+    Animation* currentAnim = nullptr;
+    Animation anims[MaxOfEnum<CharacterState>()] = {};
 
     float attackTick = 0.f;
-    float attackDelay = 1.0f;
+    float attackDelay = 0.5f;
+    float skillTick = 0.f;
+    float skillDelay = 0.5f;
 
     // stat
     wstring nick;

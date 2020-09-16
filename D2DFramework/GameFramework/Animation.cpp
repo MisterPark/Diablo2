@@ -7,10 +7,9 @@ Animation::Animation()
 {
 }
 
-Animation::Animation(SpriteType _spriteKey, GameObject * _ref)
+Animation::Animation(SpriteType _spriteKey)
 {
 	SetSpriteKey(_spriteKey);
-	SetReferenceObject(_ref);
 }
 
 Animation::~Animation()
@@ -19,8 +18,6 @@ Animation::~Animation()
 
 void Animation::Update()
 {
-	if (ref == nullptr)return;
-
 	tick += TimeManager::DeltaTime();
 	if (tick >= delay)
 	{
@@ -39,54 +36,82 @@ void Animation::Update()
 		currentFrame++;
 	}
 }
-
-void Animation::RenderCharacter()
+void Animation::Initialize()
 {
-	if (ref == nullptr)return;
-	Texture* tex = D2DRenderManager::GetTexture(spriteKey);
-	if (tex == nullptr)return;
-
-	lastFrame = tex->colCount - 1;
-
-	float angle = D3DXToDegree(ref->direction) + 630.f;
-	angle += (360.f / 32.f);
-	angle = fmodf(angle, 360.f);
-	int directionIndex = angle / (360.f / 16.f);// -1;
-	D2DRenderManager::DrawCharacter(spriteKey, ref->transform, directionIndex, currentFrame);
+	currentFrame = 0;
 }
-
-void Animation::RenderImage()
-{
-	Texture* tex = D2DRenderManager::GetTexture(spriteKey);
-	if (tex == nullptr)return;
-	
-	D2DRenderManager::DrawImage(spriteKey, ref->transform);
-}
-
-void Animation::RenderSprite()
-{
-	Texture* tex = D2DRenderManager::GetTexture(spriteKey);
-	if (tex == nullptr)return;
-
-	lastFrame = tex->rowCount * tex->colCount - 1;
-
-	D2DRenderManager::DrawSprite(spriteKey, ref->transform, currentFrame);
-
-}
+//
+//void Animation::RenderCharacter()
+//{
+//	if (ref == nullptr)return;
+//	Texture* tex = D2DRenderManager::GetTexture(spriteKey);
+//	if (tex == nullptr)return;
+//
+//	lastFrame = tex->colCount - 1;
+//
+//	float angle = D3DXToDegree(ref->direction) + 630.f;
+//	angle += (360.f / 32.f);
+//	angle = fmodf(angle, 360.f);
+//	int directionIndex = angle / (360.f / 16.f);// -1;
+//	D2DRenderManager::DrawCharacter(spriteKey, ref->transform, directionIndex, currentFrame);
+//}
+//
+//void Animation::RenderImage()
+//{
+//	Texture* tex = D2DRenderManager::GetTexture(spriteKey);
+//	if (tex == nullptr)return;
+//	
+//	D2DRenderManager::DrawImage(spriteKey, ref->transform);
+//}
+//
+//void Animation::RenderSprite()
+//{
+//	Texture* tex = D2DRenderManager::GetTexture(spriteKey);
+//	if (tex == nullptr)return;
+//
+//	lastFrame = tex->rowCount * tex->colCount - 1;
+//
+//	D2DRenderManager::DrawSprite(spriteKey, ref->transform, currentFrame);
+//
+//}
 
 SpriteType Animation::GetSpriteKey()
 {
 	return spriteKey;
 }
 
+int Animation::GetCurrentFrame()
+{
+	return this->currentFrame;
+}
+
+int Animation::GetLastFrame()
+{
+	return this->lastFrame;
+}
+
+bool Animation::IsLoop()
+{
+	return this->isLoop;
+}
+
 void Animation::SetSpriteKey(SpriteType _spriteKey)
 {
 	this->spriteKey = _spriteKey;
+	Texture* tex = D2DRenderManager::GetTexture(_spriteKey);
+	if (tex == nullptr)return;
+
+	lastFrame = tex->colCount - 1;
 }
 
-void Animation::SetReferenceObject(GameObject * _target)
+void Animation::SetCurrentFrame(int _curr)
 {
-	ref = _target;
+	this->currentFrame = _curr;
+}
+
+void Animation::SetLastFrame(int _last)
+{
+	this->lastFrame = _last;
 }
 
 void Animation::SetLoop(bool _loop)

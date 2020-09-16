@@ -14,6 +14,7 @@ enum class SpriteType
 	BG_TITLE,
 	BG_CHAR_CREATION,
 
+	UI_CURSOR,
 	UI_LOGO,
 	UI_BTN_WIDE,
 	UI_BTN_MEDIUM,
@@ -30,6 +31,11 @@ enum class SpriteType
 	UI_PANEL_STATUS_BAR,
 	UI_HP_BALL,
 	UI_MP_BALL,
+	UI_RECT_RED,
+	UI_RECT_BLACK_ALPHA,
+
+	ITEM_INV_SST,
+	ITEM_FLP_SST,
 
 	SO_BW,
 	SO_NU_HTH,
@@ -71,6 +77,7 @@ public:
 	static void DrawCharacter(SpriteType spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
 	static void DrawTile(SpriteType spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
 	static void DrawSubTile(SpriteType spriteKey, Transform transform, DWORD row = 0, DWORD col = 0);
+	static void DrawItem(SpriteType spriteKey, Vector3 pos, int index);
 
 	static void DrawImage(SpriteType spriteKey, Transform transform);
 	static void DrawImage(SpriteType spriteKey, float x, float y, float verticalPer);
@@ -84,6 +91,9 @@ public:
 
 	static void DrawLine(float sx, float sy, float ex, float ey);
 	static void DrawLine(float sx, float sy, float ex, float ey, D3DXCOLOR color);
+
+	static void DrawRect(float sx, float sy, float ex, float ey);
+	static void DrawRectWorld(float sx, float sy, float ex, float ey);
 
 
 private:

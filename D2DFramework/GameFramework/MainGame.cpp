@@ -46,6 +46,7 @@ MainGame * MainGame::GetInstance()
 
 void MainGame::Initialize()
 {
+	
 	TimeManager::GetInstance();
 	TimeManager::SetFrame(dfFPS);
 	D2DRenderManager::GetInstance();
@@ -73,6 +74,7 @@ void MainGame::Initialize()
 	D2DRenderManager::LoadSprite(L"Sprites\\ui\\gameselectscreen.png", SpriteType::BG_TITLE, 1, 1);
 	D2DRenderManager::LoadSprite(L"Sprites\\ui\\charactercreationscreen.png", SpriteType::BG_CHAR_CREATION, 1, 1);
 
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\cursor.png", SpriteType::UI_CURSOR, 1, 8);
 	D2DRenderManager::LoadSprite(L"Sprites\\ui\\logo.png", SpriteType::UI_LOGO, 30, 1);
 	D2DRenderManager::LoadSprite(L"Sprites\\ui\\WideButton.png", SpriteType::UI_BTN_WIDE, 1, 2);
 	D2DRenderManager::LoadSprite(L"Sprites\\ui\\mediumSelButton.png", SpriteType::UI_BTN_MEDIUM, 1, 2);
@@ -89,6 +91,12 @@ void MainGame::Initialize()
 	D2DRenderManager::LoadSprite(L"Sprites\\ui\\StatusBar.png", SpriteType::UI_PANEL_STATUS_BAR, 1, 1);
 	D2DRenderManager::LoadSprite(L"Sprites\\ui\\HPBall.png", SpriteType::UI_HP_BALL, 1, 1);
 	D2DRenderManager::LoadSprite(L"Sprites\\ui\\MPBall.png", SpriteType::UI_MP_BALL, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\RedRect.png", SpriteType::UI_RECT_RED, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\BlackRect.png", SpriteType::UI_RECT_BLACK_ALPHA, 1, 1);
+
+
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\invsst.png", SpriteType::ITEM_INV_SST, 1, 1);
+	D2DRenderManager::LoadSprite(L"Sprites\\ui\\flpsst.png", SpriteType::ITEM_FLP_SST, 1, 17);
 
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOBW.png", SpriteType::SO_BW, 5, 6);
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SONUHTH.png", SpriteType::SO_NU_HTH, 16, 8);
@@ -97,7 +105,7 @@ void MainGame::Initialize()
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SORNSTF.png", SpriteType::SO_RN_STF, 16, 8);
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOA1STF.png", SpriteType::SO_A1_STF, 16, 18);
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOA2STF.png", SpriteType::SO_A2_STF, 16, 18);
-	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOSCSTF.png", SpriteType::SO_SC_STF, 16, 19);
+	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOSCSTF.png", SpriteType::SO_SC_STF, 16, 14);
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOGHSTF.png", SpriteType::SO_GH_STF, 16, 8);
 
 

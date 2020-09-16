@@ -2,6 +2,7 @@
 #include "UI.h"
 
 class Label;
+class Button;
 
 class Panel_Status :
     public UI
@@ -24,10 +25,13 @@ public:
     virtual void OnLeave();
     virtual void OnChangedText();
 
+    static void Exit();
 
-    
+
+    Button* exitBtn = nullptr;
     Label* nick                   =nullptr;
     Label* className              =nullptr;
     Label* labels[MaxOfEnum<StatType>()] = {};
+    Label* tags[MaxOfEnum<StatType>()] = {};
 };
 

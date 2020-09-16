@@ -22,8 +22,16 @@ void Label::Update()
 
 void Label::Render()
 {
+	if (isDrawRect)
+	{
+		float sx = transform.position.x - 5;
+		float sy = transform.position.y - 5;
+		float ex = transform.position.x + Width() + 5;
+		float ey = transform.position.y + Height() + 5;
+		D2DRenderManager::DrawRect(sx, sy, ex, ey);
+	}
 	D2DRenderManager::DrawString(pFont, text, transform.position.x, transform.position.y, color);
-
+	
 }
 
 void Label::OnClick()
@@ -56,7 +64,7 @@ int Label::Width()
 	if (pFont == nullptr) return 0;
 	TEXTMETRICW tm = {};
 	pFont->GetTextMetricsW(&tm);
-	int w = tm.tmAveCharWidth * lstrlenW(text);
+	int w = tm.tmAveCharWidth * lstrlenW(text)*2;
 	return w;
 }
 
@@ -94,4 +102,9 @@ void Label::SetFont(const wstring& faceName, int size, UINT fontWeight)
 void Label::SetColor(D3DXCOLOR color)
 {
 	this->color = color;
+}
+
+void Label::SetRect(bool _isDrawRect)
+{
+	this->isDrawRect = _isDrawRect;
 }

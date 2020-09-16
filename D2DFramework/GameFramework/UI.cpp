@@ -8,7 +8,7 @@ void UI::Update()
 
 void UI::Render()
 {
-	anim->RenderImage();
+	D2DRenderManager::DrawUI(anim->GetSpriteKey(), transform.position, 0);
 }
 
 void UI::UpdateUI()

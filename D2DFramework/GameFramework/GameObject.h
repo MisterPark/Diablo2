@@ -9,6 +9,8 @@ enum class ObjectType
 	NONE,
 	SUB_TILE,
 	SORCERESS,
+
+	ITEM_SHORT_STAFF,
 	
 	UI_LOGO,
 	BUTTON,

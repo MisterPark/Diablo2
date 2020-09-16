@@ -442,6 +442,45 @@ void D2DRenderManager::DrawSubTile(SpriteType spriteKey, Transform transform, DW
 	pD2DRenderManager->pSprite->End();
 }
 
+void D2DRenderManager::DrawItem(SpriteType spriteKey, Vector3 pos, int index)
+{
+	auto find = pD2DRenderManager->textureMap.find(spriteKey);
+	if (find == pD2DRenderManager->textureMap.end())
+	{
+		// 로드되지 않은 스프라이트.
+		return;
+	}
+
+	const Texture* tex = find->second;
+
+	// 스프라이트 한장의 넓이와 높이, 위치
+	int w = tex->GetSpriteWidth();
+	int h = tex->GetSpriteHeight();
+
+	int row = index / tex->colCount;
+	int col = index % tex->colCount;
+
+	int x = col * w;
+	int y = row * h;
+	RECT area;
+	area.left = x;
+	area.top = y;
+	area.right = x + w;
+	area.bottom = y + h;
+
+	float centerX = float(w >> 1);
+	float centerY = float(h >> 1);
+
+	Matrix world, trans;
+	D3DXMatrixTranslation(&trans, pos.x-Camera::GetX(), pos.y-Camera::GetY(), 0.f);
+	world = trans;
+
+	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
+	pD2DRenderManager->pSprite->SetTransform(&world);
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &Vector3(centerX, h-20, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	pD2DRenderManager->pSprite->End();
+}
+
 void D2DRenderManager::DrawImage(SpriteType spriteKey, Transform transform)
 {
 	auto find = pD2DRenderManager->textureMap.find(spriteKey);
@@ -586,4 +625,56 @@ void D2DRenderManager::DrawLine(float sx, float sy, float ex, float ey, D3DXCOLO
 	pD2DRenderManager->pLine->Begin();
 	pD2DRenderManager->pLine->Draw(point, 2, color);
 	pD2DRenderManager->pLine->End();
+}
+
+void D2DRenderManager::DrawRect(float sx, float sy, float ex, float ey)
+{
+	auto find = pD2DRenderManager->textureMap.find(SpriteType::UI_RECT_BLACK_ALPHA);
+	if (find == pD2DRenderManager->textureMap.end())
+	{
+		// 로드되지 않은 스프라이트.
+		return;
+	}
+
+	const Texture* tex = find->second;
+
+	// 스프라이트 한장의 넓이와 높이, 위치
+	int w = tex->imageInfo.Width;
+	int h = tex->imageInfo.Height;
+
+	Matrix world, trans, rot, scale, parent;
+	D3DXMatrixScaling(&scale, ex-sx, ey-sy, 0.f);
+	D3DXMatrixTranslation(&trans, sx, sy, 0.f);
+	world = scale * trans;
+
+	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
+	pD2DRenderManager->pSprite->SetTransform(&world);
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, nullptr, &Vector3(0.f, 0.f, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	pD2DRenderManager->pSprite->End();
+}
+
+void D2DRenderManager::DrawRectWorld(float sx, float sy, float ex, float ey)
+{
+	auto find = pD2DRenderManager->textureMap.find(SpriteType::UI_RECT_BLACK_ALPHA);
+	if (find == pD2DRenderManager->textureMap.end())
+	{
+		// 로드되지 않은 스프라이트.
+		return;
+	}
+
+	const Texture* tex = find->second;
+
+	// 스프라이트 한장의 넓이와 높이, 위치
+	int w = tex->imageInfo.Width;
+	int h = tex->imageInfo.Height;
+
+	Matrix world, trans, rot, scale, parent;
+	D3DXMatrixScaling(&scale, ex - sx, ey - sy, 0.f);
+	D3DXMatrixTranslation(&trans, sx - Camera::GetX(), sy - Camera::GetY(), 0.f);
+	world = scale * trans;
+
+	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
+	pD2DRenderManager->pSprite->SetTransform(&world);
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, nullptr, &Vector3(0.f, 0.f, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	pD2DRenderManager->pSprite->End();
 }

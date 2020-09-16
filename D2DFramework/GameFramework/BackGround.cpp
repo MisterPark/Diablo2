@@ -37,5 +37,5 @@ void BackGround::Update()
 
 void BackGround::Render()
 {
-	anim->RenderImage();
+	D2DRenderManager::DrawImage(anim->GetSpriteKey(), transform);
 }

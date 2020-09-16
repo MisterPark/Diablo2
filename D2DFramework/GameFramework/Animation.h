@@ -1,30 +1,30 @@
 #pragma once
 #include "D2DRenderManager.h"
 class GameObject;
-class Texture;
 
 class Animation
 {
 public:
 	Animation();
-	Animation(SpriteType _spriteKey, GameObject* _ref);
+	Animation(SpriteType _spriteKey);
 	~Animation();
 
 	void Update();
-	void RenderCharacter();
-	void RenderImage();
-	void RenderSprite();
+	void Initialize();
 
 	SpriteType GetSpriteKey();
-	void SetSpriteKey(SpriteType _spriteKey);
+	int GetCurrentFrame();
+	int GetLastFrame();
+	bool IsLoop();
 
-	void SetReferenceObject(GameObject* _target);
+	void SetSpriteKey(SpriteType _spriteKey);
+	void SetCurrentFrame(int _curr);
+	void SetLastFrame(int _last);
 	void SetLoop(bool _loop);
 	void SetDelay(float _delay);
 
 private:
-	SpriteType spriteKey;
-	GameObject* ref = nullptr;
+	SpriteType spriteKey = SpriteType::NONE;
 	
 	int currentFrame = 0;
 	int lastFrame = 0;

@@ -11,6 +11,8 @@
 #include "UI_StatusBar.h"
 #include "Panel_Status.h"
 #include "Inventory.h"
+#include "ShortStaff.h"
+#include "Cursor.h"
 
 ObjectManager* pObjectManager = nullptr;
 int lastUid = 0;
@@ -22,7 +24,7 @@ ObjectManager::ObjectManager()
 	UI_StatusBar::GetInstance();
 	Panel_Status::GetInstance();
 	Inventory::GetInstance();
-
+	Cursor::GetInstance();
 }
 
 ObjectManager::~ObjectManager()
@@ -32,6 +34,7 @@ ObjectManager::~ObjectManager()
 	UI_StatusBar::Destroy();
 	Panel_Status::Destroy();
 	Inventory::Destroy();
+	Cursor::Destroy();
 }
 
 ObjectManager * ObjectManager::GetInstance()
@@ -53,6 +56,10 @@ GameObject * ObjectManager::CreateObject(ObjectType _type)
 		break;
 	case ObjectType::SORCERESS:
 		pObj = new Sorceress();
+		break;
+
+	case ObjectType::ITEM_SHORT_STAFF:
+		pObj = new ShortStaff;
 		break;
 	case ObjectType::UI_LOGO:
 		pObj = new UI_Logo;
@@ -126,6 +133,7 @@ void ObjectManager::Update()
 	UI_StatusBar::GetInstance()->Update();
 	Inventory::GetInstance()->Update();
 	Panel_Status::GetInstance()->Update();
+	Cursor::GetInstance()->Update();
 
 	auto& objTable = pObjectManager->objectTable;
 	for (auto& objList : objTable)
@@ -228,6 +236,7 @@ void ObjectManager::Render()
 	}
 	
 
+	Cursor::GetInstance()->Render();
 	// 디버그용
 	//TimeManager::RenderFPS();
 }

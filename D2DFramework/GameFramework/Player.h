@@ -19,6 +19,7 @@ public:
 	static void RenderDebug();
 
 	static void SetCharacter(ObjectType _type);
+	static void SetPosition(Vector3 pos);
 	static void SetVisible(bool _val);
 	static void SetEnable(bool _val);
 

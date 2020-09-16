@@ -4,6 +4,7 @@
 #include "Label.h"
 #include "Panel_Status.h"
 #include "Inventory.h"
+#include "Cursor.h"
 
 Player* pPlayer = nullptr;
 
@@ -71,18 +72,44 @@ void Player::Update()
 	}
 	if (InputManager::GetMouseLButton())
 	{
-		if (InputManager::GetKey(VK_SHIFT))
+		if (Cursor::IsOnUI() == false)
 		{
-			pPlayer->pChar->Attack();
-		}
-		else
-		{
-			//pPlayer->pChar->PathFInding(InputManager::GetMousePosOnWorld());
-			pPlayer->pChar->pathList.clear();
-			pPlayer->pChar->nextPos = TileManager::MouseToWallIndex();
-			pPlayer->pChar->isMoving = true;
+			if (!Cursor::HasItem())
+			{
+				if (InputManager::GetKey(VK_SHIFT))
+				{
+					pPlayer->pChar->Attack();
+				}
+				else
+				{
+					//pPlayer->pChar->PathFInding(InputManager::GetMousePosOnWorld());
+					pPlayer->pChar->pathList.clear();
+					pPlayer->pChar->nextPos = TileManager::MouseToWallIndex();
+					pPlayer->pChar->isMoving = true;
+				}
+				
+			}
+			else
+			{
+				Item* item = Cursor::DropItem();
+				item->isVisible = true;
+				item->isEnable = true;
+				item->anim->SetCurrentFrame(0);
+				item->transform.position = pPlayer->pChar->transform.position;
+				
+			}
+			
 		}
 		
+		
+	}
+
+	if (InputManager::GetMouseRButton())
+	{
+		if (InputManager::GetKey(VK_SHIFT))
+		{
+			pPlayer->pChar->SkillCast();
+		}
 	}
 
 	
@@ -94,11 +121,12 @@ void Player::Update()
 
 void Player::RenderDebug()
 {
+	D2DRenderManager::DrawRect(0, 0, 100, 100);
 	if (pPlayer->pChar == nullptr) return;
 	WCHAR wstr[64] = {};
-	swprintf_s(wstr, L"%f", D3DXToDegree(pPlayer->pChar->direction));
+	swprintf_s(wstr, L"%d,%d", InputManager::GetMousePosOnClient().x, InputManager::GetMousePosOnClient().y);
 	pPlayer->label->SetText(wstr);
-	pPlayer->label->SetColor(Color(255, 255, 0, 0));
+	pPlayer->label->SetColor(Color::Red());
 	pPlayer->label->Render();
 }
 
@@ -122,6 +150,12 @@ void Player::SetCharacter(ObjectType _type)
 	Camera::SetTarget(pChar);
 	pPlayer->pChar = pChar;
 	pChar->speed = 200.f;
+}
+
+void Player::SetPosition(Vector3 pos)
+{
+	if (pPlayer->pChar)
+		pPlayer->pChar->transform.position = pos;
 }
 
 void Player::SetVisible(bool _val)

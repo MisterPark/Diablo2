@@ -16,8 +16,16 @@ void TestScene::OnLoaded()
 
 	Player::GetInstance();
 	Player::SetCharacter(ObjectType::SORCERESS);
+	Player::SetPosition(Vector3(2880, 650, 0));
 	Player::SetVisible(true);
 	Player::SetEnable(true);
+
+	GameObject* item = ObjectManager::CreateObject(ObjectType::ITEM_SHORT_STAFF);
+	item->transform.position = { 2880,750,0 };
+	item = ObjectManager::CreateObject(ObjectType::ITEM_SHORT_STAFF);
+	item->transform.position = { 2800,750,0 };
+	item = ObjectManager::CreateObject(ObjectType::ITEM_SHORT_STAFF);
+	item->transform.position = { 2900,750,0 };
 
 	UI_StatusBar::GetInstance()->isVisible = true;
 	UI_StatusBar::GetInstance()->isEnable = true;

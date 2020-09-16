@@ -41,7 +41,7 @@ void UI_StatusBar::Update()
 void UI_StatusBar::Render()
 {
 	if (isVisible == false)return;
-	anim->RenderImage();
+	D2DRenderManager::DrawUI(anim->GetSpriteKey(), transform.position, 0);
 
 	D2DRenderManager::DrawImage(SpriteType::UI_HP_BALL, 30, 507, perHP);
 	D2DRenderManager::DrawImage(SpriteType::UI_MP_BALL, 690, 507, perMP);

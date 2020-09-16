@@ -22,11 +22,13 @@ public:
 
     void SetFont(const wstring& faceName, int size, UINT weight);
     void SetColor(D3DXCOLOR color);
+    void SetRect(bool _isDrawRect);
 
     LPD3DXFONT pFont = nullptr;
     INT size = 0;
     UINT fontWeight = 0;
     D3DXCOLOR color = D3DCOLOR_ARGB(255, 0, 0, 0);
     RECT textArea = {};
+    bool isDrawRect = false;
 };
 
