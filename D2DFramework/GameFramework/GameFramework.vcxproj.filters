@@ -55,6 +55,12 @@
     <Filter Include="GameObject\Item">
       <UniqueIdentifier>{043c3020-79ac-433c-9985-88c74eb5dd52}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Missile">
+      <UniqueIdentifier>{cec6c936-c0c6-4f5c-84c8-98f11cfb6a0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Effect">
+      <UniqueIdentifier>{14bf011a-60f4-4d88-ad44-91ad42860c08}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -210,28 +216,67 @@
     <ClInclude Include="UI_StatusBar.h">
       <Filter>GameObject\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Panel_Status.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Animator.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>GameObject\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Inventory.h">
-      <Filter>GameObject\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Cursor.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="ShortStaff.h">
       <Filter>GameObject\Item</Filter>
     </ClInclude>
+    <ClInclude Include="QuiltedArmor.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
     <ClInclude Include="LeatherCap.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Cursor.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Firebolt.h">
+      <Filter>GameObject\Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="Missile.h">
+      <Filter>GameObject\Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="Panel_Status.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FireCast.h">
+      <Filter>GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="LightCast.h">
+      <Filter>GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="ColdCast.h">
+      <Filter>GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBall.h">
+      <Filter>GameObject\Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="FireExplode.h">
+      <Filter>GameObject\Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="FireWall.h">
+      <Filter>GameObject\Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="Inferno.h">
+      <Filter>GameObject\Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="MeteorTarget.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="QuiltedArmor.h">
+    <ClInclude Include="Meteor.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SmallFire.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -344,31 +389,70 @@
     <ClCompile Include="UI_StatusBar.cpp">
       <Filter>GameObject\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Panel_Status.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Animator.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Inventory.cpp">
-      <Filter>GameObject\Item</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>GameObject\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Cursor.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="ShortStaff.cpp">
       <Filter>GameObject\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="LeatherCap.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="TestScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="QuiltedArmor.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="LeatherCap.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Cursor.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Firebolt.cpp">
+      <Filter>GameObject\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="Missile.cpp">
+      <Filter>GameObject\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="Panel_Status.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ColdCast.cpp">
+      <Filter>GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="FireCast.cpp">
+      <Filter>GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="LightCast.cpp">
+      <Filter>GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBall.cpp">
+      <Filter>GameObject\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="FireExplode.cpp">
+      <Filter>GameObject\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="FireWall.cpp">
+      <Filter>GameObject\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="Inferno.cpp">
+      <Filter>GameObject\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="MeteorTarget.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Meteor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SmallFire.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

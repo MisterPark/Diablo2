@@ -106,6 +106,27 @@ void MainGame::Initialize()
 	D2DRenderManager::LoadSprite(L"Sprites\\Item\\invlbt.png", SpriteType::ITEM_INV_LBT, 1, 1);
 	D2DRenderManager::LoadSprite(L"Sprites\\Item\\flplbt.png", SpriteType::ITEM_FLP_LBT, 1, 17);
 
+	D2DRenderManager::LoadSprite(L"Sprites\\skill\\firecast.png", SpriteType::EFFECT_FIRECAST, 1, 14);
+	D2DRenderManager::LoadSprite(L"Sprites\\skill\\coldcast.png", SpriteType::EFFECT_COLDCAST, 1, 15);
+	D2DRenderManager::LoadSprite(L"Sprites\\skill\\lightcast.png", SpriteType::EFFECT_LIGHTCAST, 1, 10);
+	D2DRenderManager::LoadSprite(L"Sprites\\skill\\explode.png", SpriteType::EFFECT_EXPLODE, 1, 12);
+	D2DRenderManager::LoadSprite(L"Sprites\\skill\\meteorTarget.png", SpriteType::EFFECT_METEOR_TARGET, 1, 17);
+
+	D2DRenderManager::LoadSprite(L"Sprites\\skill\\firebolt.png", SpriteType::SKILL_FIREBOLT, 16, 5);
+	D2DRenderManager::LoadSprite(L"Sprites\\skill\\fireball.png", SpriteType::SKILL_FIREBALL, 16, 5);
+	D2DRenderManager::LoadSprite(L"Sprites\\skill\\Inferno.png", SpriteType::SKILL_INFERNO, 1, 15);
+	D2DRenderManager::LoadSprite(L"Sprites\\skill\\firewall_s.png", SpriteType::SKILL_FIREWALL_S, 1, 19);
+	D2DRenderManager::LoadSprite(L"Sprites\\skill\\firewall.png", SpriteType::SKILL_FIREWALL, 1, 18);
+	D2DRenderManager::LoadSprite(L"Sprites\\skill\\firewall_e.png", SpriteType::SKILL_FIREWALL_E, 1, 19);
+	D2DRenderManager::LoadSprite(L"Sprites\\skill\\smallfire_s.png", SpriteType::SKILL_SMALLFIRE_S, 1, 19);
+	D2DRenderManager::LoadSprite(L"Sprites\\skill\\smallfire.png", SpriteType::SKILL_SMALLFIRE, 1, 18);
+	D2DRenderManager::LoadSprite(L"Sprites\\skill\\smallfire_e.png", SpriteType::SKILL_SMALLFIRE_E, 1, 19);
+	D2DRenderManager::LoadSprite(L"Sprites\\skill\\meteor.png", SpriteType::SKILL_METEOR, 1, 12);
+
+
+	D2DRenderManager::LoadSprite(L"Sprites\\skill\\teleport.png", SpriteType::SKILL_TELEPORT, 1, 18);
+	
+
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SOBW.png", SpriteType::SO_BW, 5, 6);
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SONUHTH.png", SpriteType::SO_NU_HTH, 16, 8);
 	D2DRenderManager::LoadSprite(L"Sprites\\character\\so\\SORNHTH.png", SpriteType::SO_RN_HTH, 16, 8);

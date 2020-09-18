@@ -190,7 +190,7 @@ HRESULT D2DRenderManager::LoadSprite(const wstring& filePath, SpriteType spriteK
 		return E_FAIL;
 	}
 
-	if (FAILED(D3DXCreateTextureFromFileEx(
+	if (FAILED(D3DXCreateTextureFromFileExW(
 		pD2DRenderManager->pDevice,
 		filePath.c_str(),
 		tex->imageInfo.Width,
@@ -201,7 +201,7 @@ HRESULT D2DRenderManager::LoadSprite(const wstring& filePath, SpriteType spriteK
 		D3DPOOL_MANAGED,
 		D3DX_DEFAULT,
 		D3DX_DEFAULT,
-		0,
+		D3DCOLOR_ARGB(255,0,0,0),
 		nullptr,
 		nullptr,
 		&tex->pTexture)))

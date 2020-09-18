@@ -25,6 +25,7 @@ Sorceress::Sorceress()
 	anims[(int)CharacterState::A2_STF].SetSpriteKey(SpriteType::SO_A2_STF);
 	anims[(int)CharacterState::SC_STF].SetSpriteKey(SpriteType::SO_SC_STF);
 	anims[(int)CharacterState::GH_STF].SetSpriteKey(SpriteType::SO_GH_STF);
+
 	anims[(int)CharacterState::TN_STF].SetLoop(true);
 	anims[(int)CharacterState::RN_STF].SetLoop(true);
 	anims[(int)CharacterState::A1_STF].SetLoop(false);

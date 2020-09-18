@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpriteEditor", "SpriteEditor\SpriteEditor.csproj", "{AAB91FBE-09E1-4E73-9B46-44767F3AFCEC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AAB91FBE-09E1-4E73-9B46-44767F3AFCEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAB91FBE-09E1-4E73-9B46-44767F3AFCEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAB91FBE-09E1-4E73-9B46-44767F3AFCEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAB91FBE-09E1-4E73-9B46-44767F3AFCEC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BFEA2D93-CD9A-45AA-9CB3-783731444893}
+	EndGlobalSection
+EndGlobal

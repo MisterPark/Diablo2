@@ -108,13 +108,22 @@ void Player::Update()
 	{
 		if (InputManager::GetKey(VK_SHIFT))
 		{
-			pPlayer->pChar->SkillCast();
+			//pPlayer->pChar->SkillCast();
+			//pPlayer->pChar->CastFireBolt();
+			//pPlayer->pChar->CastFireBall();
+			//pPlayer->pChar->CastInfreno();
+			//pPlayer->pChar->CastBlaze();
+			//pPlayer->pChar->CastFireWall();
+			pPlayer->pChar->CastMeteor();
 		}
 	}
 
 	
 
-	
+	if (InputManager::GetMouseRButtonUp())
+	{
+		pPlayer->pChar->CastInfrenoOff();
+	}
 
 }
 

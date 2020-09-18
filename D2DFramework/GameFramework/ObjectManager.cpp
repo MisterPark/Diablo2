@@ -15,6 +15,17 @@
 #include "Cursor.h"
 #include "LeatherCap.h"
 #include "QuiltedArmor.h"
+#include "Firebolt.h"
+#include "FireCast.h"
+#include "ColdCast.h"
+#include "LightCast.h"
+#include "FireExplode.h"
+#include "FireBall.h"
+#include "Inferno.h"
+#include "FireWall.h"
+#include "MeteorTarget.h"
+#include "Meteor.h"
+#include "SmallFire.h"
 
 ObjectManager* pObjectManager = nullptr;
 int lastUid = 0;
@@ -69,6 +80,48 @@ GameObject * ObjectManager::CreateObject(ObjectType _type)
 	case ObjectType::ITEM_QUILTED_ARMOR:
 		pObj = new QuiltedArmor;
 		break;
+	case ObjectType::EFFECT_FIRECAST:
+		pObj = new FireCast();
+		break;
+	case ObjectType::EFFECT_COLDCAST:
+		pObj = new ColdCast();
+		break;
+	case ObjectType::EFFECT_LIGHTCAST:
+		pObj = new LightCast();
+		break;
+	case ObjectType::EFFECT_EXPLODE:
+		pObj = new FireExplode();
+		break;
+	case ObjectType::EFFECT_METEOR_TARGET:
+		pObj = new MeteorTarget;
+		break;
+
+
+	case ObjectType::SKILL_FIREBOLT:
+		pObj = new Firebolt;
+		break;
+	case ObjectType::SKILL_FIREBALL:
+		pObj = new FireBall;
+		break;
+	case ObjectType::SKILL_INFERNO:
+		pObj = new Inferno;
+		break;
+	case ObjectType::SKILL_FIREWALL:
+		pObj = new FireWall;
+		break;
+	case ObjectType::SKILL_SMALL_FIRE:
+		pObj = new SmallFire;
+		break;
+	case ObjectType::SKILL_METEOR:
+		pObj = new Meteor;
+		break;
+	case ObjectType::SKILL_HYDRA:break;
+
+	case ObjectType::SKILL_TELEPORT:
+		pObj = new QuiltedArmor;
+		break;
+
+
 	case ObjectType::UI_LOGO:
 		pObj = new UI_Logo;
 		break;
