@@ -254,9 +254,11 @@ void D2DRenderManager::DrawSprite(SpriteType spriteKey, Transform transform, int
 	D3DXMatrixTranslation(&trans, transform.position.x - Camera::GetX(), transform.position.y - Camera::GetY(), 0.f);
 	world = scale * trans;
 
+	Vector3 center = Vector3(centerX, centerY, 0.f);
+
 	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	pD2DRenderManager->pSprite->SetTransform(&world);
-	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &Vector3(centerX, centerY, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &center, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 	pD2DRenderManager->pSprite->End();
 }
 
@@ -291,9 +293,11 @@ void D2DRenderManager::DrawUI(SpriteType spriteKey, Transform transform, int ind
 	D3DXMatrixTranslation(&trans, transform.position.x, transform.position.y , 0.f);
 	world = scale * trans;
 
+	Vector3 center = Vector3(0.f, 0.f, 0.f);
+
 	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	pD2DRenderManager->pSprite->SetTransform(&world);
-	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &Vector3(0.f, 0.f, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &center, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 	pD2DRenderManager->pSprite->End();
 }
 
@@ -327,9 +331,11 @@ void D2DRenderManager::DrawUI(SpriteType spriteKey, Vector3 pos, int index)
 	D3DXMatrixTranslation(&trans, pos.x, pos.y, 0.f);
 	world = trans;
 
+	Vector3 center = Vector3(0.f, 0.f, 0.f);
+
 	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	pD2DRenderManager->pSprite->SetTransform(&world);
-	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &Vector3(0.f, 0.f, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &center, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 	pD2DRenderManager->pSprite->End();
 }
 
@@ -363,9 +369,11 @@ void D2DRenderManager::DrawCharacter(SpriteType spriteKey, Transform transform, 
 	D3DXMatrixTranslation(&trans, transform.position.x - Camera::GetX(), transform.position.y - Camera::GetY(), 0.f);
 	world = scale * trans;
 
+	Vector3 center = Vector3(centerX, h, 0.f);
+
 	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	pD2DRenderManager->pSprite->SetTransform(&world);
-	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &Vector3(centerX, h, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &center, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 	pD2DRenderManager->pSprite->End();
 
 }
@@ -400,9 +408,11 @@ void D2DRenderManager::DrawTile(SpriteType spriteKey, Transform transform, DWORD
 	D3DXMatrixTranslation(&trans, transform.position.x - Camera::GetX(), transform.position.y - Camera::GetY(), 0.f);
 	world = scale * trans;
 
+	Vector3 center = Vector3(0.f, h - dfTILE_H, 0.f);
+
 	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	pD2DRenderManager->pSprite->SetTransform(&world);
-	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &Vector3(0.f, h-dfTILE_H, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &center, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 	pD2DRenderManager->pSprite->End();
 }
 
@@ -436,9 +446,11 @@ void D2DRenderManager::DrawSubTile(SpriteType spriteKey, Transform transform, DW
 	D3DXMatrixTranslation(&trans, transform.position.x - Camera::GetX(), transform.position.y - Camera::GetY(), 0.f);
 	world = scale * trans;
 
+	Vector3 center = Vector3(centerX, h - dfTILE_H_HALF, 0.f);
+
 	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	pD2DRenderManager->pSprite->SetTransform(&world);
-	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &Vector3(centerX, h - dfTILE_H_HALF, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &center, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 	pD2DRenderManager->pSprite->End();
 }
 
@@ -475,9 +487,11 @@ void D2DRenderManager::DrawItem(SpriteType spriteKey, Vector3 pos, int index)
 	D3DXMatrixTranslation(&trans, pos.x-Camera::GetX(), pos.y-Camera::GetY(), 0.f);
 	world = trans;
 
+	Vector3 center = Vector3(centerX, h - 20, 0.f);
+
 	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	pD2DRenderManager->pSprite->SetTransform(&world);
-	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &Vector3(centerX, h-20, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, &area, &center, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 	pD2DRenderManager->pSprite->End();
 }
 
@@ -501,9 +515,11 @@ void D2DRenderManager::DrawImage(SpriteType spriteKey, Transform transform)
 	D3DXMatrixTranslation(&trans, transform.position.x, transform.position.y, 0.f);
 	world = scale * trans;
 
+	Vector3 center = Vector3(0.f, 0.f, 0.f);
+
 	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	pD2DRenderManager->pSprite->SetTransform(&world);
-	pD2DRenderManager->pSprite->Draw(tex->pTexture, nullptr, &Vector3(0.f, 0.f, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, nullptr, &center, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 	pD2DRenderManager->pSprite->End();
 }
 
@@ -530,9 +546,11 @@ void D2DRenderManager::DrawImage(SpriteType spriteKey, float x, float y, float v
 	D3DXMatrixTranslation(&trans, x, y, 0.f);
 	world = trans;
 
+	Vector3 center = Vector3(0.f, 0.f, 0.f);
+
 	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	pD2DRenderManager->pSprite->SetTransform(&world);
-	pD2DRenderManager->pSprite->Draw(tex->pTexture, &rt, &Vector3(0.f, 0.f, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, &rt, &center, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 	pD2DRenderManager->pSprite->End();
 }
 
@@ -646,10 +664,12 @@ void D2DRenderManager::DrawRect(float sx, float sy, float ex, float ey)
 	D3DXMatrixScaling(&scale, ex-sx, ey-sy, 0.f);
 	D3DXMatrixTranslation(&trans, sx, sy, 0.f);
 	world = scale * trans;
+	
+	Vector3 center = Vector3(0.f, 0.f, 0.f);
 
 	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	pD2DRenderManager->pSprite->SetTransform(&world);
-	pD2DRenderManager->pSprite->Draw(tex->pTexture, nullptr, &Vector3(0.f, 0.f, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, nullptr, &center, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 	pD2DRenderManager->pSprite->End();
 }
 
@@ -673,8 +693,10 @@ void D2DRenderManager::DrawRectWorld(float sx, float sy, float ex, float ey)
 	D3DXMatrixTranslation(&trans, sx - Camera::GetX(), sy - Camera::GetY(), 0.f);
 	world = scale * trans;
 
+	Vector3 center = Vector3(0.f, 0.f, 0.f);
+
 	pD2DRenderManager->pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	pD2DRenderManager->pSprite->SetTransform(&world);
-	pD2DRenderManager->pSprite->Draw(tex->pTexture, nullptr, &Vector3(0.f, 0.f, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	pD2DRenderManager->pSprite->Draw(tex->pTexture, nullptr, &center, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 	pD2DRenderManager->pSprite->End();
 }
